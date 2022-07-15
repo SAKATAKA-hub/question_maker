@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('test', function () {
-    return view('test');
+Route::get('ceate_cuestion', function () {
+    return view('ceate_cuestion');
 });
 
 Route::get('/', function () {
