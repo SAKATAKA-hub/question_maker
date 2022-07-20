@@ -1,0 +1,127 @@
+<? php
+
+/**
+ * ==========================
+ *  マイグレーション
+ * ==========================
+ */
+/*
+
+    # 問題グループ QuestionGroups ---------------------
+    $table->id();
+    $table->string('title',150 )->comment('問題タイトル');
+    $table->string('resume',150)->comment('問題の説明文');
+    $table->string('image',150 )->comment('サムネイル画像パス');
+    $table->string('tags',150  )->comment('タグ');
+    $table->boolean('is_public')->comment('公開か否か')->default(0);
+
+    $table->unsignedBigInteger('user_id')->comment('問題作成者ID');
+    $table->foreign('user_id')->references('id')->on('users') //存在しないidの登録は不可
+    ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
+    $table->timestamps();
+
+
+    # 問題 Questions ----------------------------------
+    $table->id();
+    $table->string('text',150        )->comment('問題文');
+    $table->string('answer_type',150 )->comment('回答の種種類');
+
+    $table->unsignedBigInteger('question_group_id')->comment('問題グループID');
+    $table->foreign('question_group_id')->references('id')->on('question_groups') //存在しないidの登録は不可
+    ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+    $table->timestamps();
+
+
+    # 問題の選択肢 QuestionsOptions -------------------
+    $table->id();
+    $table->string('text',150 　)->comment('選択肢のテキスト');
+    $table->boolean('is_correct')->comment('正解か否か')->default(0);
+
+    $table->unsignedBigInteger('question_id')->comment('問題ID');
+    $table->foreign('question_id')->references('id')->on('questions') //存在しないidの登録は不可
+    ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
+    $table->timestamps();
+
+
+
+    # 回答グループ AnswerGroups -----------------------
+    $table->id();
+    $table->string('score',150)->comment('点数');
+
+    $table->unsignedBigInteger('user_id')->comment('回答者ID');
+    $table->foreign('user_id')->references('id')->on('users') //存在しないidの登録は不可
+    ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
+
+    $table->unsignedBigInteger('question_group_id')->comment('問題グループID');
+    $table->foreign('question_id')->references('id')->on('questions') //存在しないidの登録は不可
+    ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
+    $table->timestamps();
+
+
+    # 回答 Answers -----------------------------------
+    $table->id();
+    $table->string('text',150)->comment('回答内容');
+    $table->boolean('is_correct')->comment('正解か否か')->default(0);
+
+    $table->unsignedBigInteger('answer_group_id')->comment('回答グループID');
+    $table->foreign('answer_group_id')->references('id')->on('answer_groups') //存在しないidの登録は不可
+    ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
+    $table->unsignedBigInteger('question_id')->comment('問題ID');
+    $table->foreign('question_id')->references('id')->on('questions') //存在しないidの登録は不可
+    ->onDelete('cascade');//主テーブルに関連する従テーブルのレコードを削除
+
+    $table->timestamps();
+
+
+    php artisan make:model QuestionGroup -m
+    php artisan make:model Question -m
+    php artisan make:model QuestionsOption -m
+    php artisan make:model AnswerGroup -m
+    php artisan make:model Answer -m
+
+
+    php artisan make:controller PlayQuestionController
+    php artisan make:controller MakeQuestionController
+    php artisan make:controller ResultsController
+    php artisan make:controller SettingsController
+
+
+    */
+
+    # PlayQuestionController
+    /**
+     * =================================
+     *  問題集を解く　処理
+     * =================================
+    */
+
+    # MakeQuestionController
+    /**
+     * =================================
+     *  問題集を作る　処理
+     * =================================
+    */
+
+    # SettingsController
+    /**
+     * =================================
+     *  各種設定　処理
+     * =================================
+    */
+
+    # ResultsController
+    /**
+     * =================================
+     *  成績　処理
+     * =================================
+    */
+
+
+
+
+?>
