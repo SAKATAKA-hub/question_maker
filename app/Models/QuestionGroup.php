@@ -17,3 +17,5 @@ class QuestionGroup extends Model
         'title','resume','image','tags','is_public','user_id',
     ];
 }
+
+

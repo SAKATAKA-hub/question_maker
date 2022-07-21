@@ -21,6 +21,12 @@ window.Vue = require('vue').default;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+Vue.component('read-image-file-component', require('./components/MakeQuestion/ReadImageFileComponent.vue').default);
+
+/* 部品アイテム */
+Vue.component('submit-button-component', require('./components/Items/SubmitButtonComponent.vue').default);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

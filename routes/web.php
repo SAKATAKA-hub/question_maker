@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +18,40 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
+| 問題集を作る　処理　MakeQuestionGroupController
+|--------------------------------------------------------------------------
+*/
+    # 問題集の一覧表示(list)
+    Route::get('/make_question_group/list', [Controllers\MakeQuestionGroupController::class, 'list'])
+    ->name('make_question_group.list');
+
+    # 問題集の新規作成表示(create)
+    Route::get('/make_question_group/create', [Controllers\MakeQuestionGroupController::class, 'create'])
+    ->name('make_question_group.create');
+
+    # 新規作成問題集の保存(store)
+    Route::post('/make_question_group/store', [Controllers\MakeQuestionGroupController::class, 'store'])
+    ->name('make_question_group.store');
+
+    # 問題集の編集表示(edit)
+    # 編集問題集の保存(update)
+    # 問題集の削除(delete)
+
+
+
+/*
+|--------------------------------------------------------------------------
 | 問題集を作る　処理　MakeQuestionController
 |--------------------------------------------------------------------------
 */
     # 問題集の一覧表示(list)
-    Route::get('/make_question/list', [Controllers\WorkerInfoController::class, 'list'])
-    ->name('list');
+    Route::get('/make_question/list', [Controllers\MakeQuestionController::class, 'list'])
+    ->name('make_question.list');
 
     # 問題集の新規作成表示(create)
+    Route::get('/make_question/create', [Controllers\MakeQuestionController::class, 'create'])
+    ->name('make_question.create');
+
     # 新規作成問題集の保存(store)
     # 問題集の編集表示(edit)
     # 編集問題集の保存(update)
