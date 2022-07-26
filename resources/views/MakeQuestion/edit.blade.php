@@ -2,17 +2,31 @@
 
 
 <!----- title ----->
-@section('title','問題集の新規作成')
+@section('title')
+    @if ( empty($question) )
+    問題の登録
+    @else
+    問題の修正
+    @endif
+@endsection
+
 
 <!----- breadcrumb ----->
 @section('breadcrumb')
 <nav class="mb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb mb-0  bg-white">
-        <li class="breadcrumb-item"><a href="#" class="text-success">
+        <li class="breadcrumb-item"><a href="{{route('questions_list')}}" class="text-success">
             <i class="bi bi-house-door-fill"></i> Home
         </a></li>
+        <li class="breadcrumb-item"><a href="{{route('make_question_group.list')}}" class="text-success">
+            作成問題集リスト
+        </a></li>
         <li class="breadcrumb-item" aria-current="page">
-            問題集の新規作成
+            @if ( empty($question) )
+            問題の登録
+            @else
+            問題の修正
+            @endif
         </li>
     </ol>
 </nav>
@@ -39,7 +53,11 @@
 <section class="border-bottom bg-white">
     <div class="container-1200">
         <h2 class="text-secondary fw-bold mb-3">
-            問題集の新規作成
+            @if ( empty($question) )
+            問題の登録
+            @else
+            問題の修正
+            @endif
         </h2>
     </div>
 </section>
@@ -48,76 +66,100 @@
 <section>
     <div class="container-1200 pt-5">
 
-        <!-- [ 基本情報 ] -->
-        <h3 class="text-secondary fw-bold mb-3">
-            基本情報を入力する
-        </h3>
-
-        <form action="{{ route('make_question_group.store') }}" method="POST" enctype="multipart/form-data">
+        @if ( empty($question) ){{-- 新規作成 --}}
+        <form action="{{ route('make_question.store', $question_group ) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="card mb-5 card-body">
 
-                <!-- タイトル -->
+        @else{{-- 更新 --}}
+        <form action="{{ route('make_question.update', $question ) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PATCH')
+
+        @endif
+
+
+            <div class="card mb-5 card-body shadow">
+
+                <!-- 出題順 -->
                 <div class="form-group mb-4">
-                    <label for="title_input" class="form-check-label fs-5 mb-2 fw-bold"
-                    >タイトル</label>
-                    <input type="text" name="title" class="form-control" id="title_input" placeholder="問題集のタイトル"
-                    style="height:2rem;" maxlength="150" required>
+                    <label for="order_input" class="form-check-label fs-5 mb-2 fw-bold"
+                    >出題順</label>
+
+                    <select name="order" class="form-select" id="order_input">
+                        <option value="1">1問目</option>
+                        <option value="2">2問目</option>
+                        <option value="3">3問目</option>
+                    </select>
                 </div>
 
 
-                <!-- 説明文 -->
+                <!-- 問題文 -->
                 <div class="form-group mb-4">
-                    <label for="resume_input1" class="form-check-label fs-5 mb-2 fw-bold"
-                    >説明文</label>
-                    <textarea name="resume" class="form-control" id="resume_input1" rows="3" maxlength="150"
-                    placeholder="問題集の簡単な説明を書きましょう！"
-                    ></textarea>
+                    <label for="text" class="form-check-label fs-5 mb-2 fw-bold"
+                    >問題文</label>
+                    <textarea name="text" class="form-control" id="text" rows="3"
+                    maxlength="150" required></textarea>
                     <div class="form-text">※150文字以内</div>
                 </div>
 
 
-                <!-- サムネ画像 -->
-                <div class="form-group mb-4">
-                    <label for="exampleFormControlInput1" class="form-check-label fs-5 mb-2 fw-bold"
-                    >サムネ画像</label>
-
-                    <read-image-file-component img_path="{{asset('storage/site/image/no_image.png')}}"></read-image-file-component>
-
-                    <div class="form-text">※ファイルは10Mバイト以内で、jpeg・jpg・pngのいずれかの形式を選択してください。</div>
-                </div>
-
-
-                <!-- タグ -->
-                <div class="form-group mb-4">
-                    <label for="exampleFormControlInput1" class="form-check-label fs-5 mb-2 fw-bold"
-                    >タグ</label>
-                    <input type="text" name="tags" class="form-control" id="exampleFormControlInput1" placeholder="タグ"
-                    style="height:2rem;" maxlength="150">
-                    <div class="form-text">※タグが複数あるときは、全角または半角スペースで区切ってください。</div>
-                </div>
-
-                <!-- 公開設定 -->
+                <!-- 回答の種類 -->
                 <div class="mb-4">
-                    <label class="form-check-label fs-5 mb-2 fw-bold">公開設定</label>
+                    <label class="form-check-label fs-5 mb-2 fw-bold">回答方法</label>
                     <div class="ms-3 d-flex gap-3">
 
                         <div class="form-check">
-                            <input name="is_public" value="true" type="radio" class="form-check-input" id="exampleCheck1" checked>
-                            <label class="form-check-label fw-bold" for="exampleCheck1">公開</label>
+                            <input name="answer_type" value="1" type="radio" class="form-check-input"
+                            id="answerType1" checked>
+                            <label class="form-check-label fw-bold" for="answerType1">ひとつの答えを選ぶ</label>
                         </div>
                         <div class="form-check">
-                            <input name="is_public" value="" type="radio" class="form-check-input" id="exampleCheck2">
-                            <label class="form-check-label fw-bold" for="exampleCheck2">非公開</label>
+                            <input name="answer_type" value="2" type="radio" class="form-check-input"
+                            id="answerType2">
+                            <label class="form-check-label fw-bold" for="answerType2">複数の答えを選ぶ</label>
+                        </div>
+                        <div class="form-check">
+                            <input name="answer_type" value="0" type="radio" class="form-check-input"
+                            id="answerType0">
+                            <label class="form-check-label fw-bold" for="answerType0">文章で答えを入力する</label>
                         </div>
 
                     </div>
                 </div>
 
+
+                <!-- 正解 -->
+                <div class="form-group mb-4">
+                    <label for="" class="form-check-label fs-5 mb-2 fw-bold"
+                    >正解</label>
+                    <input type="text"  name="answer_texts[]" class="form-control" id="exampleInputPassword1"
+                    style="height:2rem;" required>
+                    <input type="hidden" name="answer_booleans[]" value="1">
+                </div>
+
+
+                <!-- 問題画像 -->
+                <div class="form-group mb-4">
+                    <label for="exampleFormControlInput1" class="form-check-label fs-5 mb-2 fw-bold"
+                    >問題画像</label>
+
+                    @php $img_path = isset($question) ? $question->image : 'site/image/no_image.png' ; @endphp
+                    <read-image-file-component img_path="{{asset('storage/'.$img_path)}}" alt="問題画像"></read-image-file-component>
+
+                    <div class="form-text">※ファイルは10Mバイト以内で、jpeg・jpg・pngのいずれかの形式を選択してください。</div>
+                </div>
+
+
                 <!-- 送信ボタン -->
                 <div class="mt-5 mb-5">
                     <div class="d-grid gap-2 col-md-4 mx-auto">
-                        <button class="btn btn-success btn-lg rounded-pill" type="submit">基本情報登録</button>
+                        <button class="btn btn-success btn-lg rounded-pill" type="submit">
+                            @if ( empty($question) )
+                            問題の登録
+                            @else
+                            問題の更新
+                            @endif
+                        </button>
                     </div>
                 </div>
 
@@ -126,7 +168,8 @@
 
 
         <!-- [ 問題を登録する ] -->
-        {{-- <h3 class="text-secondary fw-bold mb-3">
+{{--
+        <h3 class="text-secondary fw-bold mb-3">
             問題を登録する
         </h3>
         <ul class="p-0">
@@ -320,17 +363,10 @@
         </ul>
 
         <div class="mt-3">
-            <button type="button" class="btn btn-secondary border">+ 問題の追加</button>
-        </div> --}}
+            <button type="button" class="btn btn-secondary border">+ 問題の登録</button>
+        </div>
+ --}}
 
-
-            <!-- 送信ボタン -->
-            {{-- <div class="m-3 mb-5">
-                <div class="d-grid gap-2 col-md-4 mx-auto">
-                    <button class="btn btn-success btn-lg rounded-pill" type="button">確　認</button>
-                </div>
-            </div>
-        --}}
 
     </div>
 </section>

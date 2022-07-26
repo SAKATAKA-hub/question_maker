@@ -59,8 +59,8 @@
                     <div class="overflow-hidden">
                         <div>
                             <!-- 公開設定 -->
-                            @if ( $question_group->is_public )
-                            <span class="badge badge-warning"  style="border-radius:.8rem; transform: translateY(-0.1rem);"
+                            @if ( $question_group->published_at )
+                            <span class="badge badge-info"  style="border-radius:.8rem; transform: translateY(-0.1rem);"
                             >公開中</span>
                             @else
                             <span class="badge badge-secondary" style="border-radius:.8rem; transform: translateY(-0.1rem);"
@@ -68,7 +68,7 @@
                             @endif
 
                             <!-- 作成日 -->
-                            <span>{{ \Carbon\Carbon::parse($question_group->created_at)->format('Y-m-d') }}</span>
+                            <span>作成日{{ \Carbon\Carbon::parse($question_group->created_at)->format('Y-m-d') }}</span>
                         </div>
 
                         <!-- タイトル -->
@@ -76,8 +76,8 @@
 
                     </div>
                     <div class="" style="min-width:9rem;">
-                        <button type="button" class="btn btn-link text-secondary" style="text-decoration:none;"
-                        >編集</button>
+                        <a href="{{route('make_question_group.select_edit',$question_group)}}" class="btn btn-link text-secondary" style="text-decoration:none;"
+                        >編集</a>
 
                         <button type="button" class="btn btn-link text-danger"    style="text-decoration:none;"
                         >削除</button>

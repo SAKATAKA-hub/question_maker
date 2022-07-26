@@ -671,9 +671,9 @@ h6, .h6 {
   background-color: transparent;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+/* .breadcrumb-item + .breadcrumb-item::before {
   content: "\2192";
-}
+} */
 
 .breadcrumb-bordered {
   background-color: transparent;
@@ -1675,7 +1675,7 @@ h6, .h6 {
 
 /* Form elements */
 .form-control,
-.custom-select {
+.form-select {
   border: solid 1px #e9ecef;
   box-shadow: none !important;
   transition: border .3s;
@@ -1693,9 +1693,9 @@ h6, .h6 {
   background-color: #F8F9FA;
 }
 
-.form-control {
+/* .form-control {
   padding: 1.288rem 1.2rem;
-}
+} */
 
 .form-control.form-control-sm {
   padding: .98rem .75rem;

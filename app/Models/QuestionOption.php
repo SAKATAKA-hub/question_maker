@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Model;
  *  問題の選択肢 QuestionsOptions
  * ===============================
  */
-class QuestionsOption extends Model
+class QuestionOption extends Model
 {
     use HasFactory;
     public $timestamps = true;
     protected $fillable = [
-        'text','is_correct','question_id'
+        'text','is_answer','question_id'
     ];
 }

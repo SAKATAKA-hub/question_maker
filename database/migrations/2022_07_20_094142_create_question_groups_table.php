@@ -20,10 +20,10 @@ class CreateQuestionGroupsTable extends Migration
         Schema::create('question_groups', function (Blueprint $table) {
             $table->id();
             $table->string('title',150 )->comment('問題タイトル');
-            $table->string('resume',150)->comment('問題の説明文');
-            $table->string('image',150 )->comment('サムネイル画像パス');
-            $table->string('tags',150  )->comment('タグ');
-            $table->boolean('is_public')->comment('公開か否か')->default(0);
+            $table->string('resume',150)->comment('問題の説明文')->nullable();
+            $table->string('image',150 )->comment('サムネイル画像パス')->nullable();
+            $table->string('tags',150  )->comment('タグ')->nullable();
+            $table->dateTime('published_at')->comment('公開日')->nullable()->default(null);
 
             $table->unsignedBigInteger('user_id')->comment('問題作成者ID');
             $table->foreign('user_id')->references('id')->on('users') //存在しないidの登録は不可

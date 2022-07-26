@@ -5,10 +5,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 /**
  * =================================
- *  問題の選択肢 QuestionsOptions
+ *  問題の選択肢 QuestionOptions
  * =================================
 */
-class CreateQuestionsOptionsTable extends Migration
+class CreateQuestionOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,10 +17,10 @@ class CreateQuestionsOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions_options', function (Blueprint $table) {
+        Schema::create('question_options', function (Blueprint $table) {
             $table->id();
             $table->string('text',150   )->comment('選択肢のテキスト');
-            $table->boolean('is_correct')->comment('正解か否か')->default(0);
+            $table->boolean('is_answer')->comment('正解か否か')->default(0);
 
             $table->unsignedBigInteger('question_id')->comment('問題ID');
             $table->foreign('question_id')->references('id')->on('questions') //存在しないidの登録は不可
@@ -37,6 +37,6 @@ class CreateQuestionsOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions_options');
+        Schema::dropIfExists('question_options');
     }
 }

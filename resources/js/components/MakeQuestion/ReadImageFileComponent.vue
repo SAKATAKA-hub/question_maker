@@ -42,7 +42,7 @@
 
                 const file = event.target.files[0];
                 const input_file = document.getElementById('file_input');
-                console.log( input_file.value );
+                // console.log( input_file.value );
 
                 // this.src = URL.createObjectURL(file);
 

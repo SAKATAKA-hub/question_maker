@@ -14,6 +14,22 @@ class Question extends Model
     use HasFactory;
     public $timestamps = true;
     protected $fillable = [
-        'text','answer_type','question_group_id',
+        'text','answer_type','order','image','question_group_id',
     ];
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    */
+    # QuestionOptionテーブルとのリレーション
+    public function question_options()
+    {
+        return $this->hasMany(QuestionOption::class,'question_id');
+    }
+
+
 }
