@@ -28,7 +28,7 @@ Vue.component('select-answer-component', require('./components/MakeQuestion/Sele
 
 /* 部品アイテム */
 Vue.component('submit-button-component', require('./components/Items/SubmitButtonComponent.vue').default);
-
+Vue.component('count-up-timer-component', require('./components/Items/CountUpTimerComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

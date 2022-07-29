@@ -2,12 +2,12 @@
 
 
 <!----- title ----->
-@section('title','わたしの問題集リスト')
+@section('title','ユーザーさんの問題集リスト')
 
 <!----- breadcrumb ----->
 @section('breadcrumb')
 <li class="breadcrumb-item" aria-current="page">
-    わたしの問題集リスト
+    ユーザーさんの問題集リスト
 </li>
 @endsection
 

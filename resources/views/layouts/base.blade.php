@@ -25,13 +25,8 @@
 
 </head>
 <body class="bg-white">
-    <header >
-        <div class="container-1200">
-            <h1 class="fs-5">
-                {{-- <span class="fs-1 fw-bold text-success">問</span> --}}
-                いちから作る問題集
-            </h1>
-        </div>
+    <header>
+        @include('_parts.header')
     </header>
     <main>
         <!-- 見出しタイトル -->

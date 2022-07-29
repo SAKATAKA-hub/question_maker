@@ -16,10 +16,17 @@
     <link href="{{ asset('css/index.css') }}" rel="stylesheet">
 
 </head>
-<body class="p-3">
+<body class="pt-3 container">
 
 
     <h2>カウントアップタイマー</h2>
+
+
+    <div id="app">
+        <count-up-timer-component></count-up-timer-component>
+    </div>
+
+
 
     <form onsubmit="stopOnbeforeunload()">
         <div class="mb-3">

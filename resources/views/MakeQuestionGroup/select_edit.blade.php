@@ -37,7 +37,10 @@
 <section>
     <div class="container-1200">
 
-        <div class="callout callout-success">
+
+
+
+        <div class="callout callout-success mb-5">
             <h5>問題集に載せる問題を作成しましょう！</h5>
             <p>
                 <strong>問題の追加</strong>から、問題を沢山追加しましょう。<br>
@@ -46,7 +49,15 @@
         </div>
 
 
-        <div class=" border-0 mb-5">
+    </div>
+</section>
+<section>
+    <div class="container-1200">
+
+
+
+        <h3>基本情報</h3>
+        <div class="card mb-5">
             <div class="card-body">
                 <h3 class="border-bottom border-4 pb-2 mb-3">
                     <!-- 公開設定 -->
@@ -105,6 +116,16 @@
         </div>
 
 
+
+
+    </div>
+</section>
+<section class="bg-light py-5">
+    <div class="container-1200">
+
+
+
+        <h3>問題</h3>
         @foreach ($question_group->questions as $key => $question)
         <div class="card mb-3">
             <div class="card-body">
