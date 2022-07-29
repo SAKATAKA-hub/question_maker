@@ -14,6 +14,6 @@ class QuestionOption extends Model
     use HasFactory;
     public $timestamps = true;
     protected $fillable = [
-        'text','is_answer','question_id'
+        'answer_text','answer_boolean','question_id'
     ];
 }

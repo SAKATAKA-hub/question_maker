@@ -9,7 +9,7 @@ use \App\Http\Controllers;
 |--------------------------------------------------------------------------
 */
     # 全ての問題集一覧ページの表示(list)
-    Route::get('/', function () { return view('PlayQuestion.questions_list'); })
+    Route::get('/', [Controllers\PlayQuestionController::class, 'list'])
     ->name('questions_list');
 
     # 自分で作成した問題集一覧ページの表示(my_list)
@@ -49,7 +49,10 @@ use \App\Http\Controllers;
     Route::patch('/make_question_group/update/{question_group}', [Controllers\MakeQuestionGroupController::class, 'update'])
     ->name('make_question_group.update');
 
-    # 問題集の削除(delete)
+
+    # 問題集の削除(destroy)
+    Route::delete('/make_question_group/destroy/{question_group}', [Controllers\MakeQuestionGroupController::class, 'destroy'])
+    ->name('make_question_group.destroy');
 
 
 
@@ -58,10 +61,6 @@ use \App\Http\Controllers;
 | 問題集を作る　処理　MakeQuestionController
 |--------------------------------------------------------------------------
 */
-    # 問題集の一覧ページの表示(list)
-    // Route::get('/make_question/list', [Controllers\MakeQuestionController::class, 'list'])
-    // ->name('make_question.list');
-
     # 問題の新規作成ページの表示(create)
     Route::get('/make_question/create/{question_group}', [Controllers\MakeQuestionController::class, 'create'])
     ->name('make_question.create');
@@ -75,12 +74,18 @@ use \App\Http\Controllers;
     Route::get('/make_question/edit/{question}', [Controllers\MakeQuestionController::class, 'edit'])
     ->name('make_question.edit');
 
+    # 問題選択肢情報のAPI取得(question_options_api)
+    Route::post('/make_question/question_options_api', [Controllers\MakeQuestionController::class, 'question_options_api'])
+    ->name('make_question.question_options_api');
+
     # 編集問題の保存(update)
-    Route::get('/make_question/update/{question}', [Controllers\MakeQuestionController::class, 'update'])
+    Route::patch('/make_question/update/{question}', [Controllers\MakeQuestionController::class, 'update'])
     ->name('make_question.update');
 
 
-    # 問題の削除(delete)
+    # 問題の削除(destroy)
+    Route::delete('/make_question/destroy/{question}', [Controllers\MakeQuestionController::class, 'destroy'])
+    ->name('make_question.destroy');
 
 
 /*
@@ -123,11 +128,20 @@ use \App\Http\Controllers;
 
 # 問題一覧
 Route::get('/test/', function () { return view('test.questions_list'); })
-->name('questions_list');
+->name('test.questions_list');
 
 # 問題
 Route::get('/test/question/{id}/{num}', function ($id,$num) { return view( 'test.question.'.$num,compact('id','num') ); })
 ->name('question');
+
+# フォームのページ離脱防止アラート
+Route::get('/test/page_exit_prevention_alert', function(){ return view( 'test.page_exit_prevention_alert' ); })
+->name('test.page_exit_prevention_alert');
+
+
+# カウントアップタイマー
+Route::get('/test/timer', function(){ return view( 'test.timer' ); })
+->name('test.timer');
 
 
 

@@ -6,16 +6,9 @@
 
 <!----- breadcrumb ----->
 @section('breadcrumb')
-<nav class="mb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    <ol class="breadcrumb mb-0  bg-white">
-        <li class="breadcrumb-item"><a href="#" class="text-success">
-            <i class="bi bi-house-door-fill"></i> Home
-        </a></li>
-        <li class="breadcrumb-item" aria-current="page">
-            わたしの問題集リスト
-        </li>
-    </ol>
-</nav>
+<li class="breadcrumb-item" aria-current="page">
+    わたしの問題集リスト
+</li>
 @endsection
 
 
@@ -36,27 +29,25 @@
 
 <!----- contents ----->
 @section('contents')
-<section class="border-bottom bg-white">
+<section class="bg-white py-5">
+
     <div class="container-1200">
-        <h2 class="text-secondary fw-bold mb-3">
-            わたしの問題集リスト
-        </h2>
-    </div>
-</section>
-
-
-<section>
-    <div class="container-1200">
-
-        <div class="mb-3">
-            <a href="{{route('make_question_group.create')}}" class="btn btn-success rounded-pill">新規作成</a>
-        </div>
-
-        <ul class="list-group">
-            @foreach ($question_groups as $question_group)
+        <ul class="list-group list-group-flush">
+            @foreach ($question_groups as $key => $question_group)
             <li class="list-group-item">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="overflow-hidden">
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="card-image" style="
+                            background:url({{ asset('storage/'.$question_group->image_puth) }});
+                            background-repeat  : no-repeat;
+                            background-size    : cover;
+                            background-position: center center;
+                            width: 4rem; height: 4rem; border-radius: .5rem;
+                        "></div>
+                    </div>
+                    <div class="col">
+
+
                         <div>
                             <!-- 公開設定 -->
                             @if ( $question_group->published_at )
@@ -74,20 +65,66 @@
                         <!-- タイトル -->
                         <a href="" class="fs-3" style="text-decoration:none;">{{ $question_group->title }}</a>
 
-                    </div>
-                    <div class="" style="min-width:9rem;">
-                        <a href="{{route('make_question_group.select_edit',$question_group)}}" class="btn btn-link text-secondary" style="text-decoration:none;"
-                        >編集</a>
 
-                        <button type="button" class="btn btn-link text-danger"    style="text-decoration:none;"
-                        >削除</button>
+                    </div>
+                    <!-- 操作ボタン -->
+                    <div class="col-auto">
+                        <div class="dropdown">
+                            <button class="btn btn-link text-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href=""
+                                >詳細情報</a></li>
+                                <li><a class="dropdown-item" href=""
+                                >利用者成績一覧</a></li>
+                                <li><a class="dropdown-item" href="{{route('make_question_group.select_edit',$question_group)}}"
+                                >編集</a></li>
+                                <li><a class="dropdown-item" href="#"
+                                data-bs-toggle="modal" data-bs-target="#deleteQuestionGroupModal{{$key}}"
+                                >削除</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+
+
+                <!-- delete Modal -->
+                <div class="modal fade" id="deleteQuestionGroupModal{{$key}}" tabindex="-1" aria-labelledby="deleteQuestionGroupModal{{$key}}Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-danger" id="deleteQuestionGroupModal{{$key}}Label">問題集の削除</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{sprintf('%02d', $question_group->title )}}を削除します。<br>よろしいですか？
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" style="text-decoration:none;" class="btn btn-link text-secondary fw-bold" data-bs-dismiss="modal"
+                            >閉じる</button>
+
+                            <form action="{{route('make_question_group.destroy',$question_group)}}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" style="text-decoration:none;" class="btn btn-link text-danger fw-bold"
+                                >削除</button>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
             </li>
             @endforeach
         </ul>
+    </div>
 
 
+    <!-- 問題追加ボタン -->
+    <div  id="addQuestion" class="text-end">
+        <a href="{{route('make_question_group.create')}}"
+        class="btn btn-success btn-lg rounded-pill shadow m-3 me-md-5 ">+ 問題集の新規作成</a>
     </div>
 </section>
 @endsection

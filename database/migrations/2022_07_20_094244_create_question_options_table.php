@@ -19,8 +19,8 @@ class CreateQuestionOptionsTable extends Migration
     {
         Schema::create('question_options', function (Blueprint $table) {
             $table->id();
-            $table->string('text',150   )->comment('選択肢のテキスト');
-            $table->boolean('is_answer')->comment('正解か否か')->default(0);
+            $table->string('answer_text',150)->comment('選択肢のテキスト');
+            $table->boolean('answer_boolean')->comment('正解か否か')->default(0);
 
             $table->unsignedBigInteger('question_id')->comment('問題ID');
             $table->foreign('question_id')->references('id')->on('questions') //存在しないidの登録は不可

@@ -22,6 +22,9 @@ window.Vue = require('vue').default;
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 Vue.component('read-image-file-component', require('./components/MakeQuestion/ReadImageFileComponent.vue').default);
+Vue.component('select-answer-component', require('./components/MakeQuestion/SelectAnswerComponent.vue').default);
+
+
 
 /* 部品アイテム */
 Vue.component('submit-button-component', require('./components/Items/SubmitButtonComponent.vue').default);

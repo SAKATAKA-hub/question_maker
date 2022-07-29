@@ -24,8 +24,8 @@
     @yield('style')
 
 </head>
-<body>
-    <header class="bg-white">
+<body class="bg-white">
+    <header >
         <div class="container-1200">
             <h1 class="fs-5">
                 {{-- <span class="fs-1 fw-bold text-success">問</span> --}}
@@ -34,12 +34,29 @@
         </div>
     </header>
     <main>
-        <!-- breadcrumb -->
-        <section  class="bg-white">
+        <!-- 見出しタイトル -->
+        <section class="border-bottom">
             <div class="container-1200">
-                @yield('breadcrumb')
+
+                <h2 class="text-secondary fw-bold">@yield('title')</h2>
+
             </div>
         </section>
+
+        <!-- breadcrumb -->
+        <section  class="bg-white">
+            <div class="container-1200 ">
+                <nav class="mb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 bg-white">
+                        <li class="breadcrumb-item"><a href="{{route('questions_list')}}" class="text-success">
+                            <i class="bi bi-house-door-fill"></i> Home
+                        </a></li>
+                        @yield('breadcrumb')
+                    </ol>
+                </nav>
+            </div>
+        </section>
+
 
 
         <!-- contents -->
@@ -76,10 +93,10 @@
 
 
     <!-- bootstrap JavaScript -->
+    @yield('script')
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- avant-ui JavaScript -->
-    <script src="{{ asset('avant-ui/js/avantui.js') }}" defer></script>
-    @yield('script')
+    {{-- <script src="{{ asset('avant-ui/js/avantui.js') }}" defer></script> --}}
 
 </body>
 </html>

@@ -2,6 +2,17 @@ main{
     min-height: 100vh;
 }
 
+
+    /* 問題追加ボタンのスタイル */
+    #addQuestion{
+        /* background: pink; */
+
+        position: fixed;
+        left:0; bottom: 1rem;
+        width: 100%;
+        z-index: 10;
+    }
+
 /*
 * ---------------------------
 * コンテナー

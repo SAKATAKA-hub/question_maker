@@ -13,23 +13,16 @@
 
 <!----- breadcrumb ----->
 @section('breadcrumb')
-<nav class="mb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    <ol class="breadcrumb mb-0  bg-white">
-        <li class="breadcrumb-item"><a href="{{route('questions_list')}}" class="text-success">
-            <i class="bi bi-house-door-fill"></i> Home
-        </a></li>
-        <li class="breadcrumb-item"><a href="{{route('make_question_group.list')}}" class="text-success">
-            作成問題集リスト
-        </a></li>
-        <li class="breadcrumb-item" aria-current="page">
-            @if ( empty($question_group) )
-            問題集の新規作成
-            @else
-            問題集基本情報の修正
-            @endif
-        </li>
-    </ol>
-</nav>
+<li class="breadcrumb-item"><a href="{{route('make_question_group.list')}}" class="text-success">
+    作成問題集リスト
+</a></li>
+<li class="breadcrumb-item" aria-current="page">
+    @if ( empty($question_group) )
+    問題集の新規作成
+    @else
+    問題集基本情報の修正
+    @endif
+</li>
 @endsection
 
 
@@ -45,33 +38,23 @@
 
 <!----- script ----->
 @section('script')
+<script src="{{asset('js/page_exit_prevention_alert.js')}}"></script>
 @endsection
 
 
 <!----- contents ----->
 @section('contents')
-<section class="border-bottom bg-white">
-    <div class="container-1200">
-        <h2 class="text-secondary fw-bold mb-3">
-            @if ( empty($question_group) )
-            問題集の新規作成
-            @else
-            問題集基本情報の修正
-            @endif
-        </h2>
-    </div>
-</section>
-
-
 <section>
     <div class="container-1200 pt-5">
 
         @if ( empty($question_group) ){{-- 新規作成 --}}
-        <form action="{{ route('make_question_group.store' ) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('make_question_group.store' ) }}"
+        method="POST" enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
             @csrf
 
         @else{{-- 更新 --}}
-        <form action="{{ route('make_question_group.update', $question_group ) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('make_question_group.update', $question_group ) }}"
+        method="POST" enctype="multipart/form-data" onsubmit="stopOnbeforeunload()">
             @csrf
             @method('PATCH')
 
@@ -86,7 +69,7 @@
                     >タイトル</label>
                     <input type="text" name="title" class="form-control" id="title_input" placeholder="問題集のタイトル"
                     value="{{ isset($question_group) ? $question_group->title : '' }} "
-                    style="height:2rem;" maxlength="150" required>
+                    maxlength="150" required>
                 </div>
 
 
@@ -133,7 +116,7 @@
                     >タグ</label>
                     <input type="text" name="tags" class="form-control" id="exampleFormControlInput1" placeholder="タグ"
                     value="{{ isset($question_group) ? $question_group->tags : '' }} "
-                    style="height:2rem;" maxlength="150">
+                    maxlength="150">
                     <div class="form-text">※タグが複数あるときは、全角または半角スペースで区切ってください。</div>
                 </div>
 

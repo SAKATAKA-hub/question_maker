@@ -171,10 +171,39 @@ class MakeQuestionGroupController extends Controller
 
         # 問題集の編集ヶ所選択ページへリダイレクト
         return redirect()->route('make_question_group.select_edit', $question_group)
-        ->with('alert-success','問題集の基本情報を更新しました。');
+        ->with('alert-warning','問題集の基本情報を更新しました。');
     }
 
-    #
-    # 問題集の削除(delete)
+
+    /**
+     * 問題集の削除(destroy)
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\QuestionGroup $question_group //選択した問題集グループ
+     * @return \Illuminate\View\View
+    */
+    public function destroy(Request $request, \App\Models\QuestionGroup $question_group)
+    {
+
+        # 各問題のアップロード画像の削除
+        foreach ($question_group->questions as $question) {
+            $delete_path = $question->image;
+            if( Storage::exists( $delete_path ) ){ storage::delete( $delete_path ); }
+        }
+
+
+        # 問題集のサムネ画像の削除
+        $delete_path = $question_group->image;
+        if( Storage::exists( $delete_path ) ){ storage::delete( $delete_path ); }
+
+
+        # 問題集の削除
+        $question_group->delete();
+
+
+
+        # 問題集の編集ヶ所選択ページへリダイレクト
+        return redirect()->route('make_question_group.list')
+        ->with('alert-danger','問題集の基本情報を削除しました。');
+    }
 
 }
