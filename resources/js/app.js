@@ -21,14 +21,20 @@ window.Vue = require('vue').default;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+/* 問題作成 */
 Vue.component('read-image-file-component', require('./components/MakeQuestion/ReadImageFileComponent.vue').default);
-Vue.component('select-answer-component', require('./components/MakeQuestion/SelectAnswerComponent.vue').default);
-
+Vue.component('select-answer-component',   require('./components/MakeQuestion/SelectAnswerComponent.vue').default);
 
 
 /* 部品アイテム */
-Vue.component('submit-button-component', require('./components/Items/SubmitButtonComponent.vue').default);
+Vue.component('submit-button-component',  require('./components/Items/SubmitButtonComponent.vue').default);
 Vue.component('count-up-timer-component', require('./components/Items/CountUpTimerComponent.vue').default);
+
+
+/* 認証 */
+Vue.component('reset-pass-component', require('./components/UserAuth/ResetPassComponent.vue').default);
+Vue.component('register-component',   require('./components/UserAuth/RegisterComponent.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

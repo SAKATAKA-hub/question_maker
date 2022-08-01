@@ -81,4 +81,75 @@ class QuestionGroup extends Model
         }
 
     //
+    /*
+    |--------------------------------------------------------------------------
+    | スコープ
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+    /**
+     * キーワード検索結果のオブジェクトを返す( seach )
+     * @param  String $keywords
+     * @return Object $query
+    */
+    public function scopeSearch( $query, $keywords )
+    {
+        # キーワード文字列を配列へ変換
+        $keywords_array = explode( ' ', $keywords );
+        // dd($keywords_array);
+
+
+        # titleから検索
+        $query->where(function($query) use( $keywords_array ){
+            foreach ($keywords_array as $keyword)
+            {
+                $query->where('title','like','%'.$keyword.'%');
+            }
+        });
+
+
+
+        # resumeから検索
+        $query->orWhere(function($query) use( $keywords_array ){
+            foreach ($keywords_array as $keyword)
+            {
+                $query->where('resume','like','%'.$keyword.'%');
+            }
+        });
+
+
+        # tagsから検索
+        $query->orWhere(function($query) use( $keywords_array ){
+            foreach ($keywords_array as $keyword)
+            {
+                $query->where('tags','like','%'.$keyword.'%');
+            }
+        });
+
+        # 問題文($question->text)から検索
+
+            // キーワードを含む問題文を検索
+            $questions = \App\Models\Question::search( $keywords )->get();
+
+            // キーワードを含む問題文の問題グループを抽出
+            $query->orWhere(function($query) use( $questions ){
+                foreach ($questions as $num => $question)
+                {
+                    if( !$num ){
+                        $query->where( 'id', $question->question_group_id );
+                    }else{
+                        $query->orWhere( 'id', $question->question_group_id );
+                    }
+                }
+            });
+
+        //
+        // dd( $questions );
+
+
+        return $query;
+    }
+
+    //
 }

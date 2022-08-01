@@ -81,9 +81,11 @@
                         </small>
                         <div class="my-5">
                             <!-- 検索フォーム -->
-                            <form action="#" method="POST">
+                            <form action="{{ route('questions_search_list') }}">
                                 <div  class="input-group overflow-hidden border shadow" style="border-radius:2rem;">
-                                    <input type="text" class="form-control border-0 ps-3" placeholder="キーワード" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="text" name="seach_keywords" class="form-control border-0 ps-3"
+                                    value="@if ( isset($keywords) ){{  $keywords.' '  }}@endif" placeholder="キーワード" aria-label="SeachKeywords" aria-describedby="basic-addon1">
+
                                     <span class="input-group-text border-0" id="basic-addon1">
                                         <button type="submit" class="btn"><i class="bi bi-search"></i></button>
                                     </span>
@@ -101,7 +103,7 @@
         {{-- <div class="container-1200 divider divider-dashed"></div><!---- Divider ----> --}}
         <section>
             <div class="container-1200">
-                <div class="row mx-3">
+                {{-- <div class="row mx-3">
                     <div class="col-md-6 order-md-2" >
                         <img src="{{ asset('storage/site/image/22901978.jpg') }}" class="d-block w-100" alt="人気の問題集">
                     </div>
@@ -117,7 +119,7 @@
                             </p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row my-5 mx-3">
 
                     @foreach ($question_groups as $i => $question_group)
@@ -151,7 +153,6 @@
                                 </div>
                             </a href="#">
                         </div>
-
 
                         <!-- Modal -->
                         <div class="modal fade" id="questionModal{{ $i+1 }}" tabindex="-1" aria-labelledby="questionModal{{ $i+1 }}Label" aria-hidden="true">
@@ -192,9 +193,14 @@
 
                     @endforeach
                 </div>
+
+                <div class="mb-5 d-flex justify-content-center">
+                    {{ $question_groups->links('vendor.pagination.bootstrap-4') }}
+
+                </div>
             </div>
         </section>
-        <div class="container-1200 divider divider-dashed"></div><!---- Divider ---->
+        <div class="container-1200 divider divider-dashed my-5"></div><!---- Divider ---->
         <section>
             <div class="container-1200">
 

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand navbar-light mx-auto" style="max-width:1200px;">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <strong class="text-success">mondai</strong>
+            <strong class="text-success"> {{ env('APP_NAME') }}</strong>
         </a>
 
         <ul class="navbar-nav ms-auto p-0">

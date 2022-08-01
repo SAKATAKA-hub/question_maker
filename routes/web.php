@@ -12,6 +12,10 @@ use \App\Http\Controllers;
     Route::get('/', [Controllers\PlayQuestionController::class, 'list'])
     ->name('questions_list');
 
+    # 検索結果一覧の表示(questions_search_list)
+    Route::get('questions_search_list', [Controllers\PlayQuestionController::class, 'questions_search_list'])
+    ->name('questions_search_list');
+
     # 自分で作成した問題集一覧ページの表示(my_list)
     # 他者が作成した問題集一覧ページの表示(others_list)
     # 問題集の一覧表示・キーワード検索(seached_list)
@@ -104,12 +108,54 @@ use \App\Http\Controllers;
 */
 
 
+
+
 /*
 |--------------------------------------------------------------------------
-| 認証　処理　
+| フッターメニュー (footer_menu)
 |--------------------------------------------------------------------------
 */
+    # 利用規約
 
+    # プライバシーポリシー(privacy_policy)
+    Route::get('/privacy_policy', function () { return view('footer_menu.privacy_policy'); })
+    ->name('footer_menu.privacy_policy');
+
+    # お問い合わせ
+
+
+/*
+|--------------------------------------------------------------------------
+| 認証・登録・パスワード変更　(UserAuthController)
+|--------------------------------------------------------------------------
+*/
+    # ログイン画面の表示(login_form)
+    Route::get('/user_auth/login_form', function () { return view('user_auth.login_form'); })
+    ->name('user_auth.login_form');
+
+    # ログイン処理(login)
+    Route::post('/user_auth/login', [Controllers\UserAuthController::class, 'login'])
+    ->name('user_auth.login');
+
+    # ログアウト処理(logout)
+    Route::get('/user_auth/logout', [Controllers\UserAuthController::class, 'logout'])
+    ->name('user_auth.logout');
+
+
+    # パスワードリセット画面の表示(reset_pass_form)
+    Route::get('/user_auth/reset_pass_form', function () { return view('user_auth.reset_pass_form',['step'=>1]); })
+    ->name('user_auth.reset_pass_form');
+
+
+    # ユーザー登録画面の表示(register_form)
+    Route::get('/user_auth/register_form', function(){ return view('user_auth.register_form',['step'=>1] ); })
+    ->name('user_auth.register_form');
+
+
+    # ログインが必要ですページ(require_login)　※ログイン前にログインが必要なページにアクセスした際に表示されるページ
+    Route::get('/user_auth/require_login', function () { return view('user_auth.require_login'); })
+    ->name('user_auth.require_login');
+//
 
 
 

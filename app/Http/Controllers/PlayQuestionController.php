@@ -16,17 +16,34 @@ class PlayQuestionController extends Controller
     */
     public function list()
     {
-        # ユーザー情報
-        $user = \App\Models\User::first();
-
         # ユーザーの問題集情報の取得
-        $question_groups = \App\Models\QuestionGroup::where('user_id',$user->id)
-        ->orderBy('created_at','desc')->get();
+        $question_groups = \App\Models\QuestionGroup::orderBy('created_at','desc')
+        ->paginate(3);
 
         # ページの表示
         return view('PlayQuestion.questions_list', compact('question_groups'));
     }
 
+
+    /**
+     * 検索結果一覧の表示(questions_search_list)
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+    */
+    public function questions_search_list( Request $request )
+    {
+        # キーワード
+        $keywords = str_replace( '　',' ',$request->seach_keywords );
+
+        # ユーザーの問題集情報の取得
+        $question_groups = \App\Models\QuestionGroup::search( $keywords )
+        ->orderBy('created_at','desc')
+        ->paginate(3);
+
+        # ページの表示
+        return view('PlayQuestion.questions_list', compact('question_groups', 'keywords'));
+
+    }
 
     # 自分で作成した問題集一覧ページの表示(my_list)
     # 他者が作成した問題集一覧ページの表示(others_list)

@@ -67,5 +67,29 @@ class Question extends Model
         }
 
     //
+    /*
+    |--------------------------------------------------------------------------
+    | スコープ
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+    /**
+     * キーワード検索結果のオブジェクトを返す( seach )
+     * @param  String $seach_keywords
+     * @return Object $query
+    */
+    public function scopeSearch( $query, $seach_keywords )
+    {
+        # キーワード文字列を配列へ変換
+        $keywords_array = explode( ' ', $seach_keywords );
 
+        # 問題文(text)から検索
+        foreach ($keywords_array as $keyword)
+        {
+            $query->where('text','like','%'.$keyword.'%');
+        }
+
+        return $query;
+    }
 }
