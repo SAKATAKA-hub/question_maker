@@ -39,14 +39,14 @@
     </div>
     <div class="row mb-3">
         <div class="col-sm-8 offset-sm-2">
-            <a href="{{ route('worker_auth.register_form') }}" class="btn btn-lg btn-arrow btn-curve btn-success text-white w-100">
+            <a href="{{ route('user_auth.register_form') }}" class="btn btn-lg rounded-pill btn-primary w-100">
                 {{ __('会員登録（無料）') }}
             </a>
         </div>
     </div>
     <div class="row mb-3">
         <div class="col-sm-8 offset-sm-2">
-            <a href="{{ route('worker_auth.login_form') }}" class="btn btn-lg btn-arrow btn-curve btn-outline-primary w-100">
+            <a href="{{ route('user_auth.login_form') }}" class="btn btn-lg rounded-pill btn-outline-success w-100">
                 {{ __('ログイン') }}
             </a>
         </div>

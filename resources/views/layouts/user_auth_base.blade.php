@@ -29,7 +29,7 @@
 </head>
 <body class="bg-white">
     <header class="container-600">
-        <h1 class="m-0"><a href="#" class="navbar-brand fs-2 fw-bold text-success">
+        <h1 class="m-0"><a href="{{ route('home')}}" class="navbar-brand fs-2 fw-bold text-success">
             {{ env('APP_NAME') }}
         </a></h1>
     </header>

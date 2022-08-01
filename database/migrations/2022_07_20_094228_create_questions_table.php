@@ -22,7 +22,7 @@ class CreateQuestionsTable extends Migration
             $table->string('text',150    )->comment('問題文');
             $table->integer('answer_type')->comment('回答の種類');
             $table->integer('order'      )->comment('出題順位');
-            $table->string('image',150   )->comment('問題画像パス')->nullable();
+            $table->string('image',150   )->comment('問題画像パス')->nullable()->default(null);
 
             $table->unsignedBigInteger('question_group_id')->comment('問題グループID');
             $table->foreign('question_group_id')->references('id')->on('question_groups') //存在しないidの登録は不可

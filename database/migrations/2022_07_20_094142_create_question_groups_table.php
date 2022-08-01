@@ -21,7 +21,7 @@ class CreateQuestionGroupsTable extends Migration
             $table->id();
             $table->string('title',150 )->comment('問題タイトル');
             $table->string('resume',150)->comment('問題の説明文')->nullable();
-            $table->string('image',150 )->comment('サムネイル画像パス')->nullable();
+            $table->string('image',150 )->comment('サムネイル画像パス')->nullable()->default(null);
             $table->string('tags',150  )->comment('タグ')->nullable();
             $table->dateTime('published_at')->comment('公開日')->nullable()->default(null);
 

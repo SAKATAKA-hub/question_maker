@@ -3,13 +3,17 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers;
 
+# Home
+Route::get('/', function(){ return redirect()->route('questions_list'); })
+->name('home');
+
 /*
 |--------------------------------------------------------------------------
 | 問題集を解く　処理　PlayQuestionController
 |--------------------------------------------------------------------------
 */
     # 全ての問題集一覧ページの表示(list)
-    Route::get('/', [Controllers\PlayQuestionController::class, 'list'])
+    Route::get('/questions_list', [Controllers\PlayQuestionController::class, 'list'])
     ->name('questions_list');
 
     # 検索結果一覧の表示(questions_search_list)
@@ -106,7 +110,10 @@ use \App\Http\Controllers;
 | 各種設定　処理　SettingsController
 |--------------------------------------------------------------------------
 */
-
+    # 名前変更
+    # 画像変更
+    # パスワード変更
+    # 退会処理
 
 
 
@@ -115,13 +122,22 @@ use \App\Http\Controllers;
 | フッターメニュー (footer_menu)
 |--------------------------------------------------------------------------
 */
-    # 利用規約
+    # 利用規約(trems)
+    Route::get('/trems', function () { view('footer_menu.trems'); })
+    ->name('footer_menu.trems');
 
     # プライバシーポリシー(privacy_policy)
-    Route::get('/privacy_policy', function () { return view('footer_menu.privacy_policy'); })
+    Route::get('/privacy_policy', function () { view('footer_menu.privacy_policy'); })
     ->name('footer_menu.privacy_policy');
 
-    # お問い合わせ
+    # お問い合わせ(contact)
+    Route::get('/contact', function () { view('footer_menu.contact'); })
+    ->name('footer_menu.contact');
+
+    # よくある質問(q_and_a)
+    Route::get('/q_and_a', function () { view('footer_menu.q_and_a'); })
+    ->name('footer_menu.q_and_a');
+
 
 
 /*
@@ -155,6 +171,11 @@ use \App\Http\Controllers;
     # ログインが必要ですページ(require_login)　※ログイン前にログインが必要なページにアクセスした際に表示されるページ
     Route::get('/user_auth/require_login', function () { return view('user_auth.require_login'); })
     ->name('user_auth.require_login');
+
+    # 退会処理(destroy)
+    Route::get('/user_auth/destroy', function () { return view('user_auth.destroy'); })
+    ->name('user_auth.destroy');
+
 //
 
 
@@ -199,6 +220,6 @@ Route::get('/test/timer', function(){ return view( 'test.timer' ); })
 //     return view('welcome');
 // });
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
