@@ -17,7 +17,8 @@ class PlayQuestionController extends Controller
     public function list()
     {
         # ユーザーの問題集情報の取得
-        $question_groups = \App\Models\QuestionGroup::orderBy('created_at','desc')
+        $question_groups = \App\Models\QuestionGroup::
+        orderBy('published_at','desc')->where('published_at', '<>', null)
         ->paginate(3);
 
         # ページの表示
@@ -37,7 +38,7 @@ class PlayQuestionController extends Controller
 
         # ユーザーの問題集情報の取得
         $question_groups = \App\Models\QuestionGroup::search( $keywords )
-        ->orderBy('created_at','desc')
+        ->orderBy('published_at','desc')->where('published_at', '<>', null)
         ->paginate(3);
 
         # ページの表示

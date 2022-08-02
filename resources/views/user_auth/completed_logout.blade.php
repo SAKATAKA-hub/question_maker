@@ -38,7 +38,7 @@
 
         <div class="row mb-3">
             <div class="col-sm-8 offset-sm-2">
-                <a href="{{ route('user_auth.login_form') }}" class="btn btn-arrow btn-curve btn-success text-white w-100">
+                <a href="{{ route('user_auth.login_form') }}" class="btn rounded-pill btn-success text-white w-100">
                     {{ __('再度ログインする') }}
                 </a>
             </div>

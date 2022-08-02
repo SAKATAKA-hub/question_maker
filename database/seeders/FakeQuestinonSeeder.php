@@ -16,14 +16,14 @@ class FakeQuestinonSeeder extends Seeder
         # ユーザー情報
         $user = \App\Models\User::first();
 
-
         # 問題集の登録
         $question_group = new \App\Models\QuestionGroup([
             'user_id' => $user->id,
             'title'   => 'テスト問題',
             'resume'  => 'この問題は、作業用のテスト問題です。',
             'image'   => 'site/image/sample.jpg',
-            'tags'    => '仮登録問題　テスト　hoge'
+            'tags'    => '仮登録問題　テスト　hoge',
+            'published_at' => \Carbon\Carbon::parse()->format('Y-m-d H:i:s'),
         ]);
         $question_group->save();
 
@@ -90,5 +90,43 @@ class FakeQuestinonSeeder extends Seeder
                 $question_option->save();
             }
         }
+
+
+
+
+        # 問題集の登録
+        $question_group = new \App\Models\QuestionGroup([
+            'user_id' => $user->id,
+            'title'   => 'テスト問題2',
+            'resume'  => 'この問題は、作業用のテスト問題です。',
+            'image'   => 'site/image/sample.jpg',
+            'tags'    => '仮登録問題　テスト　hoge',
+            'published_at' => \Carbon\Carbon::parse()->format('Y-m-d H:i:s'),
+        ]);
+        $question_group->save();
+
+
+        # 問題集の登録
+        $question_group = new \App\Models\QuestionGroup([
+            'user_id' => $user->id,
+            'title'   => 'テスト問題3',
+            'resume'  => 'この問題は、作業用のテスト問題です。',
+            'image'   => 'site/image/sample.jpg',
+            'tags'    => '仮登録問題　テスト　hoge',
+            'published_at' => \Carbon\Carbon::parse()->format('Y-m-d H:i:s'),
+        ]);
+        $question_group->save();
+
+
+        # 問題集の登録
+        $question_group = new \App\Models\QuestionGroup([
+            'user_id' => $user->id,
+            'title'   => 'テスト問題4 非公開',
+            'resume'  => 'この問題は、作業用のテスト問題です。',
+            'image'   => 'site/image/sample.jpg',
+            'tags'    => '仮登録問題　テスト　hoge',
+        ]);
+        $question_group->save();
+
     }
 }

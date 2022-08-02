@@ -6114,203 +6114,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6324,13 +6127,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       token: document.querySelector('[name="csrf_token"]').content,
 
       /* ルート */
-      api_route: {
-        step01: document.querySelector('[name="api_route_step01"]').content,
-        step02: document.querySelector('[name="api_route_step02"]').content,
-        step03: document.querySelector('[name="api_route_step03"]').content,
-        step04: document.querySelector('[name="api_route_step04"]').content
-      },
       route: {
+        email_unique_api: document.querySelector('[name="rote_email_unique_api"]').content,
+        //登録済メールアドレスか確認するAPI
+        register_api: document.querySelector('[name="rote_register_api"]').content,
+        //会員登録API
         login: document.querySelector('[name="route_login"]').content,
         // ログイン
         privacy_policy: document.querySelector('[name="route_privacy_policy"]').content //プライバシーポリシー
@@ -6341,171 +6142,109 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       card_num: 1,
 
       /* 入力内容 */
-      input: {
-        step01: {
-          name01: '',
-          name02: '',
-          kana_name01: '',
-          kana_name02: '',
-          gender: '',
-          barthday: ''
-        },
-        step02: {
-          email: '',
-          tell: '',
-          address01: '',
-          address02: '',
-          created_verification_code: '' //認証コードメール送信の有無
-
-        },
-        step03: {
-          verification_code: '',
-          //認証コード(入力)
-          verification_code_confirmation: '',
-          //認証コード
-          password: '',
-          password_confirmation: ''
-        }
+      inputs: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
       },
+
+      /* 確認ボタン */
+      conf_btn_disabled: true,
 
       /* エラー内容 */
       errors: {
-        step01: {},
-        step02: {},
-        step03: {}
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
       },
 
-      /* オプションデータ */
-      form_option: {
-        // 誕生日の最大値
-        max_barthday: this.maxBarthday(),
-        // 都道府県
-        todohukens: {
-          1: '北海道',
-          2: '青森県',
-          3: '岩手県',
-          4: '宮城県',
-          5: '秋田県',
-          6: '山形県',
-          7: '福島県',
-          8: '茨城県',
-          9: '栃木県',
-          10: '群馬県',
-          11: '埼玉県',
-          12: '千葉県',
-          13: '東京都',
-          14: '神奈川県',
-          15: '新潟県',
-          16: '富山県',
-          17: '石川県',
-          18: '福井県',
-          19: '山梨県',
-          20: '長野県',
-          21: '岐阜県',
-          22: '静岡県',
-          23: '愛知県',
-          24: '三重県',
-          25: '滋賀県',
-          26: '京都府',
-          27: '大阪府',
-          28: '兵庫県',
-          29: '奈良県',
-          30: '和歌山県',
-          31: '鳥取県',
-          32: '島根県',
-          33: '岡山県',
-          34: '広島県',
-          35: '山口県',
-          36: '徳島県',
-          37: '香川県',
-          38: '愛媛県',
-          39: '高知県',
-          40: '福岡県',
-          41: '佐賀県',
-          42: '長崎県',
-          43: '熊本県',
-          44: '大分県',
-          45: '宮崎県',
-          46: '鹿児島県',
-          47: '沖縄県'
-        },
-        // パスワード入力の表示形式
-        input_password: {
-          type: 'password',
-          text: 'パスワードを表示'
-        }
+      /* パスワード入力の表示形式 */
+      input_password: {
+        type: 'password',
+        text: 'パスワードを表示'
       }
     };
   },
   mounted: function mounted() {
     //* テスト用入力データの挿入 */
     if (this.test.data) {
-      this.input = {
-        step01: {
-          name01: '山田',
-          name02: '太郎',
-          kana_name01: 'やまだ',
-          kana_name02: 'たろう',
-          gender: '男性',
-          barthday: '1999-09-09'
-        },
-        step02: {
-          email: 'aek1214@yahoo.co.jp',
-          tell: '0312345678',
-          address01: '東京都',
-          address02: '練馬区ススキが原',
-          created_verification_code: '' //認証コードメール送信の有無
-
-        },
-        step03: {
-          verification_code: '',
-          //認証コード
-          verification_code_confirmation: '',
-          //認証コード(入力)
-          password: 'password',
-          password_confirmation: 'password'
-        }
-      };
-    } // console.log('register_form.')
-
+      this.inputs.name = '山田　太郎';
+      this.inputs.email = 'yamada@mail.co.jp';
+      this.inputs.password = 'password';
+      this.inputs.password_confirmation = 'password';
+      this.conf_btn_disabled = false;
+    }
   },
   methods: {
     /* ステップ01の次へメソッド */
     nextToStep01: function nextToStep01() {
-      var _this = this;
-
-      // [ 非同期通信 ]
-      fetch(this.api_route.step01, {
-        method: 'POST',
-        body: new URLSearchParams(this.input.step01)
-      }).then(function (response) {
-        if (!response.ok) {
-          alert('データ送信エラーが発生しました。');
-        }
-
-        return response.json();
-      }) // [ 非同期通信・成功処理 ]
-      .then(function (json) {
-        if (!json.errors) //[ バリデーション・成功 ]
-          {
-            _this.addCardNum();
-
-            _this.errors.step01 = {}; // console.log( json );
-          } else //[ バリデーション・失敗 ]
-          {
-            _this.errors.step01 = json.errors; // console.log( this.errors.step01 );
-          }
-      });
+      this.addCardNum();
     },
 
     /* ステップ02の次へメソッド */
     nextToStep02: function nextToStep02() {
+      var _this = this;
+
+      // 新規会員情報の登録[ 非同期通信 ]
+      fetch(this.route.register_api, {
+        method: 'POST',
+        body: new URLSearchParams(_objectSpread({
+          _token: this.token
+        }, this.inputs))
+      }).then(function (response) {
+        if (!response.ok) {
+          alert('データ送信エラーが発生しました。');
+        }
+
+        return response.json();
+      }).then(function (json) {
+        _this.addCardNum(); // console.log( json );
+
+      });
+    },
+
+    /*
+    | --------------------------------------
+    |  入力内容のバリデーション
+    | --------------------------------------
+    */
+
+    /* 入力の変更[ 氏名 ] */
+    changeInputName: function changeInputName() {
+      // 入力必須
+      this.errors.name = this.inputs.name == '' ? 'メールアドレスの入力は必須です。' : '';
+      this.confInputs();
+    },
+
+    /* 入力の変更[ メールアドレス ] */
+    changeInputEmail: function changeInputEmail() {
       var _this2 = this;
 
-      // [ 非同期通信 ]
-      fetch(this.api_route.step02, {
+      // 入力必須
+      this.errors.email = this.inputs.email == '' ? 'メールアドレスの入力は必須です。' : ''; // メール形式
+
+      var pattern = /^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/g;
+      ;
+      this.errors.email = !this.inputs.email.match(pattern) ? 'メール形式で入力してください。' : this.errors.email;
+      this.confInputs(); // メールの重複確認[ 非同期通信 ]
+      // 他にバリデーションエラーがあれば、以下の処理は実行しない。
+
+      if (this.errors.email) {
+        return;
+      } // 非同期通信の通信待ち対策
+
+
+      this.errors.email = '確認中・・・';
+      this.confInputs();
+      fetch(this.route.email_unique_api, {
         method: 'POST',
-        body: new URLSearchParams(this.input.step02)
+        body: new URLSearchParams({
+          _token: this.token,
+          //token
+          email: this.inputs.email
+        })
       }).then(function (response) {
         if (!response.ok) {
           alert('データ送信エラーが発生しました。');
@@ -6514,74 +6253,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return response.json();
       }) // [ 非同期通信・成功処理 ]
       .then(function (json) {
-        if (!json.errors) //[ バリデーション・成功 ]
-          {
-            _this2.addCardNum();
+        _this2.errors.email = json.email_ique ? 'このメールアドレスは、すでに登録されています。' : '';
 
-            _this2.errors.step02 = {}; // 認証コードの保存
+        _this2.confInputs(); // console.log( json.email_ique );
 
-            if (json.verification_code) {
-              _this2.input.step03.verification_code_confirmation = json.verification_code;
-              _this2.input.step02.created_verification_code = true; //認証コード：送信済み
-            } // console.log( json );
-
-          } else //[ バリデーション・失敗 ]
-          {
-            _this2.errors.step02 = json.errors; // console.log( this.errors.step02 );
-          }
-      });
+      }); //
     },
 
-    /* ステップ03の次へメソッド */
-    nextToStep03: function nextToStep03() {
-      var _this3 = this;
+    /* 入力の変更[ パスワード ] */
+    changeInputPassword: function changeInputPassword() {
+      // 入力必須
+      this.errors.password = this.inputs.password == '' ? 'パスワードの入力は必須です。' : ''; // 8文字以上20文字以下の半角英数字
 
-      // [ 非同期通信 ]
-      fetch(this.api_route.step03, {
-        method: 'POST',
-        body: new URLSearchParams(this.input.step03)
-      }).then(function (response) {
-        if (!response.ok) {
-          alert('データ送信エラーが発生しました。');
-        }
+      var pattern = /^[a-zA-Z0-9_+-]{8,20}$/g;
+      ;
+      this.errors.password = !this.inputs.password.match(pattern) ? '8文字以上20文字以下の半角英数字で入力してください。' : ''; // 入力内容が一致すれば、確認用エラーメッセージの削除
 
-        return response.json();
-      }) // [ 非同期通信・成功処理 ]
-      .then(function (json) {
-        if (!json.errors) //[ バリデーション・成功 ]
-          {
-            _this3.addCardNum();
-
-            _this3.errors.step03 = {}; // console.log( json );
-          } else //[ バリデーション・失敗 ]
-          {
-            _this3.errors.step03 = json.errors; // console.log( this.errors.step03 );
-          }
-      });
+      this.errors.password_confirmation = this.inputs.password_confirmation != this.inputs.password ? this.errors.password_confirmation : this.errors.password_confirmation;
+      this.confInputs();
     },
 
-    /* ステップ04の次へメソッド */
-    nextToStep04: function nextToStep04() {
-      var _this4 = this;
+    /* 入力の変更[ パスワードの確認 ] */
+    changeInputPasswordConfirmation: function changeInputPasswordConfirmation() {
+      // 入力必須
+      this.errors.password_confirmation = this.inputs.password_confirmation == '' ? ' パスワードの確認の入力は必須です。' : ''; // 入力内容が一致するか
 
-      // 送信データ
-      var input_step04 = _objectSpread(_objectSpread(_objectSpread({}, this.input.step01), this.input.step02), this.input.step03); // [ 非同期通信 ]
+      this.errors.password_confirmation = this.inputs.password_confirmation != this.inputs.password ? ' 入力内容が一致しません。' : this.errors.password_confirmation;
+      this.confInputs();
+    },
 
-
-      fetch(this.api_route.step04, {
-        method: 'POST',
-        body: new URLSearchParams(input_step04)
-      }).then(function (response) {
-        if (!response.ok) {
-          alert('データ送信エラーが発生しました。');
-        }
-
-        return response.json();
-      }) // [ 非同期通信・成功処理 ]
-      .then(function (json) {
-        _this4.addCardNum(); // console.log( json );
-
-      });
+    /* 入力内容の確認 */
+    confInputs: function confInputs() {
+      // 全ての入力内容が正しければ、確認ボタンが押せる。
+      this.conf_btn_disabled = this.inputs.name && this.inputs.email && this.inputs.password && this.inputs.password_confirmation && !this.errors.name && !this.errors.email && !this.errors.password && !this.errors.password_confirmation ? false : true;
     },
 
     /* 次へメソッド */
@@ -6602,23 +6306,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
 
-    /* 入力できる誕生日の最大値 */
-    maxBarthday: function maxBarthday() {
-      var now = new Date();
-      var max_year = now.getFullYear() - 15;
-      return max_year + '-12-31';
-    },
-
     /* パスワード入力の表示切替 */
     toggleDisplayPassword: function toggleDisplayPassword() {
-      var type = this.form_option.input_password.type;
+      var type = this.input_password.type;
 
       if (type === 'password') {
-        this.form_option.input_password.text = 'パスワードを非表示';
-        this.form_option.input_password.type = 'text';
+        this.input_password.text = 'パスワードを非表示';
+        this.input_password.type = 'text';
       } else {
-        this.form_option.input_password.text = 'パスワードを表示';
-        this.form_option.input_password.type = 'password';
+        this.input_password.text = 'パスワードを表示';
+        this.input_password.type = 'password';
       }
     },
 
@@ -6803,7 +6500,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       /* test用フォーム・データの利用 */
       test: {
-        form: false
+        form: true
       },
 
       /* token ( ログイン処理のページ遷移時に利用 )*/
@@ -31110,123 +30807,7 @@ var render = function () {
               "form",
               {
                 staticClass: "mb-3 me-3",
-                attrs: { action: _vm.api_route.step01, method: "post" },
-              },
-              [
-                _vm._l(_vm.input.step01, function (value, name) {
-                  return _c("input", {
-                    key: name,
-                    attrs: { name: name, type: "hidden" },
-                    domProps: { value: value },
-                  })
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger text-white",
-                    attrs: { type: "submit" },
-                  },
-                  [_vm._v("ステップ01テスト")]
-                ),
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "mb-3 me-3",
-                attrs: { action: _vm.api_route.step02, method: "post" },
-              },
-              [
-                _vm._l(_vm.input.step02, function (value, name) {
-                  return _c("input", {
-                    key: name,
-                    attrs: { name: name, type: "hidden" },
-                    domProps: { value: value },
-                  })
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger text-white",
-                    attrs: { type: "submit" },
-                  },
-                  [_vm._v("ステップ02テスト")]
-                ),
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "mb-3 me-3",
-                attrs: { action: _vm.api_route.step03, method: "post" },
-              },
-              [
-                _vm._l(_vm.input.step03, function (value, name) {
-                  return _c("input", {
-                    key: name,
-                    attrs: { name: name, type: "hidden" },
-                    domProps: { value: value },
-                  })
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger text-white",
-                    attrs: { type: "submit" },
-                  },
-                  [_vm._v("ステップ03テスト")]
-                ),
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "mb-3 me-3",
-                attrs: { action: _vm.api_route.step04, method: "post" },
-              },
-              [
-                _vm._l(
-                  Object.assign(
-                    {},
-                    this.input.step01,
-                    this.input.step02,
-                    this.input.step03
-                  ),
-                  function (value, name) {
-                    return _c("input", {
-                      key: name,
-                      attrs: { name: name, type: "hidden" },
-                      domProps: { value: value },
-                    })
-                  }
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger text-white",
-                    attrs: { type: "submit" },
-                  },
-                  [_vm._v("ステップ04テスト")]
-                ),
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "mb-3 me-3",
-                attrs: { action: _vm.route.login, method: "post" },
+                attrs: { action: _vm.route.email_unique_api, method: "post" },
               },
               [
                 _c("input", {
@@ -31234,16 +30815,26 @@ var render = function () {
                   domProps: { value: _vm.token },
                 }),
                 _vm._v(" "),
-                _vm._l(
-                  Object.assign({}, this.input.step02, this.input.step03),
-                  function (value, name) {
-                    return _c("input", {
-                      key: name,
-                      attrs: { name: name, type: "hidden" },
-                      domProps: { value: value },
-                    })
-                  }
-                ),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.inputs.email,
+                      expression: "inputs.email",
+                    },
+                  ],
+                  attrs: { type: "hidden", name: "email" },
+                  domProps: { value: _vm.inputs.email },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.inputs, "email", $event.target.value)
+                    },
+                  },
+                }),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -31251,7 +30842,38 @@ var render = function () {
                     staticClass: "btn btn-danger text-white",
                     attrs: { type: "submit" },
                   },
-                  [_vm._v("ログイン")]
+                  [_vm._v("登録済メールアドレスか確認")]
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                staticClass: "mb-3 me-3",
+                attrs: { action: _vm.route.register_api, method: "post" },
+              },
+              [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.token },
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.inputs, function (value, name) {
+                  return _c("input", {
+                    key: name,
+                    attrs: { name: name, type: "hidden" },
+                    domProps: { value: value },
+                  })
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger text-white",
+                    attrs: { type: "submit" },
+                  },
+                  [_vm._v("会員登録処理テスト")]
                 ),
               ],
               2
@@ -31260,341 +30882,31 @@ var render = function () {
         ])
       : _vm._e(),
     _vm._v(" "),
+    _c("h3", { staticClass: "text-secondary fw-bold mb-3" }, [
+      _vm._v(_vm._s("会員登録")),
+    ]),
+    _vm._v(" "),
     _vm.card_num === 1
       ? _c("div", { staticClass: "anima-fadein-bottom" }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c("div", { staticClass: "card shadow w-100 p-3 mb-3" }, [
             _c("div", { staticClass: "card-body" }, [
-              _c("h3", { staticClass: "text-secondary fw-bold mb-3" }, [
-                _vm._v(_vm._s("会員登録")),
-              ]),
-              _vm._v(" "),
-              _vm._m(0),
-              _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
                 _c("label", { attrs: { for: "name01" } }, [
-                  _vm._v(_vm._s("氏　名")),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-6" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step01.name01,
-                          expression: "input.step01.name01",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "name01",
-                        type: "name",
-                        name: "name01",
-                        required: "",
-                        autocomplete: "name01",
-                        autofocus: "",
-                        placeholder: "苗字",
-                      },
-                      domProps: { value: _vm.input.step01.name01 },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.input.step01,
-                            "name01",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.step01.name01
-                      ? _c(
-                          "div",
-                          _vm._l(
-                            _vm.errors.step01.name01,
-                            function (error, key) {
-                              return _c(
-                                "div",
-                                {
-                                  key: key,
-                                  staticClass: "text-danger",
-                                  attrs: { role: "alert" },
-                                },
-                                [_vm._v("※" + _vm._s(error))]
-                              )
-                            }
-                          ),
-                          0
-                        )
-                      : _vm._e(),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-6" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step01.name02,
-                          expression: "input.step01.name02",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "name02",
-                        type: "name",
-                        name: "name02",
-                        required: "",
-                        autocomplete: "name02",
-                        autofocus: "",
-                        placeholder: "名前",
-                      },
-                      domProps: { value: _vm.input.step01.name02 },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.input.step01,
-                            "name02",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.step01.name02
-                      ? _c(
-                          "div",
-                          _vm._l(
-                            _vm.errors.step01.name02,
-                            function (error, key) {
-                              return _c(
-                                "div",
-                                {
-                                  key: key,
-                                  staticClass: "text-danger",
-                                  attrs: { role: "alert" },
-                                },
-                                [_vm._v("※" + _vm._s(error))]
-                              )
-                            }
-                          ),
-                          0
-                        )
-                      : _vm._e(),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-5" }, [
-                _c("label", { attrs: { for: "kana_name01" } }, [
-                  _vm._v(_vm._s("ふりがな")),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-6" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step01.kana_name01,
-                          expression: "input.step01.kana_name01",
-                        },
-                      ],
-                      staticClass: "form-control me-2",
-                      attrs: {
-                        id: "kana_name01",
-                        type: "name",
-                        name: "kana_name01",
-                        required: "",
-                        autocomplete: "kana_name01",
-                        autofocus: "",
-                        placeholder: "みようじ",
-                      },
-                      domProps: { value: _vm.input.step01.kana_name01 },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.input.step01,
-                            "kana_name01",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.step01.kana_name01
-                      ? _c(
-                          "div",
-                          _vm._l(
-                            _vm.errors.step01.kana_name01,
-                            function (error, key) {
-                              return _c(
-                                "div",
-                                {
-                                  key: key,
-                                  staticClass: "text-danger",
-                                  attrs: { role: "alert" },
-                                },
-                                [_vm._v("※" + _vm._s(error))]
-                              )
-                            }
-                          ),
-                          0
-                        )
-                      : _vm._e(),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-6" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step01.kana_name02,
-                          expression: "input.step01.kana_name02",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "kana_name02",
-                        type: "name",
-                        name: "kana_name02",
-                        required: "",
-                        autocomplete: "kana_name02",
-                        autofocus: "",
-                        placeholder: "なまえ",
-                      },
-                      domProps: { value: _vm.input.step01.kana_name02 },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.input.step01,
-                            "kana_name02",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.step01.kana_name02
-                      ? _c(
-                          "div",
-                          _vm._l(
-                            _vm.errors.step01.kana_name02,
-                            function (error, key) {
-                              return _c(
-                                "div",
-                                {
-                                  key: key,
-                                  staticClass: "text-danger",
-                                  attrs: { role: "alert" },
-                                },
-                                [_vm._v("※" + _vm._s(error))]
-                              )
-                            }
-                          ),
-                          0
-                        )
-                      : _vm._e(),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c("label", { attrs: { for: "gender" } }, [
-                  _vm._v(_vm._s("性別")),
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step01.gender,
-                          expression: "input.step01.gender",
-                        },
-                      ],
-                      staticClass: "form-select",
-                      attrs: { id: "gender", name: "gender", required: "" },
-                      on: {
-                        change: function ($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function (o) {
-                              return o.selected
-                            })
-                            .map(function (o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.input.step01,
-                            "gender",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        },
-                      },
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }, [
-                        _vm._v("選択してください"),
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "女性" } }, [
-                        _vm._v("女性"),
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "男性" } }, [
-                        _vm._v("男性"),
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "その他" } }, [
-                        _vm._v("その他"),
-                      ]),
-                    ]
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s("氏　名") +
+                      "\n                    "
                   ),
-                ]),
-                _vm._v(" "),
-                _vm.errors.step01.gender
-                  ? _c(
-                      "div",
-                      _vm._l(_vm.errors.step01.gender, function (error, key) {
-                        return _c(
-                          "div",
-                          {
-                            key: key,
-                            staticClass: "text-danger",
-                            attrs: { role: "alert" },
-                          },
-                          [_vm._v("※" + _vm._s(error))]
-                        )
-                      }),
-                      0
-                    )
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-5" }, [
-                _c("label", { attrs: { for: "barthday" } }, [
-                  _vm._v(_vm._s("誕生日")),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "badge bg-danger ms-1",
+                      staticStyle: { transform: "translateY(-2px)" },
+                    },
+                    [_vm._v("必須")]
+                  ),
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -31602,51 +30914,429 @@ var render = function () {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.input.step01.barthday,
-                      expression: "input.step01.barthday",
+                      value: _vm.inputs.name,
+                      expression: "inputs.name",
                     },
                   ],
                   staticClass: "form-control",
+                  class: { "border-danger": _vm.errors.name != "" },
                   attrs: {
-                    id: "barthday",
-                    type: "date",
-                    name: "barthday",
-                    max: _vm.form_option.max_barthday,
+                    id: "name",
+                    type: "name",
+                    maxlength: "50",
+                    name: "name",
                     required: "",
-                    autocomplete: "barthday",
-                    autofocus: "",
+                    placeholder: "山田　太郎",
                   },
-                  domProps: { value: _vm.input.step01.barthday },
+                  domProps: { value: _vm.inputs.name },
                   on: {
+                    change: _vm.changeInputName,
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(
-                        _vm.input.step01,
-                        "barthday",
-                        $event.target.value
-                      )
+                      _vm.$set(_vm.inputs, "name", $event.target.value)
                     },
                   },
                 }),
                 _vm._v(" "),
-                _vm.errors.step01.barthday
-                  ? _c(
-                      "div",
-                      _vm._l(_vm.errors.step01.barthday, function (error, key) {
-                        return _c(
-                          "div",
-                          {
-                            key: key,
-                            staticClass: "text-danger",
-                            attrs: { role: "alert" },
+                _vm.errors.name.length
+                  ? _c("div", [
+                      _c("div", { staticClass: "text-danger" }, [
+                        _vm._v("※" + _vm._s(_vm.errors.name)),
+                      ]),
+                    ])
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("label", { attrs: { for: "email" } }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s("メールアドレス") +
+                      "\n                        "
+                  ),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "badge bg-danger ms-1",
+                      staticStyle: { transform: "translateY(-2px)" },
+                    },
+                    [_vm._v("必須")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.inputs.email,
+                      expression: "inputs.email",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  class: { "border-danger": _vm.errors.email != "" },
+                  attrs: {
+                    id: "email",
+                    type: "email",
+                    maxlength: "150",
+                    name: "email",
+                    required: "",
+                    placeholder: "yamada@email.co.jp",
+                  },
+                  domProps: { value: _vm.inputs.email },
+                  on: {
+                    change: _vm.changeInputEmail,
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.inputs, "email", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm.errors.email.length
+                  ? _c("div", [
+                      _c("div", { staticClass: "text-danger" }, [
+                        _vm._v("※" + _vm._s(_vm.errors.email)),
+                      ]),
+                    ])
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("label", { attrs: { for: "password" } }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s("パスワード") +
+                      "\n                        "
+                  ),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "badge bg-danger ms-1",
+                      staticStyle: { transform: "translateY(-2px)" },
+                    },
+                    [_vm._v("必須")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  {
+                    staticClass: "mb-0",
+                    staticStyle: { "font-size": ".8rem" },
+                  },
+                  [_vm._v("※8文字以上20文字以下の半角英数字")]
+                ),
+                _vm._v(" "),
+                _vm.input_password.type === "checkbox"
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.inputs.password,
+                          expression: "inputs.password",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      class: { "border-danger": _vm.errors.password != "" },
+                      attrs: {
+                        id: "password",
+                        name: "password",
+                        required: "",
+                        autocomplete: "current-password",
+                        type: "checkbox",
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.inputs.password)
+                          ? _vm._i(_vm.inputs.password, null) > -1
+                          : _vm.inputs.password,
+                      },
+                      on: {
+                        change: [
+                          function ($event) {
+                            var $$a = _vm.inputs.password,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.inputs,
+                                    "password",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.inputs,
+                                    "password",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.inputs, "password", $$c)
+                            }
                           },
-                          [_vm._v("※" + _vm._s(error))]
-                        )
-                      }),
-                      0
-                    )
+                          _vm.changeInputPassword,
+                        ],
+                      },
+                    })
+                  : _vm.input_password.type === "radio"
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.inputs.password,
+                          expression: "inputs.password",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      class: { "border-danger": _vm.errors.password != "" },
+                      attrs: {
+                        id: "password",
+                        name: "password",
+                        required: "",
+                        autocomplete: "current-password",
+                        type: "radio",
+                      },
+                      domProps: { checked: _vm._q(_vm.inputs.password, null) },
+                      on: {
+                        change: [
+                          function ($event) {
+                            return _vm.$set(_vm.inputs, "password", null)
+                          },
+                          _vm.changeInputPassword,
+                        ],
+                      },
+                    })
+                  : _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.inputs.password,
+                          expression: "inputs.password",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      class: { "border-danger": _vm.errors.password != "" },
+                      attrs: {
+                        id: "password",
+                        name: "password",
+                        required: "",
+                        autocomplete: "current-password",
+                        type: _vm.input_password.type,
+                      },
+                      domProps: { value: _vm.inputs.password },
+                      on: {
+                        change: _vm.changeInputPassword,
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.inputs, "password", $event.target.value)
+                        },
+                      },
+                    }),
+                _vm._v(" "),
+                _vm.errors.password.length
+                  ? _c("div", [
+                      _c("div", { staticClass: "text-danger" }, [
+                        _vm._v("※" + _vm._s(_vm.errors.password)),
+                      ]),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticStyle: {
+                      "font-size": ".5rem",
+                      "text-decoration": "none",
+                    },
+                    attrs: { href: "" },
+                    on: {
+                      click: function ($event) {
+                        $event.preventDefault()
+                        return _vm.toggleDisplayPassword.apply(null, arguments)
+                      },
+                    },
+                  },
+                  [_vm._v(_vm._s(_vm.input_password.text))]
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-5" }, [
+                _c("label", { attrs: { for: "password_confirmation" } }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s("パスワードの確認") +
+                      "\n                        "
+                  ),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "badge bg-danger ms-1",
+                      staticStyle: { transform: "translateY(-2px)" },
+                    },
+                    [_vm._v("必須")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  {
+                    staticClass: "mb-0",
+                    staticStyle: { "font-size": ".8rem" },
+                  },
+                  [_vm._v("※8文字以上20文字以下の半角英数字")]
+                ),
+                _vm._v(" "),
+                _vm.input_password.type === "checkbox"
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.inputs.password_confirmation,
+                          expression: "inputs.password_confirmation",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "border-danger": _vm.errors.password_confirmation != "",
+                      },
+                      attrs: {
+                        id: "password_confirmation",
+                        name: "password_confirmation",
+                        required: "",
+                        autocomplete: "current-password_confirmation",
+                        type: "checkbox",
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.inputs.password_confirmation)
+                          ? _vm._i(_vm.inputs.password_confirmation, null) > -1
+                          : _vm.inputs.password_confirmation,
+                      },
+                      on: {
+                        change: [
+                          function ($event) {
+                            var $$a = _vm.inputs.password_confirmation,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.inputs,
+                                    "password_confirmation",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.inputs,
+                                    "password_confirmation",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.inputs, "password_confirmation", $$c)
+                            }
+                          },
+                          _vm.changeInputPasswordConfirmation,
+                        ],
+                      },
+                    })
+                  : _vm.input_password.type === "radio"
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.inputs.password_confirmation,
+                          expression: "inputs.password_confirmation",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "border-danger": _vm.errors.password_confirmation != "",
+                      },
+                      attrs: {
+                        id: "password_confirmation",
+                        name: "password_confirmation",
+                        required: "",
+                        autocomplete: "current-password_confirmation",
+                        type: "radio",
+                      },
+                      domProps: {
+                        checked: _vm._q(_vm.inputs.password_confirmation, null),
+                      },
+                      on: {
+                        change: [
+                          function ($event) {
+                            return _vm.$set(
+                              _vm.inputs,
+                              "password_confirmation",
+                              null
+                            )
+                          },
+                          _vm.changeInputPasswordConfirmation,
+                        ],
+                      },
+                    })
+                  : _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.inputs.password_confirmation,
+                          expression: "inputs.password_confirmation",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "border-danger": _vm.errors.password_confirmation != "",
+                      },
+                      attrs: {
+                        id: "password_confirmation",
+                        name: "password_confirmation",
+                        required: "",
+                        autocomplete: "current-password_confirmation",
+                        type: _vm.input_password.type,
+                      },
+                      domProps: { value: _vm.inputs.password_confirmation },
+                      on: {
+                        change: _vm.changeInputPasswordConfirmation,
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.inputs,
+                            "password_confirmation",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
+                _vm._v(" "),
+                _vm.errors.password_confirmation.length
+                  ? _c("div", [
+                      _c("div", { staticClass: "text-danger" }, [
+                        _vm._v("※" + _vm._s(_vm.errors.password_confirmation)),
+                      ]),
+                    ])
                   : _vm._e(),
               ]),
               _vm._v(" "),
@@ -31694,14 +31384,17 @@ var render = function () {
                     "button",
                     {
                       staticClass:
-                        "btn btn-arrow btn-curve btn-success text-white w-100",
-                      attrs: { type: "button" },
+                        "btn rounded-pill btn-warning text-white w-100",
+                      attrs: {
+                        type: "button",
+                        disabled: _vm.conf_btn_disabled,
+                      },
                       on: { click: _vm.nextToStep01 },
                     },
                     [
                       _vm._v(
                         "\n                            " +
-                          _vm._s("次のステップへ　進む") +
+                          _vm._s("確認") +
                           "\n                        "
                       ),
                     ]
@@ -31715,273 +31408,65 @@ var render = function () {
     _vm._v(" "),
     _vm.card_num === 2
       ? _c("div", { staticClass: "anima-fadein-bottom" }, [
+          _vm._m(1),
+          _vm._v(" "),
           _c("div", { staticClass: "card shadow w-100 p-3 mb-3" }, [
             _c("div", { staticClass: "card-body" }, [
-              _c("h3", { staticClass: "text-secondary fw-bold mb-3" }, [
-                _vm._v(_vm._s("会員登録")),
+              _c("h5", { staticClass: "card-title fw-bold text-center mb-3" }, [
+                _vm._v("入力内容の確認"),
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c("label", { attrs: { for: "email" } }, [
-                  _vm._v(_vm._s("メールアドレス")),
+              _c("div", { staticClass: "row mb-3" }, [
+                _c("div", { staticClass: "col-md-4 fw-bold" }, [
+                  _vm._v("氏　名"),
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.input.step02.email,
-                      expression: "input.step02.email",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "email",
-                    type: "email",
-                    name: "email",
-                    required: "",
-                    autocomplete: "email",
-                    autofocus: "",
-                  },
-                  domProps: { value: _vm.input.step02.email },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.input.step02, "email", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors.step02.email
-                  ? _c(
-                      "div",
-                      _vm._l(_vm.errors.step02.email, function (error, key) {
-                        return _c(
-                          "div",
-                          {
-                            key: key,
-                            staticClass: "text-danger",
-                            attrs: { role: "alert" },
-                          },
-                          [_vm._v("※" + _vm._s(error))]
-                        )
-                      }),
-                      0
-                    )
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-5" }, [
-                _c("label", { attrs: { for: "tell" } }, [
-                  _vm._v(_vm._s("電話番号（半角数字、ハイフンなし）")),
+                _c("div", { staticClass: "col-md-8 text-secondary" }, [
+                  _vm._v(_vm._s(_vm.inputs.name)),
                 ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.input.step02.tell,
-                      expression: "input.step02.tell",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "tell",
-                    type: "tell",
-                    name: "tell",
-                    required: "",
-                    autocomplete: "tell",
-                    autofocus: "",
-                  },
-                  domProps: { value: _vm.input.step02.tell },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.input.step02, "tell", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors.step02.tell
-                  ? _c(
-                      "div",
-                      _vm._l(_vm.errors.step02.tell, function (error, key) {
-                        return _c(
-                          "div",
-                          {
-                            key: key,
-                            staticClass: "text-danger",
-                            attrs: { role: "alert" },
-                          },
-                          [_vm._v("※" + _vm._s(error))]
-                        )
-                      }),
-                      0
-                    )
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c("label", { attrs: { for: "address01" } }, [
-                  _vm._v(_vm._s("住所（都道府県）")),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.input.step02.address01,
-                        expression: "input.step02.address01",
-                      },
-                    ],
-                    staticClass: "form-select w-50",
-                    attrs: { id: "address01", name: "address01", required: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.input.step02,
-                          "address01",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("選択してください"),
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(
-                      _vm.form_option.todohukens,
-                      function (todohuken, key) {
-                        return _c(
-                          "option",
-                          { key: key, domProps: { value: todohuken } },
-                          [_vm._v(_vm._s(todohuken))]
-                        )
-                      }
-                    ),
-                  ],
-                  2
-                ),
-                _vm._v(" "),
-                _vm.errors.step02.address01
-                  ? _c(
-                      "div",
-                      _vm._l(
-                        _vm.errors.step02.address01,
-                        function (error, key) {
-                          return _c(
-                            "div",
-                            {
-                              key: key,
-                              staticClass: "text-danger",
-                              attrs: { role: "alert" },
-                            },
-                            [_vm._v("※" + _vm._s(error))]
-                          )
-                        }
-                      ),
-                      0
-                    )
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-5" }, [
-                _c("label", { attrs: { for: "address02" } }, [
-                  _vm._v(_vm._s("住所（市町村・番地・建物名）")),
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.input.step02.address02,
-                      expression: "input.step02.address02",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "address02",
-                    type: "text",
-                    name: "address02",
-                    required: "",
-                    autocomplete: "address02",
-                    autofocus: "",
-                  },
-                  domProps: { value: _vm.input.step02.address02 },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.input.step02,
-                        "address02",
-                        $event.target.value
-                      )
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors.step02.address02
-                  ? _c(
-                      "div",
-                      _vm._l(
-                        _vm.errors.step02.address02,
-                        function (error, key) {
-                          return _c(
-                            "div",
-                            {
-                              key: key,
-                              staticClass: "text-danger",
-                              attrs: { role: "alert" },
-                            },
-                            [_vm._v("※" + _vm._s(error))]
-                          )
-                        }
-                      ),
-                      0
-                    )
-                  : _vm._e(),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row mb-3" }, [
+                _c("div", { staticClass: "col-md-4 fw-bold" }, [
+                  _vm._v("メールアドレス"),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-8 text-secondary" }, [
+                  _vm._v(_vm._s(_vm.inputs.email)),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row mb-3" }, [
+                _c("div", { staticClass: "col-md-4 fw-bold" }, [
+                  _vm._v("password"),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-8 text-secondary" },
+                  _vm._l(_vm.inputs.password.length, function (star, key) {
+                    return _c("span", { key: key }, [_vm._v("*")])
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row mt-5 mb-3" }, [
                 _c("div", { staticClass: "col-sm-8 offset-sm-2 mb-3" }, [
                   _c(
                     "button",
                     {
                       staticClass:
-                        "btn btn-arrow btn-curve btn-success text-white w-100",
+                        "btn rounded-pill btn-warning text-white w-100",
                       attrs: { type: "button" },
                       on: { click: _vm.nextToStep02 },
                     },
                     [
                       _vm._v(
                         "\n                            " +
-                          _vm._s("次のステップへ　進む") +
+                          _vm._s("登録") +
                           "\n                        "
                       ),
                     ]
@@ -31993,14 +31478,14 @@ var render = function () {
                     "button",
                     {
                       staticClass:
-                        "btn btn-arrow btn-curve btn-secondary text-white w-100",
+                        "btn rounded-pill btn-secondary text-white w-100",
                       attrs: { type: "button" },
                       on: { click: _vm.subCardNum },
                     },
                     [
                       _vm._v(
                         "\n                            " +
-                          _vm._s("前のステップへ　戻る") +
+                          _vm._s("戻る") +
                           "\n                        "
                       ),
                     ]
@@ -32014,618 +31499,10 @@ var render = function () {
     _vm._v(" "),
     _vm.card_num === 3
       ? _c("div", { staticClass: "anima-fadein-bottom" }, [
+          _vm._m(3),
+          _vm._v(" "),
           _c("div", { staticClass: "card shadow w-100 p-3 mb-3" }, [
             _c("div", { staticClass: "card-body" }, [
-              _c("h3", { staticClass: "text-secondary fw-bold mb-3" }, [
-                _vm._v(_vm._s("会員登録")),
-              ]),
-              _vm._v(" "),
-              _vm._m(2),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-5" }, [
-                _vm._m(3),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "verification_code" } }, [
-                  _vm._v(_vm._s("認証番号（半角数字）")),
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.input.step03.verification_code,
-                      expression: "input.step03.verification_code",
-                    },
-                  ],
-                  staticClass: "form-control w-50",
-                  attrs: {
-                    id: "verification_code",
-                    type: "text",
-                    name: "verification_code",
-                    required: "",
-                    autocomplete: "current-verification_code",
-                  },
-                  domProps: { value: _vm.input.step03.verification_code },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.input.step03,
-                        "verification_code",
-                        $event.target.value
-                      )
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors.step03.verification_code
-                  ? _c(
-                      "div",
-                      _vm._l(
-                        _vm.errors.step03.verification_code,
-                        function (error, key) {
-                          return _c(
-                            "div",
-                            {
-                              key: key,
-                              staticClass: "text-danger",
-                              attrs: { role: "alert" },
-                            },
-                            [_vm._v("※" + _vm._s(error))]
-                          )
-                        }
-                      ),
-                      0
-                    )
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass:
-                      "d-flex justify-content-between align-items-center",
-                    attrs: { for: "password" },
-                  },
-                  [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s("パスワード") +
-                        "\n                        "
-                    ),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-link",
-                        staticStyle: {
-                          "font-size": ".5rem",
-                          "text-decoration": "none",
-                        },
-                        attrs: { href: "" },
-                        on: {
-                          click: function ($event) {
-                            $event.preventDefault()
-                            return _vm.toggleDisplayPassword.apply(
-                              null,
-                              arguments
-                            )
-                          },
-                        },
-                      },
-                      [_vm._v(_vm._s(_vm.form_option.input_password.text))]
-                    ),
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "p",
-                  {
-                    staticClass: "mb-0",
-                    staticStyle: { "font-size": ".8rem" },
-                  },
-                  [_vm._v("※8文字以上20文字以下の半角英数字")]
-                ),
-                _vm._v(" "),
-                _vm.form_option.input_password.type === "checkbox"
-                  ? _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step03.password,
-                          expression: "input.step03.password",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "password",
-                        name: "password",
-                        required: "",
-                        autocomplete: "current-password",
-                        type: "checkbox",
-                      },
-                      domProps: {
-                        checked: Array.isArray(_vm.input.step03.password)
-                          ? _vm._i(_vm.input.step03.password, null) > -1
-                          : _vm.input.step03.password,
-                      },
-                      on: {
-                        change: function ($event) {
-                          var $$a = _vm.input.step03.password,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                _vm.$set(
-                                  _vm.input.step03,
-                                  "password",
-                                  $$a.concat([$$v])
-                                )
-                            } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  _vm.input.step03,
-                                  "password",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
-                            }
-                          } else {
-                            _vm.$set(_vm.input.step03, "password", $$c)
-                          }
-                        },
-                      },
-                    })
-                  : _vm.form_option.input_password.type === "radio"
-                  ? _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step03.password,
-                          expression: "input.step03.password",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "password",
-                        name: "password",
-                        required: "",
-                        autocomplete: "current-password",
-                        type: "radio",
-                      },
-                      domProps: {
-                        checked: _vm._q(_vm.input.step03.password, null),
-                      },
-                      on: {
-                        change: function ($event) {
-                          return _vm.$set(_vm.input.step03, "password", null)
-                        },
-                      },
-                    })
-                  : _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step03.password,
-                          expression: "input.step03.password",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "password",
-                        name: "password",
-                        required: "",
-                        autocomplete: "current-password",
-                        type: _vm.form_option.input_password.type,
-                      },
-                      domProps: { value: _vm.input.step03.password },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.input.step03,
-                            "password",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                _vm._v(" "),
-                _vm.errors.step03.password
-                  ? _c(
-                      "div",
-                      _vm._l(_vm.errors.step03.password, function (error, key) {
-                        return _c(
-                          "div",
-                          {
-                            key: key,
-                            staticClass: "text-danger",
-                            attrs: { role: "alert" },
-                          },
-                          [_vm._v("※" + _vm._s(error))]
-                        )
-                      }),
-                      0
-                    )
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-5" }, [
-                _c("label", { attrs: { for: "password_confirmation" } }, [
-                  _vm._v(_vm._s("パスワードの確認")),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "p",
-                  {
-                    staticClass: "mb-0",
-                    staticStyle: { "font-size": ".8rem" },
-                  },
-                  [_vm._v("※8文字以上20文字以下の半角英数字")]
-                ),
-                _vm._v(" "),
-                _vm.form_option.input_password.type === "checkbox"
-                  ? _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step03.password_confirmation,
-                          expression: "input.step03.password_confirmation",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "password_confirmation",
-                        name: "password_confirmation",
-                        required: "",
-                        autocomplete: "current-password_confirmation",
-                        type: "checkbox",
-                      },
-                      domProps: {
-                        checked: Array.isArray(
-                          _vm.input.step03.password_confirmation
-                        )
-                          ? _vm._i(
-                              _vm.input.step03.password_confirmation,
-                              null
-                            ) > -1
-                          : _vm.input.step03.password_confirmation,
-                      },
-                      on: {
-                        change: function ($event) {
-                          var $$a = _vm.input.step03.password_confirmation,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                _vm.$set(
-                                  _vm.input.step03,
-                                  "password_confirmation",
-                                  $$a.concat([$$v])
-                                )
-                            } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  _vm.input.step03,
-                                  "password_confirmation",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
-                            }
-                          } else {
-                            _vm.$set(
-                              _vm.input.step03,
-                              "password_confirmation",
-                              $$c
-                            )
-                          }
-                        },
-                      },
-                    })
-                  : _vm.form_option.input_password.type === "radio"
-                  ? _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step03.password_confirmation,
-                          expression: "input.step03.password_confirmation",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "password_confirmation",
-                        name: "password_confirmation",
-                        required: "",
-                        autocomplete: "current-password_confirmation",
-                        type: "radio",
-                      },
-                      domProps: {
-                        checked: _vm._q(
-                          _vm.input.step03.password_confirmation,
-                          null
-                        ),
-                      },
-                      on: {
-                        change: function ($event) {
-                          return _vm.$set(
-                            _vm.input.step03,
-                            "password_confirmation",
-                            null
-                          )
-                        },
-                      },
-                    })
-                  : _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.input.step03.password_confirmation,
-                          expression: "input.step03.password_confirmation",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "password_confirmation",
-                        name: "password_confirmation",
-                        required: "",
-                        autocomplete: "current-password_confirmation",
-                        type: _vm.form_option.input_password.type,
-                      },
-                      domProps: {
-                        value: _vm.input.step03.password_confirmation,
-                      },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.input.step03,
-                            "password_confirmation",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                _vm._v(" "),
-                _vm.errors.step03.password_confirmation
-                  ? _c(
-                      "div",
-                      _vm._l(
-                        _vm.errors.step03.password_confirmation,
-                        function (error, key) {
-                          return _c(
-                            "div",
-                            {
-                              key: key,
-                              staticClass: "text-danger",
-                              attrs: { role: "alert" },
-                            },
-                            [_vm._v("※" + _vm._s(error))]
-                          )
-                        }
-                      ),
-                      0
-                    )
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row mb-3" }, [
-                _c("div", { staticClass: "col-sm-8 offset-sm-2 mb-3" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn btn-arrow btn-curve btn-success text-white w-100",
-                      attrs: { type: "button" },
-                      on: { click: _vm.nextToStep03 },
-                    },
-                    [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s("次のステップへ　進む") +
-                          "\n                        "
-                      ),
-                    ]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-8 offset-sm-2" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn btn-arrow btn-curve btn-secondary text-white w-100",
-                      attrs: { type: "button" },
-                      on: { click: _vm.subCardNum },
-                    },
-                    [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s("前のステップへ　戻る") +
-                          "\n                        "
-                      ),
-                    ]
-                  ),
-                ]),
-              ]),
-            ]),
-          ]),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.card_num === 4
-      ? _c("div", { staticClass: "anima-fadein-bottom" }, [
-          _c("div", { staticClass: "card shadow w-100 p-3 mb-3" }, [
-            _c("div", { staticClass: "card-body" }, [
-              _c("h3", { staticClass: "text-secondary fw-bold mb-3" }, [
-                _vm._v(_vm._s("会員登録")),
-              ]),
-              _vm._v(" "),
-              _vm._m(4),
-              _vm._v(" "),
-              _c("div", { staticClass: "card border-light mb-5" }, [
-                _c("div", { staticClass: "card-body" }, [
-                  _c(
-                    "h5",
-                    { staticClass: "card-title fw-bold text-center mb-3" },
-                    [_vm._v("入力内容の確認")]
-                  ),
-                  _vm._v(" "),
-                  _vm._m(5),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row mb-3" }, [
-                    _c("div", { staticClass: "col-md-4 fw-bold" }, [
-                      _vm._v("氏　名"),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-8 text-secondary" }, [
-                      _vm._v(
-                        _vm._s(_vm.input.step01.name01) +
-                          "　" +
-                          _vm._s(_vm.input.step01.name02)
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row mb-3" }, [
-                    _c("div", { staticClass: "col-md-4 fw-bold" }, [
-                      _vm._v("ふりがな"),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-8 text-secondary" }, [
-                      _vm._v(
-                        _vm._s(_vm.input.step01.kana_name01) +
-                          "　" +
-                          _vm._s(_vm.input.step01.kana_name02)
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row mb-3" }, [
-                    _c("div", { staticClass: "col-md-4 fw-bold" }, [
-                      _vm._v("性別"),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-8 text-secondary" }, [
-                      _vm._v(_vm._s(_vm.input.step01.gender)),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row mb-3" }, [
-                    _c("div", { staticClass: "col-md-4 fw-bold" }, [
-                      _vm._v("誕生日"),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-8 text-secondary" }, [
-                      _vm._v(_vm._s(_vm.input.step01.barthday)),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row mb-3" }, [
-                    _c("div", { staticClass: "col-md-4 fw-bold" }, [
-                      _vm._v("メールアドレス"),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-8 text-secondary" }, [
-                      _vm._v(_vm._s(_vm.input.step02.email)),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row mb-3" }, [
-                    _c("div", { staticClass: "col-md-4 fw-bold" }, [
-                      _vm._v("電話番号"),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-8 text-secondary" }, [
-                      _vm._v(_vm._s(_vm.input.step02.tell)),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row mb-3" }, [
-                    _c("div", { staticClass: "col-md-4 fw-bold" }, [
-                      _vm._v("住所"),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-8 text-secondary" }, [
-                      _vm._v(
-                        _vm._s(_vm.input.step02.address01) +
-                          _vm._s(_vm.input.step02.address02)
-                      ),
-                    ]),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row mb-3" }, [
-                _c("div", { staticClass: "col-sm-8 offset-sm-2 mb-3" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn btn-arrow btn-curve btn-success text-white w-100",
-                      attrs: { type: "button" },
-                      on: { click: _vm.nextToStep04 },
-                    },
-                    [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s("次のステップへ　進む") +
-                          "\n                        "
-                      ),
-                    ]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-8 offset-sm-2" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn btn-arrow btn-curve btn-secondary text-white w-100",
-                      attrs: { type: "button" },
-                      on: { click: _vm.subCardNum },
-                    },
-                    [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s("前のステップへ　戻る") +
-                          "\n                        "
-                      ),
-                    ]
-                  ),
-                ]),
-              ]),
-            ]),
-          ]),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.card_num === 5
-      ? _c("div", { staticClass: "anima-fadein-bottom" }, [
-          _c("div", { staticClass: "card shadow w-100 p-3 mb-3" }, [
-            _c("div", { staticClass: "card-body" }, [
-              _c("h3", { staticClass: "text-secondary fw-bold mb-3" }, [
-                _vm._v(_vm._s("会員登録")),
-              ]),
-              _vm._v(" "),
-              _vm._m(6),
-              _vm._v(" "),
               _c(
                 "h5",
                 { staticClass: "text-secondary fw-bold mb-3 text-center" },
@@ -32638,21 +31515,23 @@ var render = function () {
                 [
                   _vm._v(
                     "\n                    ようこそ、" +
-                      _vm._s(_vm.input.step01.name01) +
-                      "　" +
-                      _vm._s(_vm.input.step01.name02) +
+                      _vm._s(_vm.inputs.name) +
                       "さん！\n                "
                   ),
                 ]
               ),
               _vm._v(" "),
               _c("div", { staticClass: "row mt-5 mb-3" }, [
-                _c("div", { staticClass: "col-md-8 offset-md-2" }, [
+                _c("div", { staticClass: "col-sm-8 offset-sm-2 mb-3" }, [
                   _c(
                     "form",
                     {
-                      staticClass: "mb-3 me-3",
-                      attrs: { action: _vm.route.login, method: "post" },
+                      staticClass: "mb-3",
+                      attrs: {
+                        action: _vm.route.login,
+                        method: "post",
+                        onsubmit: "stopOnbeforeunload()",
+                      },
                     },
                     [
                       _c("input", {
@@ -32660,28 +31539,25 @@ var render = function () {
                         domProps: { value: _vm.token },
                       }),
                       _vm._v(" "),
-                      _vm._l(
-                        Object.assign({}, this.input.step02, this.input.step03),
-                        function (value, name) {
-                          return _c("input", {
-                            key: name,
-                            attrs: { name: name, type: "hidden" },
-                            domProps: { value: value },
-                          })
-                        }
-                      ),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "email" },
+                        domProps: { value: _vm.inputs.email },
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "password" },
+                        domProps: { value: _vm.inputs.password },
+                      }),
                       _vm._v(" "),
                       _c(
                         "button",
                         {
-                          staticClass:
-                            "btn btn-arrow btn-curve btn-primary text-white w-100",
+                          staticClass: "btn rounded-pill btn-success w-100",
                           attrs: { type: "submit" },
                         },
-                        [_vm._v(_vm._s("マイページへ"))]
+                        [_vm._v(_vm._s("ログインする"))]
                       ),
-                    ],
-                    2
+                    ]
                   ),
                 ]),
               ]),
@@ -32696,19 +31572,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h5", { staticClass: "mb-5 text-primary fw-bold" }, [
-      _vm._v("\n                    ステップ１/５\n                    "),
-      _c("div", { staticClass: "progress" }, [
-        _c("div", {
-          staticClass: "progress-bar progress-bar-striped bg-primary",
-          staticStyle: { width: "20%" },
-          attrs: {
-            role: "progressbar",
-            "aria-valuenow": "20",
-            "aria-valuemin": "0",
-            "aria-valuemax": "100",
-          },
-        }),
+    return _c("div", { staticClass: "mb-5" }, [
+      _c("div", { staticClass: "steps flex-row w-100" }, [
+        _c("div", { staticClass: "step bg-warning text-white" }, [
+          _c("h5", [_vm._v("1")]),
+          _c("p", [_vm._v("入力")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "step" }, [
+          _c("h5", [_vm._v("2")]),
+          _c("p", [_vm._v("確認")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "step" }, [
+          _c("h5", [_vm._v("3")]),
+          _c("p", [_vm._v("完了")]),
+        ]),
       ]),
     ])
   },
@@ -32716,39 +31595,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h5", { staticClass: "mb-5 text-primary fw-bold" }, [
-      _vm._v("\n                    ステップ２/５\n                    "),
-      _c("div", { staticClass: "progress" }, [
-        _c("div", {
-          staticClass: "progress-bar progress-bar-striped bg-primary",
-          staticStyle: { width: "40%" },
-          attrs: {
-            role: "progressbar",
-            "aria-valuenow": "40",
-            "aria-valuemin": "0",
-            "aria-valuemax": "100",
-          },
-        }),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h5", { staticClass: "mb-5 text-primary fw-bold" }, [
-      _vm._v("\n                    ステップ３/５\n                    "),
-      _c("div", { staticClass: "progress" }, [
-        _c("div", {
-          staticClass: "progress-bar progress-bar-striped bg-primary",
-          staticStyle: { width: "60%" },
-          attrs: {
-            role: "progressbar",
-            "aria-valuenow": "60",
-            "aria-valuemin": "0",
-            "aria-valuemax": "100",
-          },
-        }),
+    return _c("div", { staticClass: "mb-5" }, [
+      _c("div", { staticClass: "steps flex-row w-100" }, [
+        _c("div", { staticClass: "step bg-warning text-white" }, [
+          _c("h5", [_vm._v("1")]),
+          _c("p", [_vm._v("入力")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "step bg-warning text-white" }, [
+          _c("h5", [_vm._v("2")]),
+          _c("p", [_vm._v("確認")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "step" }, [
+          _c("h5", [_vm._v("3")]),
+          _c("p", [_vm._v("完了")]),
+        ]),
       ]),
     ])
   },
@@ -32758,11 +31620,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "bg-light p-3" }, [
       _vm._v(
-        "\n                        入力されたメールアドレス宛にメールをお送りしました。"
+        "\n                    入力内容にお間違いなければ登録完了へお進みください。"
       ),
       _c("br"),
       _vm._v(
-        "\n                        メールに記載された6ケタの認証番号を入力してください。\n                    "
+        "\n                    ※登録内容はマイページから変更可能です。\n                "
       ),
     ])
   },
@@ -32770,53 +31632,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h5", { staticClass: "mb-5 text-primary fw-bold" }, [
-      _vm._v("\n                    ステップ４/５\n                    "),
-      _c("div", { staticClass: "progress" }, [
-        _c("div", {
-          staticClass: "progress-bar progress-bar-striped bg-primary",
-          staticStyle: { width: "80%" },
-          attrs: {
-            role: "progressbar",
-            "aria-valuenow": "80",
-            "aria-valuemin": "0",
-            "aria-valuemax": "100",
-          },
-        }),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "bg-light p-3" }, [
-      _vm._v(
-        "\n                            入力内容にお間違いなければ登録完了へお進みください。"
-      ),
-      _c("br"),
-      _vm._v(
-        "\n                            ※登録内容はマイページから変更可能です。\n                        "
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h5", { staticClass: "mb-5 text-primary fw-bold" }, [
-      _vm._v("\n                    ステップ５/５\n                    "),
-      _c("div", { staticClass: "progress" }, [
-        _c("div", {
-          staticClass: "progress-bar progress-bar-striped bg-primary",
-          staticStyle: { width: "100%" },
-          attrs: {
-            role: "progressbar",
-            "aria-valuenow": "100",
-            "aria-valuemin": "0",
-            "aria-valuemax": "100",
-          },
-        }),
+    return _c("div", { staticClass: "mb-5" }, [
+      _c("div", { staticClass: "steps flex-row w-100" }, [
+        _c("div", { staticClass: "step bg-success text-white" }, [
+          _c("h5", [_vm._v("1")]),
+          _c("p", [_vm._v("入力")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "step bg-success text-white" }, [
+          _c("h5", [_vm._v("2")]),
+          _c("p", [_vm._v("確認")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "step bg-success text-white" }, [
+          _c("h5", [_vm._v("3")]),
+          _c("p", [_vm._v("完了")]),
+        ]),
       ]),
     ])
   },

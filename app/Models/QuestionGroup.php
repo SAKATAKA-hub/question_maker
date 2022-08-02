@@ -145,8 +145,6 @@ class QuestionGroup extends Model
             });
 
         //
-        // dd( $questions );
-
 
         return $query;
     }

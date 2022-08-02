@@ -7,6 +7,7 @@
 
 <!----- meta ----->
 @section('meta')
+
     <meta name="csrf_token" content="{{ csrf_token() }}">
     <meta name="api_route_step01" content="{{ '' }}">
     <meta name="api_route_step02" content="{{ '' }}">

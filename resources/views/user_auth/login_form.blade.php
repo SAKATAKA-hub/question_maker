@@ -79,7 +79,7 @@
 
                 <div class="row mb-3">
                     <div class="col-sm-8 offset-sm-2">
-                        <button type="submit" class="btn btn-arrow btn-curve btn-success text-white w-100">
+                        <button type="submit" class="btn rounded-pill btn-success text-white w-100">
                             {{ __('ログイン') }}
                         </button>
                     </div>
@@ -99,6 +99,7 @@
                         </a>
                     </div>
                 </div>
+
 
 
             </form>

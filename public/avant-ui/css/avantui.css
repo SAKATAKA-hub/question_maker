@@ -2627,6 +2627,7 @@ h6, .h6 {
   text-align: center;
   border: solid 1px #eff1f4;
   border-radius: .25rem;
+  overflow: hidden;
 }
 
 .steps h4, .steps h5 {
@@ -2640,20 +2641,47 @@ h6, .h6 {
 }
 
 .step {
-  min-width: 180px;
+  position: relative;
+  /* min-width: 180px; */
   max-width: 100%;
   flex-grow: 1;
   padding: 1rem;
   border-style: solid;
   border-width: 0 0 1px 0;
   border-color: #eff1f4;
-  border-radius: .25rem;
   background-color: #fff;
 }
 
-.step:last-of-type {
-  border: none;
+.step:first-child{
+    border-radius: .25rem 0 0 .25rem;
 }
+
+.step:last-child{
+    border-radius: 0 .25rem .25rem 0;
+}
+
+.step:not(:last-child)::after{
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    content: '';
+    border: 36px solid transparent;
+    border-left: 16px solid #fff;
+    margin: auto;
+}
+
+.bg-primary:not(:last-child)::after{
+    border-left: 16px solid #406AFF !important;
+}
+.bg-success:not(:last-child)::after{
+    border-left: 16px solid #14CFA0 !important;
+}
+.bg-warning:not(:last-child)::after{
+    border-left: 16px solid #FFA833 !important;
+}
+
 
 .step.step-done {
   opacity: 0.5;

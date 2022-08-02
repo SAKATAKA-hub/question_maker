@@ -160,7 +160,7 @@
             return{
 
                 /* test用フォーム・データの利用 */
-                test : { form : false,},
+                test : { form : true,},
 
 
                 /* token ( ログイン処理のページ遷移時に利用 )*/

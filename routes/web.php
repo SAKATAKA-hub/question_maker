@@ -164,8 +164,16 @@ Route::get('/', function(){ return redirect()->route('questions_list'); })
 
 
     # ユーザー登録画面の表示(register_form)
-    Route::get('/user_auth/register_form', function(){ return view('user_auth.register_form',['step'=>1] ); })
+    Route::get('/user_auth/register_form', function(){ return view('user_auth.register_form' ); })
     ->name('user_auth.register_form');
+
+    # ユーザー登録API(register_api)
+    Route::post('/user_auth/register_api', [Controllers\UserAuthController::class, 'register_api'])
+    ->name('user_auth.register_api');
+
+    # 登録済メールアドレスか確認するAPI(email_unique_api)
+    Route::post('/user_auth/email_unique_api', [Controllers\UserAuthController::class, 'email_unique_api'])
+    ->name('user_auth.email_unique_api');
 
 
     # ログインが必要ですページ(require_login)　※ログイン前にログインが必要なページにアクセスした際に表示されるページ

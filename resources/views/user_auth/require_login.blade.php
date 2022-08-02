@@ -39,7 +39,7 @@
     </div>
     <div class="row mb-3">
         <div class="col-sm-8 offset-sm-2">
-            <a href="{{ route('user_auth.register_form') }}" class="btn btn-lg rounded-pill btn-primary w-100">
+            <a href="{{ route('user_auth.register_form') }}" class="btn btn-lg rounded-pill btn-warning w-100">
                 {{ __('会員登録（無料）') }}
             </a>
         </div>
