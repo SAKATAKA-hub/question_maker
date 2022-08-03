@@ -9,18 +9,22 @@
             <div class="d-flex flex-wrap">
 
                 <form :action="api_route.step01" method="post" class="mb-3 me-3">
-                    <input v-for="(value, name) in input" :key="name" :name="name" :value="value" type="hidden">
+                    <input type="hidden" name="_token" :value="token">
+                    <input type="hidden" name="_method" value="patch">
+                    <input v-for="(value, name) in inputs" :key="name" :name="name" :value="value" type="hidden">
                     <button type="submit" class="btn btn-danger text-white">ステップ01テスト</button>
                 </form>
 
                 <form :action="api_route.step02" method="post" class="mb-3 me-3">
-                    <input v-for="(value, name) in input" :key="name" :name="name" :value="value"  type="hidden">
+                    <input type="hidden" name="_token" :value="token">
+                    <input type="hidden" name="_method" value="patch">
+                    <input v-for="(value, name) in inputs" :key="name" :name="name" :value="value"  type="hidden">
                     <button type="submit" class="btn btn-danger text-white">ステップ02テスト</button>
                 </form>
 
-                <form :action="route.login_form" method="post" class="mb-3 me-3">
+                <form :action="route.login" method="post" class="mb-3 me-3">
                     <input type="hidden" :value="token" name="_token">
-                    <input v-for="(value, name) in input" :key="name" :name="name" :value="value" type="hidden">
+                    <input v-for="(value, name) in inputs" :key="name" :name="name" :value="value" type="hidden">
                     <button type="submit" class="btn btn-danger text-white">ログイン</button>
                 </form>
 
@@ -39,7 +43,8 @@
                     <div class="mb-5">
                         <label for="email">メールアドレス</label>
                         <input id="email" type="email" class="form-control" name="email"
-                        v-model="input.email" required autocomplete="email" autofocus>
+                        v-model="inputs.email" :class="{'border-danger' : errors.email }"
+                        required autocomplete="email" autofocus>
 
                         <div v-if="errors.email" class="text-danger" role="alert">※{{ errors.email }}</div>
                     </div>
@@ -48,7 +53,7 @@
                     <div class="row mb-3">
                         <div class="col-sm-8 offset-sm-2">
                             <button type="submit" @click="nextToStep01"
-                            class="btn btn-arrow btn-curve btn-primary text-white w-100">
+                            class="btn rounded-pill btn-success text-white w-100">
                                 次へ
                             </button>
                         </div>
@@ -74,7 +79,8 @@
 
                         <label for="reset_pass_code">{{ '認証番号（半角数字）' }}</label>
                         <input id="reset_pass_code" type="text" class="form-control w-50" name="reset_pass_code"
-                        v-model="input.reset_pass_code" required autocomplete="current-reset_pass_code">
+                        v-model="inputs.reset_pass_code" :class="{'border-danger' : errors.reset_pass_code }"
+                        required autocomplete="current-reset_pass_code">
 
                         <div v-if="errors.reset_pass_code">
                             <div v-for="(error, key) in errors.reset_pass_code" :key="key" class="text-danger"
@@ -87,13 +93,13 @@
                         <label for="password" class="d-flex justify-content-between align-items-center">
                             {{ 'パスワード' }}
                             <a href="" class="btn btn-link" @click.prevent="toggleDisplayPassword"
-                            style="font-size:.5rem; text-decoration:none;">{{ form_option.input_password.text }}</a>
+                            style="font-size:.5rem; text-decoration:none;">{{ input_password.text }}</a>
                         </label>
                         <p class="mb-0" style="font-size:.8rem;">※8文字以上20文字以下の半角英数字</p>
 
                         <input id="password" class="form-control" name="password"
-                        :type="form_option.input_password.type"
-                        v-model="input.password" required autocomplete="current-password">
+                        :type=" input_password.type" :class="{'border-danger' : errors.password }"
+                        v-model="inputs.password" required autocomplete="current-password">
 
                         <div v-if="errors.password">
                             <div v-for="(error, key) in errors.password" :key="key" class="text-danger"
@@ -106,8 +112,8 @@
                         <p class="mb-0" style="font-size:.8rem;">※8文字以上20文字以下の半角英数字</p>
 
                         <input id="password_confirmation" class="form-control" name="password_confirmation"
-                        :type="form_option.input_password.type"
-                        v-model="input.password_confirmation" required autocomplete="current-password_confirmation">
+                        :type="input_password.type"
+                        v-model="inputs.password_confirmation" required autocomplete="current-password_confirmation">
 
                         <div v-if="errors.password_confirmation">
                             <div v-for="(error, key) in errors.password_confirmation" :key="key" class="text-danger"
@@ -118,7 +124,7 @@
 
                     <div class="row mb-3">
                         <div class="col-sm-8 offset-sm-2">
-                            <button type="submit" @click="nextToStep02" class="btn btn-arrow btn-curve btn-primary text-white w-100">
+                            <button type="submit" @click="nextToStep02" class="btn rounded-pill btn-success text-white w-100">
                                 次へ
                             </button>
                         </div>
@@ -140,8 +146,18 @@
 
                     <div class="row mt-5 mb-3">
                         <div class="col-md-8 offset-md-2">
-                            <a :href="route.login_form"
-                            class="btn btn-arrow btn-curve btn-primary text-white w-100">{{ 'ログインフォームへ' }}</a>
+                            <form :action="route.login" method="post" class="mb-3"
+                             onsubmit="stopOnbeforeunload()"
+                            >
+
+                                <input type="hidden" :value="token"           name="_token">   <!-- token -->
+                                <input type="hidden" :value="inputs.email"    name="email" >   <!-- email -->
+                                <input type="hidden" :value="inputs.password" name="password"> <!-- password -->
+
+                                <button type="submit"
+                                class="btn rounded-pill btn-success w-100">{{ 'ログインする' }}</button>
+
+                            </form>
                         </div>
                     </div>
 
@@ -160,7 +176,7 @@
             return{
 
                 /* test用フォーム・データの利用 */
-                test : { form : true,},
+                test : { form : false,},
 
 
                 /* token ( ログイン処理のページ遷移時に利用 )*/
@@ -172,9 +188,8 @@
                     step02 : document.querySelector('[name="api_route_step02"]').content,
                 },
                 route : {
-                    login_form : document.querySelector('[name="route_login_form"]').content,// ログイン
+                    login : document.querySelector('[name="route_login"]').content,// ログイン
                 },
-
 
 
                 /* 表示中カード番号 */
@@ -182,7 +197,7 @@
 
 
                 /* 入力内容 */
-                input : {
+                inputs : {
                     email: '',
                     reset_pass_code : '',//認証コード(入力)
                     reset_pass_code_confirmation : '',//認証コード
@@ -193,23 +208,16 @@
                 errors : {},
 
 
-                /* オプションデータ */
-                form_option : {
-
-                    // パスワード入力の表示形式
-                    input_password :{
-                        type : 'password', text : 'パスワードを表示',
-                    }
+                /* パスワード入力の表示形式 */
+                input_password :{
+                    type : 'password', text : 'パスワードを表示',
                 },
+
 
             }
         },
         mounted() {
-
-
-        //
-
-
+            //
         },
         methods:{
 
@@ -220,7 +228,11 @@
                 fetch(this.api_route.step01, {
 
                     method: 'POST',
-                    body: new URLSearchParams(this.input),
+                    body: new URLSearchParams({
+                        _token  : this.token, //token
+                        _method : 'patch',    //method
+                        ...this.inputs,      //入力データ一式
+                    }),
 
                 })
                 .then(response => {
@@ -238,7 +250,7 @@
                     else //[ バリデーション・失敗 ]
                     {
                         this.errors = json.errors;
-                        console.log( this.errors );
+                        // console.log( json );
                     }
                 })
 
@@ -250,7 +262,11 @@
                 fetch(this.api_route.step02, {
 
                     method: 'POST',
-                    body: new URLSearchParams(this.input),
+                    body: new URLSearchParams({
+                        _token  : this.token, //token
+                        _method : 'patch',    //method
+                        ...this.inputs,      //入力データ一式
+                    }),
 
                 })
                 .then(response => {
@@ -268,7 +284,7 @@
                     else //[ バリデーション・失敗 ]
                     {
                         this.errors = json.errors;
-                        console.log( this.errors );
+                        console.log( json );
                     }
                 })
 
@@ -285,16 +301,16 @@
             /* パスワード入力の表示切替 */
             toggleDisplayPassword : function(){
 
-                let type = this.form_option.input_password.type;
+                let type = this.input_password.type;
                 if( type === 'password' )
                 {
-                    this.form_option.input_password.text = 'パスワードを非表示';
-                    this.form_option.input_password.type = 'text';
+                    this.input_password.text = 'パスワードを非表示';
+                    this.input_password.type = 'text';
                 }
                 else
                 {
-                    this.form_option.input_password.text = 'パスワードを表示';
-                    this.form_option.input_password.type = 'password';
+                    this.input_password.text = 'パスワードを表示';
+                    this.input_password.type = 'password';
                 }
             },
         }

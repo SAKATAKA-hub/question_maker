@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 /*
 | =================================
@@ -18,7 +19,7 @@ class MakeQuestionGroupController extends Controller
     public function list()
     {
         # ユーザー情報
-        $user = \App\Models\User::first();
+        $user = Auth::user();
 
         # ユーザーの問題集情報の取得
         $question_groups = \App\Models\QuestionGroup::where('user_id',$user->id)
@@ -51,7 +52,7 @@ class MakeQuestionGroupController extends Controller
     {
 
         # ユーザー情報
-        $user = \App\Models\User::first();
+        $user = Auth::user();
 
 
         # 画像のアップロード

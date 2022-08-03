@@ -33,7 +33,7 @@
 
     <div class="container-1200">
         <ul class="list-group list-group-flush">
-            @foreach ($question_groups as $key => $question_group)
+            @forelse ($question_groups as $key => $question_group)
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-auto">
@@ -98,7 +98,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            {{sprintf('%02d', $question_group->title )}}を削除します。<br>よろしいですか？
+                            "{{ $question_group->title }}"を削除します。<br>よろしいですか？
                         </div>
                         <div class="modal-footer">
                             <button type="button" style="text-decoration:none;" class="btn btn-link text-secondary fw-bold" data-bs-dismiss="modal"
@@ -116,7 +116,13 @@
                 </div>
 
             </li>
-            @endforeach
+            @empty
+            <li class="list-group-item">
+                <div class="h2 text-secondary text-center">
+                    問題集を作成しましょう！
+                </div>
+            </li>
+            @endforelse
         </ul>
     </div>
 

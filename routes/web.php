@@ -32,6 +32,8 @@ Route::get('/', function(){ return redirect()->route('questions_list'); })
 | 問題集を作る　処理　MakeQuestionGroupController
 |--------------------------------------------------------------------------
 */
+Route::middleware(['user_auth'])->group(function () {
+
     # 問題集の一覧ページの表示(list)
     Route::get('/make_question_group/list', [Controllers\MakeQuestionGroupController::class, 'list'])
     ->name('make_question_group.list');
@@ -63,12 +65,14 @@ Route::get('/', function(){ return redirect()->route('questions_list'); })
     ->name('make_question_group.destroy');
 
 
-
+});//end middleware
 /*
 |--------------------------------------------------------------------------
 | 問題集を作る　処理　MakeQuestionController
 |--------------------------------------------------------------------------
 */
+Route::middleware(['user_auth'])->group(function () {
+
     # 問題の新規作成ページの表示(create)
     Route::get('/make_question/create/{question_group}', [Controllers\MakeQuestionController::class, 'create'])
     ->name('make_question.create');
@@ -95,7 +99,7 @@ Route::get('/', function(){ return redirect()->route('questions_list'); })
     Route::delete('/make_question/destroy/{question}', [Controllers\MakeQuestionController::class, 'destroy'])
     ->name('make_question.destroy');
 
-
+});//end middleware
 /*
 |--------------------------------------------------------------------------
 | 成績　処理　ResultsController
@@ -145,40 +149,55 @@ Route::get('/', function(){ return redirect()->route('questions_list'); })
 | 認証・登録・パスワード変更　(UserAuthController)
 |--------------------------------------------------------------------------
 */
-    # ログイン画面の表示(login_form)
-    Route::get('/user_auth/login_form', function () { return view('user_auth.login_form'); })
-    ->name('user_auth.login_form');
+    /* ユーザー認証 */
 
-    # ログイン処理(login)
-    Route::post('/user_auth/login', [Controllers\UserAuthController::class, 'login'])
-    ->name('user_auth.login');
+        # ログイン画面の表示(login_form)
+        Route::get('/user_auth/login_form', function () { return view('user_auth.login_form'); })
+        ->name('user_auth.login_form');
 
-    # ログアウト処理(logout)
-    Route::get('/user_auth/logout', [Controllers\UserAuthController::class, 'logout'])
-    ->name('user_auth.logout');
+        # ログイン処理(login)
+        Route::post('/user_auth/login', [Controllers\UserAuthController::class, 'login'])
+        ->name('user_auth.login');
 
+        # ログアウト処理(logout)
+        Route::get('/user_auth/logout', [Controllers\UserAuthController::class, 'logout'])
+        ->name('user_auth.logout');
 
-    # パスワードリセット画面の表示(reset_pass_form)
-    Route::get('/user_auth/reset_pass_form', function () { return view('user_auth.reset_pass_form',['step'=>1]); })
-    ->name('user_auth.reset_pass_form');
-
-
-    # ユーザー登録画面の表示(register_form)
-    Route::get('/user_auth/register_form', function(){ return view('user_auth.register_form' ); })
-    ->name('user_auth.register_form');
-
-    # ユーザー登録API(register_api)
-    Route::post('/user_auth/register_api', [Controllers\UserAuthController::class, 'register_api'])
-    ->name('user_auth.register_api');
-
-    # 登録済メールアドレスか確認するAPI(email_unique_api)
-    Route::post('/user_auth/email_unique_api', [Controllers\UserAuthController::class, 'email_unique_api'])
-    ->name('user_auth.email_unique_api');
+        # ログインが必要ですページ(require_login)　※ログイン前にログインが必要なページにアクセスした際に表示されるページ
+        Route::get('/user_auth/require_login', function () { return view('user_auth.require_login'); })
+        ->name('user_auth.require_login');
 
 
-    # ログインが必要ですページ(require_login)　※ログイン前にログインが必要なページにアクセスした際に表示されるページ
-    Route::get('/user_auth/require_login', function () { return view('user_auth.require_login'); })
-    ->name('user_auth.require_login');
+    /* ユーザー登録 */
+
+        # ユーザー登録画面の表示(register_form)
+        Route::get('/user_auth/register_form', function(){ return view('user_auth.register_form' ); })
+        ->name('user_auth.register_form');
+
+        # ユーザー登録API(register_api)
+        Route::post('/user_auth/register_api', [Controllers\UserAuthController::class, 'register_api'])
+        ->name('user_auth.register_api');
+
+        # 登録済メールアドレスか確認するAPI(email_unique_api)
+        Route::post('/user_auth/email_unique_api', [Controllers\UserAuthController::class, 'email_unique_api'])
+        ->name('user_auth.email_unique_api');
+
+
+    /* パスワードリセット */
+
+        # パスワードリセット画面の表示(reset_pass_form)
+        Route::get('/user_auth/reset_pass_form', function () { return view('user_auth.reset_pass_form'); })
+        ->name('user_auth.reset_pass_form');
+
+        # パスワードリセット ステップ01(reset_pass_step01_api)
+        Route::patch('/user_auth/reset_pass_step01_api', [Controllers\UserAuthController::class, 'reset_pass_step01_api'])
+        ->name('user_auth.reset_pass_step01_api');
+
+        # パスワードリセット ステップ02(reset_pass_step02_api)
+        Route::patch('/user_auth/reset_pass_step02_api', [Controllers\UserAuthController::class, 'reset_pass_step02_api'])
+        ->name('user_auth.reset_pass_step02_api');
+
+    //
 
     # 退会処理(destroy)
     Route::get('/user_auth/destroy', function () { return view('user_auth.destroy'); })

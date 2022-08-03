@@ -6339,6 +6339,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6500,7 +6522,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       /* test用フォーム・データの利用 */
       test: {
-        form: true
+        form: false
       },
 
       /* token ( ログイン処理のページ遷移時に利用 )*/
@@ -6512,7 +6534,7 @@ __webpack_require__.r(__webpack_exports__);
         step02: document.querySelector('[name="api_route_step02"]').content
       },
       route: {
-        login_form: document.querySelector('[name="route_login_form"]').content // ログイン
+        login: document.querySelector('[name="route_login"]').content // ログイン
 
       },
 
@@ -6520,7 +6542,7 @@ __webpack_require__.r(__webpack_exports__);
       card_num: 1,
 
       /* 入力内容 */
-      input: {
+      inputs: {
         email: '',
         reset_pass_code: '',
         //認証コード(入力)
@@ -6533,13 +6555,10 @@ __webpack_require__.r(__webpack_exports__);
       /* エラー内容 */
       errors: {},
 
-      /* オプションデータ */
-      form_option: {
-        // パスワード入力の表示形式
-        input_password: {
-          type: 'password',
-          text: 'パスワードを表示'
-        }
+      /* パスワード入力の表示形式 */
+      input_password: {
+        type: 'password',
+        text: 'パスワードを表示'
       }
     };
   },
@@ -6553,7 +6572,11 @@ __webpack_require__.r(__webpack_exports__);
       // [ 非同期通信 ]
       fetch(this.api_route.step01, {
         method: 'POST',
-        body: new URLSearchParams(this.input)
+        body: new URLSearchParams(_objectSpread({
+          _token: this.token,
+          //token
+          _method: 'patch'
+        }, this.inputs))
       }).then(function (response) {
         if (!response.ok) {
           alert('データ送信エラーが発生しました。');
@@ -6569,8 +6592,7 @@ __webpack_require__.r(__webpack_exports__);
             _this.errors = {}; // console.log( json );
           } else //[ バリデーション・失敗 ]
           {
-            _this.errors = json.errors;
-            console.log(_this.errors);
+            _this.errors = json.errors; // console.log( json );
           }
       });
     },
@@ -6582,7 +6604,11 @@ __webpack_require__.r(__webpack_exports__);
       // [ 非同期通信 ]
       fetch(this.api_route.step02, {
         method: 'POST',
-        body: new URLSearchParams(this.input)
+        body: new URLSearchParams(_objectSpread({
+          _token: this.token,
+          //token
+          _method: 'patch'
+        }, this.inputs))
       }).then(function (response) {
         if (!response.ok) {
           alert('データ送信エラーが発生しました。');
@@ -6599,7 +6625,7 @@ __webpack_require__.r(__webpack_exports__);
           } else //[ バリデーション・失敗 ]
           {
             _this2.errors = json.errors;
-            console.log(_this2.errors);
+            console.log(json);
           }
       });
     },
@@ -6615,14 +6641,14 @@ __webpack_require__.r(__webpack_exports__);
 
     /* パスワード入力の表示切替 */
     toggleDisplayPassword: function toggleDisplayPassword() {
-      var type = this.form_option.input_password.type;
+      var type = this.input_password.type;
 
       if (type === 'password') {
-        this.form_option.input_password.text = 'パスワードを非表示';
-        this.form_option.input_password.type = 'text';
+        this.input_password.text = 'パスワードを非表示';
+        this.input_password.type = 'text';
       } else {
-        this.form_option.input_password.text = 'パスワードを表示';
-        this.form_option.input_password.type = 'password';
+        this.input_password.text = 'パスワードを表示';
+        this.input_password.type = 'password';
       }
     }
   }
@@ -31689,7 +31715,16 @@ var render = function () {
                 attrs: { action: _vm.api_route.step01, method: "post" },
               },
               [
-                _vm._l(_vm.input, function (value, name) {
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.token },
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "_method", value: "patch" },
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.inputs, function (value, name) {
                   return _c("input", {
                     key: name,
                     attrs: { name: name, type: "hidden" },
@@ -31716,7 +31751,16 @@ var render = function () {
                 attrs: { action: _vm.api_route.step02, method: "post" },
               },
               [
-                _vm._l(_vm.input, function (value, name) {
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.token },
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "_method", value: "patch" },
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.inputs, function (value, name) {
                   return _c("input", {
                     key: name,
                     attrs: { name: name, type: "hidden" },
@@ -31740,7 +31784,7 @@ var render = function () {
               "form",
               {
                 staticClass: "mb-3 me-3",
-                attrs: { action: _vm.route.login_form, method: "post" },
+                attrs: { action: _vm.route.login, method: "post" },
               },
               [
                 _c("input", {
@@ -31748,7 +31792,7 @@ var render = function () {
                   domProps: { value: _vm.token },
                 }),
                 _vm._v(" "),
-                _vm._l(_vm.input, function (value, name) {
+                _vm._l(_vm.inputs, function (value, name) {
                   return _c("input", {
                     key: name,
                     attrs: { name: name, type: "hidden" },
@@ -31789,11 +31833,12 @@ var render = function () {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.input.email,
-                      expression: "input.email",
+                      value: _vm.inputs.email,
+                      expression: "inputs.email",
                     },
                   ],
                   staticClass: "form-control",
+                  class: { "border-danger": _vm.errors.email },
                   attrs: {
                     id: "email",
                     type: "email",
@@ -31802,13 +31847,13 @@ var render = function () {
                     autocomplete: "email",
                     autofocus: "",
                   },
-                  domProps: { value: _vm.input.email },
+                  domProps: { value: _vm.inputs.email },
                   on: {
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.input, "email", $event.target.value)
+                      _vm.$set(_vm.inputs, "email", $event.target.value)
                     },
                   },
                 }),
@@ -31828,7 +31873,7 @@ var render = function () {
                     "button",
                     {
                       staticClass:
-                        "btn btn-arrow btn-curve btn-primary text-white w-100",
+                        "btn rounded-pill btn-success text-white w-100",
                       attrs: { type: "submit" },
                       on: { click: _vm.nextToStep01 },
                     },
@@ -31865,11 +31910,12 @@ var render = function () {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.input.reset_pass_code,
-                      expression: "input.reset_pass_code",
+                      value: _vm.inputs.reset_pass_code,
+                      expression: "inputs.reset_pass_code",
                     },
                   ],
                   staticClass: "form-control w-50",
+                  class: { "border-danger": _vm.errors.reset_pass_code },
                   attrs: {
                     id: "reset_pass_code",
                     type: "text",
@@ -31877,14 +31923,14 @@ var render = function () {
                     required: "",
                     autocomplete: "current-reset_pass_code",
                   },
-                  domProps: { value: _vm.input.reset_pass_code },
+                  domProps: { value: _vm.inputs.reset_pass_code },
                   on: {
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
                       }
                       _vm.$set(
-                        _vm.input,
+                        _vm.inputs,
                         "reset_pass_code",
                         $event.target.value
                       )
@@ -31944,7 +31990,7 @@ var render = function () {
                           },
                         },
                       },
-                      [_vm._v(_vm._s(_vm.form_option.input_password.text))]
+                      [_vm._v(_vm._s(_vm.input_password.text))]
                     ),
                   ]
                 ),
@@ -31958,17 +32004,18 @@ var render = function () {
                   [_vm._v("※8文字以上20文字以下の半角英数字")]
                 ),
                 _vm._v(" "),
-                _vm.form_option.input_password.type === "checkbox"
+                _vm.input_password.type === "checkbox"
                   ? _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.input.password,
-                          expression: "input.password",
+                          value: _vm.inputs.password,
+                          expression: "inputs.password",
                         },
                       ],
                       staticClass: "form-control",
+                      class: { "border-danger": _vm.errors.password },
                       attrs: {
                         id: "password",
                         name: "password",
@@ -31977,13 +32024,13 @@ var render = function () {
                         type: "checkbox",
                       },
                       domProps: {
-                        checked: Array.isArray(_vm.input.password)
-                          ? _vm._i(_vm.input.password, null) > -1
-                          : _vm.input.password,
+                        checked: Array.isArray(_vm.inputs.password)
+                          ? _vm._i(_vm.inputs.password, null) > -1
+                          : _vm.inputs.password,
                       },
                       on: {
                         change: function ($event) {
-                          var $$a = _vm.input.password,
+                          var $$a = _vm.inputs.password,
                             $$el = $event.target,
                             $$c = $$el.checked ? true : false
                           if (Array.isArray($$a)) {
@@ -31992,35 +32039,36 @@ var render = function () {
                             if ($$el.checked) {
                               $$i < 0 &&
                                 _vm.$set(
-                                  _vm.input,
+                                  _vm.inputs,
                                   "password",
                                   $$a.concat([$$v])
                                 )
                             } else {
                               $$i > -1 &&
                                 _vm.$set(
-                                  _vm.input,
+                                  _vm.inputs,
                                   "password",
                                   $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                                 )
                             }
                           } else {
-                            _vm.$set(_vm.input, "password", $$c)
+                            _vm.$set(_vm.inputs, "password", $$c)
                           }
                         },
                       },
                     })
-                  : _vm.form_option.input_password.type === "radio"
+                  : _vm.input_password.type === "radio"
                   ? _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.input.password,
-                          expression: "input.password",
+                          value: _vm.inputs.password,
+                          expression: "inputs.password",
                         },
                       ],
                       staticClass: "form-control",
+                      class: { "border-danger": _vm.errors.password },
                       attrs: {
                         id: "password",
                         name: "password",
@@ -32028,10 +32076,10 @@ var render = function () {
                         autocomplete: "current-password",
                         type: "radio",
                       },
-                      domProps: { checked: _vm._q(_vm.input.password, null) },
+                      domProps: { checked: _vm._q(_vm.inputs.password, null) },
                       on: {
                         change: function ($event) {
-                          return _vm.$set(_vm.input, "password", null)
+                          return _vm.$set(_vm.inputs, "password", null)
                         },
                       },
                     })
@@ -32040,25 +32088,26 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.input.password,
-                          expression: "input.password",
+                          value: _vm.inputs.password,
+                          expression: "inputs.password",
                         },
                       ],
                       staticClass: "form-control",
+                      class: { "border-danger": _vm.errors.password },
                       attrs: {
                         id: "password",
                         name: "password",
                         required: "",
                         autocomplete: "current-password",
-                        type: _vm.form_option.input_password.type,
+                        type: _vm.input_password.type,
                       },
-                      domProps: { value: _vm.input.password },
+                      domProps: { value: _vm.inputs.password },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(_vm.input, "password", $event.target.value)
+                          _vm.$set(_vm.inputs, "password", $event.target.value)
                         },
                       },
                     }),
@@ -32096,14 +32145,14 @@ var render = function () {
                   [_vm._v("※8文字以上20文字以下の半角英数字")]
                 ),
                 _vm._v(" "),
-                _vm.form_option.input_password.type === "checkbox"
+                _vm.input_password.type === "checkbox"
                   ? _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.input.password_confirmation,
-                          expression: "input.password_confirmation",
+                          value: _vm.inputs.password_confirmation,
+                          expression: "inputs.password_confirmation",
                         },
                       ],
                       staticClass: "form-control",
@@ -32115,13 +32164,13 @@ var render = function () {
                         type: "checkbox",
                       },
                       domProps: {
-                        checked: Array.isArray(_vm.input.password_confirmation)
-                          ? _vm._i(_vm.input.password_confirmation, null) > -1
-                          : _vm.input.password_confirmation,
+                        checked: Array.isArray(_vm.inputs.password_confirmation)
+                          ? _vm._i(_vm.inputs.password_confirmation, null) > -1
+                          : _vm.inputs.password_confirmation,
                       },
                       on: {
                         change: function ($event) {
-                          var $$a = _vm.input.password_confirmation,
+                          var $$a = _vm.inputs.password_confirmation,
                             $$el = $event.target,
                             $$c = $$el.checked ? true : false
                           if (Array.isArray($$a)) {
@@ -32130,32 +32179,32 @@ var render = function () {
                             if ($$el.checked) {
                               $$i < 0 &&
                                 _vm.$set(
-                                  _vm.input,
+                                  _vm.inputs,
                                   "password_confirmation",
                                   $$a.concat([$$v])
                                 )
                             } else {
                               $$i > -1 &&
                                 _vm.$set(
-                                  _vm.input,
+                                  _vm.inputs,
                                   "password_confirmation",
                                   $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                                 )
                             }
                           } else {
-                            _vm.$set(_vm.input, "password_confirmation", $$c)
+                            _vm.$set(_vm.inputs, "password_confirmation", $$c)
                           }
                         },
                       },
                     })
-                  : _vm.form_option.input_password.type === "radio"
+                  : _vm.input_password.type === "radio"
                   ? _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.input.password_confirmation,
-                          expression: "input.password_confirmation",
+                          value: _vm.inputs.password_confirmation,
+                          expression: "inputs.password_confirmation",
                         },
                       ],
                       staticClass: "form-control",
@@ -32167,12 +32216,12 @@ var render = function () {
                         type: "radio",
                       },
                       domProps: {
-                        checked: _vm._q(_vm.input.password_confirmation, null),
+                        checked: _vm._q(_vm.inputs.password_confirmation, null),
                       },
                       on: {
                         change: function ($event) {
                           return _vm.$set(
-                            _vm.input,
+                            _vm.inputs,
                             "password_confirmation",
                             null
                           )
@@ -32184,8 +32233,8 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.input.password_confirmation,
-                          expression: "input.password_confirmation",
+                          value: _vm.inputs.password_confirmation,
+                          expression: "inputs.password_confirmation",
                         },
                       ],
                       staticClass: "form-control",
@@ -32194,16 +32243,16 @@ var render = function () {
                         name: "password_confirmation",
                         required: "",
                         autocomplete: "current-password_confirmation",
-                        type: _vm.form_option.input_password.type,
+                        type: _vm.input_password.type,
                       },
-                      domProps: { value: _vm.input.password_confirmation },
+                      domProps: { value: _vm.inputs.password_confirmation },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            _vm.input,
+                            _vm.inputs,
                             "password_confirmation",
                             $event.target.value
                           )
@@ -32239,7 +32288,7 @@ var render = function () {
                     "button",
                     {
                       staticClass:
-                        "btn btn-arrow btn-curve btn-primary text-white w-100",
+                        "btn rounded-pill btn-success text-white w-100",
                       attrs: { type: "submit" },
                       on: { click: _vm.nextToStep02 },
                     },
@@ -32271,13 +32320,40 @@ var render = function () {
               _c("div", { staticClass: "row mt-5 mb-3" }, [
                 _c("div", { staticClass: "col-md-8 offset-md-2" }, [
                   _c(
-                    "a",
+                    "form",
                     {
-                      staticClass:
-                        "btn btn-arrow btn-curve btn-primary text-white w-100",
-                      attrs: { href: _vm.route.login_form },
+                      staticClass: "mb-3",
+                      attrs: {
+                        action: _vm.route.login,
+                        method: "post",
+                        onsubmit: "stopOnbeforeunload()",
+                      },
                     },
-                    [_vm._v(_vm._s("ログインフォームへ"))]
+                    [
+                      _c("input", {
+                        attrs: { type: "hidden", name: "_token" },
+                        domProps: { value: _vm.token },
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "email" },
+                        domProps: { value: _vm.inputs.email },
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "password" },
+                        domProps: { value: _vm.inputs.password },
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn rounded-pill btn-success w-100",
+                          attrs: { type: "submit" },
+                        },
+                        [_vm._v(_vm._s("ログインする"))]
+                      ),
+                    ]
                   ),
                 ]),
               ]),
