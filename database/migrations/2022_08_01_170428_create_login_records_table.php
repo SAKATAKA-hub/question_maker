@@ -20,7 +20,7 @@ class CreateLoginRecordsTable extends Migration
     {
         Schema::create('login_records', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->comment('ユユーザーID');
+            $table->unsignedBigInteger('user_id')->comment('ユーザーID');
             $table->timestamps();
 
             // userテーブルとの紐づけ

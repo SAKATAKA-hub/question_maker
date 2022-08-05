@@ -23,8 +23,23 @@ Route::get('/', function(){ return redirect()->route('questions_list'); })
     # 自分で作成した問題集一覧ページの表示(my_list)
     # 他者が作成した問題集一覧ページの表示(others_list)
     # 問題集の一覧表示・キーワード検索(seached_list)
-    # 問題を解く(play)
+
+    # 問題開始の準備(befor_play_question)
+    // Route::post('/befor_play_question', [Controllers\PlayQuestionController::class, 'befor_play_question'])
+    // ->name('befor_play_question');
+
+    # 問題を解く(play_question)
+    Route::get('/play_question/{question_group}',
+    function( \App\Models\QuestionGroup $question_group ){ return view('PlayQuestion.play_question', compact('question_group')); })
+    ->name('play_question');
+
+    # 問題情報の取得(get_questions_api)
+    Route::post('/get_questions_api', [Controllers\PlayQuestionController::class, 'get_questions_api'])
+    ->name('get_questions_api');
+
     # 問題の採点(scoring)
+    Route::post('/scoring', [Controllers\PlayQuestionController::class, 'scoring'])
+    ->name('scoring');
 
 
 /*
@@ -238,6 +253,9 @@ Route::get('/test/timer', function(){ return view( 'test.timer' ); })
 ->name('test.timer');
 
 
+# 問題の詳細
+Route::get('/test/question_detail', function(){ return view( 'test.question_detail' ); })
+->name('test.question_detail');
 
 // Route::get('test/{page}', function ($page) {
 //     return view('test.'.$page);

@@ -128,8 +128,6 @@
                             <a href="#" class="card border-0 text-dark"
                             data-bs-toggle="modal" data-bs-target="#questionModal{{ $i+1 }}"
                             >
-                                {{-- <img src="{{ asset('storage/site/image/sample3.jpeg') }}" style="border-radius:.5rem;" class="card-img-top" alt="問題サムネイル"> --}}
-                                {{-- <img src="{{ asset('storage/'.$question_group->image_puth) }}" style="border-radius:.5rem; height:10rem;" class="card-img-top" alt="問題サムネイル"> --}}
 
                                 <!-- サムネ画像 -->
                                 <div class="card-image" style="
@@ -159,33 +157,60 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                    <div class="modal-title" id="questionModal{{ $i+1 }}Label">
-                                        問題を開始します。<br>
-                                        準備はよろしいですか？
-                                    </div>
+                                    <h4 class="modal-title mb-0" id="questionModal{{ $i+1 }}Label">
+                                        {{ $question_group->title }}
+                                    </h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="media comment d-flex">
-                                            <div class="media-body">
-                                                <div class="media-body-header">
-                                                    <h4 class="comment-author">{{ 'サンプル問題集'.$i+1 }}</h4>
-                                                    <span class="comment-date text-muted">7 日前</span>
-                                                    <span class="comment-reply">問題数：3問</span>
-                                                    <span class="comment-reply">制限時間：60分</span>
-                                                    <span class="comment-share">平均点：99.9点</span>
-                                                </div>
-                                            サンプルで作った問題です。
-                                            <div class="d-flex">
-                                                    <span></span>
-                                            </div>
-                                            </div>
+
+                                        <!-- サムネ画像 -->
+                                        <div class="mb-3">
+                                            <div class="card-image" style="
+                                            background:url({{ asset('storage/'.$question_group->image_puth) }});
+                                            background-repeat  : no-repeat;
+                                            background-size    : cover;
+                                            background-position: center center;
+                                            height: 16rem; border-radius: .5rem;
+                                            "></div>
                                         </div>
 
+                                        <div class="mb-3">
+                                            <!-- 公開日 -->
+                                            <div class="">
+                                                公開日：{{\Carbon\Carbon::parse( $question_group->published_at )->format('Y年m月d日 H:i')}}
+                                            </div>
+                                            <div class="media comment d-flex">
+                                                <div class="media-body">
+                                                    <div class="media-body-header">
+                                                        <span class="comment-date text-muted">7 日前</span>
+                                                        <span class="comment-reply">問題数：3問</span>
+                                                        <span class="comment-reply">制限時間：60分</span>
+                                                        <span class="comment-share">平均点：99.9点</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- タグ -->
+                                            @if ($question_group->tags)
+                                            <div class="d-flex gap-1 align-items-center">
+                                                @foreach ( explode('　',$question_group->tags) as $tag )
+                                                <div class="border p-1 " style="font-size:.8rem;">{{ $tag }}</div>
+                                                @endforeach
+                                            </div>
+                                            @endif
+                                        </div>
+
+
+                                        <div class="mb-3 p-3 bg-light">
+                                            {{ $question_group->resume }}
+                                        </div>
                                     </div>
-                                    <div class="modal-footer">
+                                    <div class="modal-body text-center fw-bold">
+                                        この問題に挑戦しますか？
+                                    </div>
+                                    <div class="modal-footer border-0">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
-                                        <a href="{{ route('question', ['id'=>$i+1, 'num'=>'1',] ) }}" class="btn btn-primary">開始</a>
+                                        <a href="{{ route('play_question', $question_group->id ) }}" class="btn btn-success">挑戦する</a>
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +249,6 @@
                 <div class="row my-5 mx-3">
 
                     @for ($i = 0; $i < 12; $i++)
-
                         <div class="col-md-6 col-lg-4 p-3 pb-3">
                             <a href="#" class="card border-0 text-dark"
                             data-bs-toggle="modal" data-bs-target="#questionModal{{ $i+1 }}"
@@ -252,6 +276,7 @@
                             </a href="#">
                         </div>
                         <!-- Modal -->
+
                         <div class="modal fade" id="questionModal{{ $i+1 }}" tabindex="-1" aria-labelledby="questionModal{{ $i+1 }}Label" aria-hidden="true">
                             <div class="modal-dialog">
                             <div class="modal-content">

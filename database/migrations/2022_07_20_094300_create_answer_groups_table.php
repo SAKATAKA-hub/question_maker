@@ -19,7 +19,8 @@ class CreateAnswerGroupsTable extends Migration
     {
         Schema::create('answer_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('score',150)->comment('点数');
+            $table->string('score',10)->comment('点数')->default(0);;
+
 
             $table->unsignedBigInteger('user_id')->comment('回答者ID');
             $table->foreign('user_id')->references('id')->on('users') //存在しないidの登録は不可

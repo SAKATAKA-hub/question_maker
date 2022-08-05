@@ -1,15 +1,5 @@
 <template>
-    <div>{{ formatTime }}
-        <!-- <div id="timer">
-            <div class="timer">
-                <div class="time">
-                    {{ formatTime }}
-                </div>
-                <button v-on:click="start" v-if="!timerOn">Start</button>
-                <button v-on:click="stop" v-if="timerOn">Stop</button>
-            </div>
-        </div> -->
-    </div>
+    <div>{{ formatTime }}</div>
 </template>
 
 <script>
@@ -52,7 +42,7 @@ export default {
             } else if (this.sec <= 0 && this.min >= 1) {
                 this.min --;
                 this.sec = 59;
-            } else if(this.sec <= 0 && this.min <= 0) {
+            } else if(this.sec <= 1 && this.min <= 0 && this.hour <= 0) {
                 this.complete();
             } else {
                 this.sec --;
@@ -61,7 +51,7 @@ export default {
 
         start: function() {
             let self = this;
-            this.timerObj = setInterval(function() { self.count() }, 1000)
+            this.timerObj = setInterval(function() { self.count() }, 1000);
             this.timerOn = true; //timerがONであることを状態として保持
         },
 
@@ -71,7 +61,12 @@ export default {
         // },
 
         complete: function() {
-            clearInterval(this.timerObj)
+
+            this.sec = 0;
+            clearInterval(this.timerObj);
+
+            //親コンポーネントの'time_up'関数を実行
+            this.$emit('time_up');
         }
     },
     computed: {

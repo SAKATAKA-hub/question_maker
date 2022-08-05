@@ -5314,81 +5314,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'timer',
-  data: function data() {
-    return {
-      min: 59,
-      sec: 59,
-      timerOn: false,
-      timerObj: null
-    };
-  },
-  methods: {
-    count: function count() {
-      if (this.sec <= 0 && this.min >= 1) {
-        this.min--;
-        this.sec = 59;
-      } else if (this.sec <= 0 && this.min <= 0) {
-        this.complete();
-      } else {
-        this.sec--;
-      }
-    },
-    start: function start() {
-      var self = this;
-      this.timerObj = setInterval(function () {
-        self.count();
-      }, 1000);
-      this.timerOn = true; //timerがONであることを状態として保持
-    },
-    stop: function stop() {
-      clearInterval(this.timerObj);
-      this.timerOn = false; //timerがOFFであることを状態として保持
-    },
-    complete: function complete() {
-      clearInterval(this.timerObj);
-    }
-  },
-  computed: {
-    formatTime: function formatTime() {
-      var timeStrings = [this.min.toString(), this.sec.toString()].map(function (str) {
-        if (str.length < 2) {
-          return "0" + str;
-        } else {
-          return str;
-        }
-      });
-      return timeStrings[0] + ":" + timeStrings[1];
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/SubmitButtonComponent.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/SubmitButtonComponent.vue?vue&type=script&lang=js& ***!
@@ -5826,6 +5751,397 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.answer_booleans = array;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'timer',
+  data: function data() {
+    return {
+      hour: 0,
+      min: 0,
+      sec: 0,
+      timerOn: false,
+      timerObj: null
+    };
+  },
+  props: {
+    //制限時間
+    time_limit: {
+      type: String,
+      "default": '01:00:00'
+    }
+  },
+  mounted: function mounted() {
+    var times = this.time_limit.split(':');
+    this.hour = times[0];
+    this.min = times[1];
+    this.sec = times[2]; // カウントの開始
+
+    this.start();
+  },
+  methods: {
+    count: function count() {
+      if (this.sec <= 0 && this.min <= 0 && this.hour >= 1) {
+        this.hour--;
+        this.min = 59;
+        this.sec = 59;
+      } else if (this.sec <= 0 && this.min >= 1) {
+        this.min--;
+        this.sec = 59;
+      } else if (this.sec <= 1 && this.min <= 0 && this.hour <= 0) {
+        this.complete();
+      } else {
+        this.sec--;
+      }
+    },
+    start: function start() {
+      var self = this;
+      this.timerObj = setInterval(function () {
+        self.count();
+      }, 1000);
+      this.timerOn = true; //timerがONであることを状態として保持
+    },
+    // stop: function() {
+    //     clearInterval(this.timerObj);
+    //     this.timerOn = false; //timerがOFFであることを状態として保持
+    // },
+    complete: function complete() {
+      this.sec = 0;
+      clearInterval(this.timerObj); //親コンポーネントの'time_up'関数を実行
+
+      this.$emit('time_up');
+    }
+  },
+  computed: {
+    formatTime: function formatTime() {
+      var timeStrings = [this.hour.toString(), this.min.toString(), this.sec.toString()].map(function (str) {
+        if (str.length < 2) {
+          return "0" + str;
+        } else {
+          return str;
+        }
+      });
+      return "残り時間：" + timeStrings[0] + "時間" + timeStrings[1] + "分" + timeStrings[2] + "秒";
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'timer',
+  data: function data() {
+    return {
+      hour: 0,
+      min: 0,
+      sec: 0,
+      timerOn: false,
+      timerObj: null
+    };
+  },
+  props: {
+    //制限時間
+    time_limit: {
+      type: String,
+      "default": '01:00:00'
+    }
+  },
+  mounted: function mounted() {
+    var times = this.time_limit.split(':');
+    this.hour = times[0];
+    this.min = times[1];
+    this.sec = times[2]; // カウントの開始
+
+    this.start();
+  },
+  methods: {
+    count: function count() {
+      if (this.sec <= 0 && this.min <= 0 && this.hour >= 1) {
+        this.hour--;
+        this.min = 59;
+        this.sec = 59;
+      } else if (this.sec <= 0 && this.min >= 1) {
+        this.min--;
+        this.sec = 59;
+      } else if (this.sec <= 1 && this.min <= 0 && this.hour <= 0) {
+        this.complete();
+      } else {
+        this.sec--;
+      }
+    },
+    start: function start() {
+      var self = this;
+      this.timerObj = setInterval(function () {
+        self.count();
+      }, 1000);
+      this.timerOn = true; //timerがONであることを状態として保持
+    },
+    // stop: function() {
+    //     clearInterval(this.timerObj);
+    //     this.timerOn = false; //timerがOFFであることを状態として保持
+    // },
+    complete: function complete() {
+      this.sec = 0;
+      clearInterval(this.timerObj); //親コンポーネントの'time_up'関数を実行
+
+      this.$emit('time_up');
+    }
+  },
+  computed: {
+    formatTime: function formatTime() {
+      var timeStrings = [this.hour.toString(), this.min.toString(), this.sec.toString()].map(function (str) {
+        if (str.length < 2) {
+          return "0" + str;
+        } else {
+          return str;
+        }
+      });
+      return "残り時間：" + timeStrings[0] + "時間" + timeStrings[1] + "分" + timeStrings[2] + "秒";
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      /* test用フォーム・データの利用 */
+      test: {
+        form: false,
+        data: false
+      },
+
+      /* token ( ログイン処理のページ遷移時に利用 )*/
+      token: document.querySelector('[name="csrf_token"]').content,
+
+      /* 問題集ID*/
+      question_group_id: document.querySelector('[name="question_group_id"]').content,
+
+      /* ルート */
+      route: {
+        get_questions_api: document.querySelector('[name="route_get_questions_api"]').content,
+        //登録済メールアドレスか確認するAPI
+        scoring: document.querySelector('[name="route_scoring"]').content //採点
+
+      },
+      question_num: 0,
+      questions: [],
+      time_limit: null
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    console.log('Component mounted.'); // [ 非同期通信 ]
+
+    fetch(this.route.get_questions_api, {
+      method: 'POST',
+      body: new URLSearchParams({
+        _token: this.token,
+        //token
+        question_group_id: this.question_group_id
+      })
+    }).then(function (response) {
+      if (!response.ok) {
+        alert('データ送信エラーが発生しました。');
+      }
+
+      return response.json();
+    }) // [ 非同期通信・成功処理 ]
+    .then(function (json) {
+      _this.questions = json.questions;
+      _this.time_limit = json.time_limit;
+      console.log(json);
+    });
+  },
+  methods: {
+    /* タイムアップ */
+    timeUP: function timeUP() {
+      this.question_num = this.questions.length + 1;
+    },
+    numAdd: function numAdd() {
+      this.question_num++;
+    },
+    numSub: function numSub() {
+      this.question_num--;
     }
   }
 });
@@ -6681,14 +6997,19 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
+/* 問題を解く */
+
+Vue.component('play-question-component', (__webpack_require__(/*! ./components/PlayQuestion/PlayQuestionComponent.vue */ "./resources/js/components/PlayQuestion/PlayQuestionComponent.vue")["default"]));
+Vue.component('count-up-timer-component', (__webpack_require__(/*! ./components/PlayQuestion/CountUpTimerComponent.vue */ "./resources/js/components/PlayQuestion/CountUpTimerComponent.vue")["default"]));
+Vue.component('count-down-timer-component', (__webpack_require__(/*! ./components/PlayQuestion/CountDownTimerComponent.vue */ "./resources/js/components/PlayQuestion/CountDownTimerComponent.vue")["default"]));
 /* 問題作成 */
 
 Vue.component('read-image-file-component', (__webpack_require__(/*! ./components/MakeQuestion/ReadImageFileComponent.vue */ "./resources/js/components/MakeQuestion/ReadImageFileComponent.vue")["default"]));
 Vue.component('select-answer-component', (__webpack_require__(/*! ./components/MakeQuestion/SelectAnswerComponent.vue */ "./resources/js/components/MakeQuestion/SelectAnswerComponent.vue")["default"]));
 /* 部品アイテム */
 
-Vue.component('submit-button-component', (__webpack_require__(/*! ./components/Items/SubmitButtonComponent.vue */ "./resources/js/components/Items/SubmitButtonComponent.vue")["default"]));
-Vue.component('count-up-timer-component', (__webpack_require__(/*! ./components/Items/CountUpTimerComponent.vue */ "./resources/js/components/Items/CountUpTimerComponent.vue")["default"]));
+Vue.component('submit-button-component', (__webpack_require__(/*! ./components/Items/SubmitButtonComponent.vue */ "./resources/js/components/Items/SubmitButtonComponent.vue")["default"])); // Vue.component('count-up-timer-component', require('./components/Items/CountUpTimerComponent.vue').default);
+
 /* 認証 */
 
 Vue.component('reset-pass-component', (__webpack_require__(/*! ./components/UserAuth/ResetPassComponent.vue */ "./resources/js/components/UserAuth/ResetPassComponent.vue")["default"]));
@@ -11768,10 +12089,10 @@ defineJQueryPlugin(Toast);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11785,7 +12106,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#timer[data-v-54093418] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.time[data-v-54093418] {\n  font-size: 100px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#timer[data-v-f75a5642] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.time[data-v-f75a5642] {\n  font-size: 100px;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n#timer[data-v-c2883c50] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.time[data-v-c2883c50] {\n  font-size: 100px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29287,10 +29632,10 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -29300,7 +29645,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_style_index_0_id_54093418_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountDownTimerComponent_vue_vue_type_style_index_0_id_f75a5642_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css&");
 
             
 
@@ -29309,11 +29654,41 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_style_index_0_id_54093418_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountDownTimerComponent_vue_vue_type_style_index_0_id_f75a5642_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_style_index_0_id_54093418_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountDownTimerComponent_vue_vue_type_style_index_0_id_f75a5642_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_style_index_0_id_c2883c50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_style_index_0_id_c2883c50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_style_index_0_id_c2883c50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
@@ -29635,47 +30010,6 @@ component.options.__file = "resources/js/components/ExampleComponent.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/Items/CountUpTimerComponent.vue":
-/*!*****************************************************************!*\
-  !*** ./resources/js/components/Items/CountUpTimerComponent.vue ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _CountUpTimerComponent_vue_vue_type_template_id_54093418_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CountUpTimerComponent.vue?vue&type=template&id=54093418&scoped=true& */ "./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=template&id=54093418&scoped=true&");
-/* harmony import */ var _CountUpTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CountUpTimerComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=script&lang=js&");
-/* harmony import */ var _CountUpTimerComponent_vue_vue_type_style_index_0_id_54093418_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css& */ "./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-;
-
-
-/* normalize component */
-
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _CountUpTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CountUpTimerComponent_vue_vue_type_template_id_54093418_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _CountUpTimerComponent_vue_vue_type_template_id_54093418_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  "54093418",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Items/CountUpTimerComponent.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
 /***/ "./resources/js/components/Items/SubmitButtonComponent.vue":
 /*!*****************************************************************!*\
   !*** ./resources/js/components/Items/SubmitButtonComponent.vue ***!
@@ -29793,6 +30127,127 @@ component.options.__file = "resources/js/components/MakeQuestion/SelectAnswerCom
 
 /***/ }),
 
+/***/ "./resources/js/components/PlayQuestion/CountDownTimerComponent.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/CountDownTimerComponent.vue ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CountDownTimerComponent_vue_vue_type_template_id_f75a5642_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CountDownTimerComponent.vue?vue&type=template&id=f75a5642&scoped=true& */ "./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=template&id=f75a5642&scoped=true&");
+/* harmony import */ var _CountDownTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CountDownTimerComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _CountDownTimerComponent_vue_vue_type_style_index_0_id_f75a5642_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css& */ "./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _CountDownTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CountDownTimerComponent_vue_vue_type_template_id_f75a5642_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _CountDownTimerComponent_vue_vue_type_template_id_f75a5642_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "f75a5642",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PlayQuestion/CountDownTimerComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PlayQuestion/CountUpTimerComponent.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/CountUpTimerComponent.vue ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CountUpTimerComponent_vue_vue_type_template_id_c2883c50_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CountUpTimerComponent.vue?vue&type=template&id=c2883c50&scoped=true& */ "./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=template&id=c2883c50&scoped=true&");
+/* harmony import */ var _CountUpTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CountUpTimerComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _CountUpTimerComponent_vue_vue_type_style_index_0_id_c2883c50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css& */ "./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _CountUpTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CountUpTimerComponent_vue_vue_type_template_id_c2883c50_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _CountUpTimerComponent_vue_vue_type_template_id_c2883c50_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "c2883c50",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PlayQuestion/CountUpTimerComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PlayQuestion/PlayQuestionComponent.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/PlayQuestionComponent.vue ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _PlayQuestionComponent_vue_vue_type_template_id_7bd3a659___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlayQuestionComponent.vue?vue&type=template&id=7bd3a659& */ "./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=template&id=7bd3a659&");
+/* harmony import */ var _PlayQuestionComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlayQuestionComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PlayQuestionComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PlayQuestionComponent_vue_vue_type_template_id_7bd3a659___WEBPACK_IMPORTED_MODULE_0__.render,
+  _PlayQuestionComponent_vue_vue_type_template_id_7bd3a659___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PlayQuestion/PlayQuestionComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/UserAuth/RegisterComponent.vue":
 /*!****************************************************************!*\
   !*** ./resources/js/components/UserAuth/RegisterComponent.vue ***!
@@ -29887,22 +30342,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountUpTimerComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
 /***/ "./resources/js/components/Items/SubmitButtonComponent.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/Items/SubmitButtonComponent.vue?vue&type=script&lang=js& ***!
@@ -29951,6 +30390,54 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountDownTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountDownTimerComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountDownTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountUpTimerComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayQuestionComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PlayQuestionComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayQuestionComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/UserAuth/RegisterComponent.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/UserAuth/RegisterComponent.vue?vue&type=script&lang=js& ***!
@@ -29983,15 +30470,28 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css&":
-/*!**************************************************************************************************************************!*\
-  !*** ./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css& ***!
-  \**************************************************************************************************************************/
+/***/ "./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_style_index_0_id_54093418_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=style&index=0&id=54093418&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountDownTimerComponent_vue_vue_type_style_index_0_id_f75a5642_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=style&index=0&id=f75a5642&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_style_index_0_id_c2883c50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=style&index=0&id=c2883c50&scoped=true&lang=css&");
 
 
 /***/ }),
@@ -30009,23 +30509,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=template&id=54093418&scoped=true&":
-/*!************************************************************************************************************!*\
-  !*** ./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=template&id=54093418&scoped=true& ***!
-  \************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_template_id_54093418_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_template_id_54093418_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_template_id_54093418_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountUpTimerComponent.vue?vue&type=template&id=54093418&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=template&id=54093418&scoped=true&");
 
 
 /***/ }),
@@ -30077,6 +30560,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectAnswerComponent_vue_vue_type_template_id_cc2d0c1a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectAnswerComponent_vue_vue_type_template_id_cc2d0c1a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SelectAnswerComponent.vue?vue&type=template&id=cc2d0c1a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/MakeQuestion/SelectAnswerComponent.vue?vue&type=template&id=cc2d0c1a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=template&id=f75a5642&scoped=true&":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=template&id=f75a5642&scoped=true& ***!
+  \*********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountDownTimerComponent_vue_vue_type_template_id_f75a5642_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountDownTimerComponent_vue_vue_type_template_id_f75a5642_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountDownTimerComponent_vue_vue_type_template_id_f75a5642_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountDownTimerComponent.vue?vue&type=template&id=f75a5642&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=template&id=f75a5642&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=template&id=c2883c50&scoped=true&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=template&id=c2883c50&scoped=true& ***!
+  \*******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_template_id_c2883c50_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_template_id_c2883c50_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountUpTimerComponent_vue_vue_type_template_id_c2883c50_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CountUpTimerComponent.vue?vue&type=template&id=c2883c50&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=template&id=c2883c50&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=template&id=7bd3a659&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=template&id=7bd3a659& ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayQuestionComponent_vue_vue_type_template_id_7bd3a659___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayQuestionComponent_vue_vue_type_template_id_7bd3a659___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayQuestionComponent_vue_vue_type_template_id_7bd3a659___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PlayQuestionComponent.vue?vue&type=template&id=7bd3a659& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=template&id=7bd3a659&");
 
 
 /***/ }),
@@ -30148,45 +30682,6 @@ var render = function () {
           ]),
         ]),
       ]),
-    ]),
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=template&id=54093418&scoped=true&":
-/*!***************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Items/CountUpTimerComponent.vue?vue&type=template&id=54093418&scoped=true& ***!
-  \***************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "timer" } }, [
-    _c("div", { staticClass: "timer" }, [
-      _c("div", { staticClass: "time" }, [
-        _vm._v("\n            " + _vm._s(_vm.formatTime) + "\n        "),
-      ]),
-      _vm._v(" "),
-      !_vm.timerOn
-        ? _c("button", { on: { click: _vm.start } }, [_vm._v("Start")])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.timerOn
-        ? _c("button", { on: { click: _vm.stop } }, [_vm._v("Stop")])
-        : _vm._e(),
     ]),
   ])
 }
@@ -30795,6 +31290,382 @@ var staticRenderFns = [
           attrs: { for: "answer_booleans0" },
         },
         [_c("span", [_vm._v("正　解")])]
+      ),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=template&id=f75a5642&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountDownTimerComponent.vue?vue&type=template&id=f75a5642&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v(_vm._s(_vm.formatTime))])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=template&id=c2883c50&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/CountUpTimerComponent.vue?vue&type=template&id=c2883c50&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v(_vm._s(_vm.formatTime))])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=template&id=7bd3a659&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PlayQuestion/PlayQuestionComponent.vue?vue&type=template&id=7bd3a659& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "w-100 mx-auto", staticStyle: { "max-width": "600px" } },
+    [
+      _vm.test.form
+        ? _c("div", [
+            _c(
+              "form",
+              {
+                attrs: { action: _vm.route.get_questions_api, method: "POST" },
+              },
+              [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.token },
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "question_group_id" },
+                  domProps: { value: _vm.question_group_id },
+                }),
+                _vm._v(" "),
+                _c("button", { attrs: { type: "submit" } }, [
+                  _vm._v("問題集の受け取り"),
+                ]),
+              ]
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.time_limit
+        ? _c(
+            "div",
+            [
+              _c("count-up-timer-component", {
+                attrs: { time_limit: _vm.time_limit },
+                on: { time_up: _vm.timeUP },
+              }),
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("form", { attrs: { action: _vm.route.scoring, method: "post" } }, [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.token },
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "question_group_id" },
+          domProps: { value: _vm.question_group_id },
+        }),
+        _vm._v(" "),
+        _c(
+          "ul",
+          { staticClass: "ps-0", staticStyle: { "list-style": "none" } },
+          [
+            _vm._l(_vm.questions, function (question, q_num) {
+              return _c("li", { key: q_num }, [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.question_num == q_num,
+                        expression: "question_num == q_num",
+                      },
+                    ],
+                    staticClass: "card",
+                  },
+                  [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("h5", { staticClass: "fw-bold" }, [
+                        _vm._v("問題" + _vm._s(q_num + 1)),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "bg-light p-3" }, [
+                        _vm._v(_vm._s(question.text)),
+                      ]),
+                      _vm._v(" "),
+                      question.image
+                        ? _c(
+                            "div",
+                            {
+                              staticClass: "overflow-hidden w-100 mb-3",
+                              staticStyle: { "border-radius": ".5rem" },
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "w-100",
+                                attrs: { src: question.image, alt: "問題画像" },
+                              }),
+                            ]
+                          )
+                        : _vm._e(),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("div", { staticClass: "form-text" }, [
+                        question.answer_type == 0
+                          ? _c("div", {}, [
+                              _vm._v("解答をテキストで入力してください。"),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        question.answer_type == 1
+                          ? _c("div", {}, [
+                              _vm._v("解答を1つ選択してください。"),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        question.answer_type == 2
+                          ? _c("div", {}, [
+                              _vm._v("解答を全て選択してください。"),
+                            ])
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        question.answer_type == 0
+                          ? _c(
+                              "ul",
+                              {
+                                staticClass: "ps-0 mb-3",
+                                staticStyle: { "list-style": "none" },
+                              },
+                              [
+                                _c("li", [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      name: "answer_" + q_num,
+                                      placeholder: "入力してください",
+                                    },
+                                  }),
+                                ]),
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        question.answer_type == 1
+                          ? _c(
+                              "ul",
+                              {
+                                staticClass: "ps-0 mb-3",
+                                staticStyle: { "list-style": "none" },
+                              },
+                              _vm._l(
+                                question.option_answer_texts,
+                                function (option_answer_text, o_num) {
+                                  return _c(
+                                    "li",
+                                    { key: o_num, staticClass: "w-100" },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "input-group mb-2" },
+                                        [
+                                          _c("input", {
+                                            staticClass: "btn-check",
+                                            attrs: {
+                                              type: "radio",
+                                              name: "answer_" + q_num,
+                                              id: "answer_" + q_num + o_num,
+                                            },
+                                            domProps: {
+                                              value: option_answer_text,
+                                            },
+                                          }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "label",
+                                            {
+                                              staticClass:
+                                                "btn btn-outline-success text-start w-100",
+                                              attrs: {
+                                                for: "answer_" + q_num + o_num,
+                                              },
+                                            },
+                                            [_vm._v(_vm._s(option_answer_text))]
+                                          ),
+                                        ]
+                                      ),
+                                    ]
+                                  )
+                                }
+                              ),
+                              0
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        question.answer_type == 2
+                          ? _c(
+                              "ul",
+                              {
+                                staticClass: "ps-0 mb-3",
+                                staticStyle: { "list-style": "none" },
+                              },
+                              _vm._l(
+                                question.option_answer_texts,
+                                function (option_answer_text, o_num) {
+                                  return _c(
+                                    "li",
+                                    { key: o_num, staticClass: "w-100" },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "input-group mb-2" },
+                                        [
+                                          _c("input", {
+                                            staticClass: "btn-check",
+                                            attrs: {
+                                              type: "checkbox",
+                                              name: "answer_" + q_num + "[]",
+                                              id: "answer_" + q_num + o_num,
+                                            },
+                                            domProps: {
+                                              value: option_answer_text,
+                                            },
+                                          }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "label",
+                                            {
+                                              staticClass:
+                                                "btn btn-outline-success text-start w-100",
+                                              attrs: {
+                                                for: "answer_" + q_num + o_num,
+                                              },
+                                            },
+                                            [_vm._v(_vm._s(option_answer_text))]
+                                          ),
+                                        ]
+                                      ),
+                                    ]
+                                  )
+                                }
+                              ),
+                              0
+                            )
+                          : _vm._e(),
+                      ]),
+                    ]),
+                  ]
+                ),
+              ])
+            }),
+            _vm._v(" "),
+            _c("li", [
+              _vm.question_num >= _vm.questions.length
+                ? _c("div", {}, [_vm._m(0)])
+                : _vm._e(),
+            ]),
+          ],
+          2
+        ),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-flex justify-content-between mt-3" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-light border rounded-pill",
+            attrs: {
+              disabled:
+                _vm.question_num <= 0 ||
+                _vm.question_num > _vm.questions.length,
+            },
+            on: { click: _vm.numSub },
+          },
+          [_c("i", { staticClass: "bi bi-arrow-left fw-bold" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-light border rounded-pill",
+            attrs: { disabled: _vm.question_num >= _vm.questions.length },
+            on: { click: _vm.numAdd },
+          },
+          [_c("i", { staticClass: "bi bi-arrow-right fw-bold" })]
+        ),
+      ]),
+    ]
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card card-body text-center" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("採点する")]
       ),
     ])
   },

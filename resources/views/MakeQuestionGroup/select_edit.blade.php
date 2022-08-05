@@ -94,11 +94,13 @@
                             更新日：{{ \Carbon\Carbon::parse( $question_group->max_updated_at )->format('Y年m月d日 H:i') }}
 
                             <!-- タグ -->
+                            @if ($question_group->tags)
                             <div class="d-flex gap-1">
                                 @foreach ( explode('　',$question_group->tags) as $tag )
                                 <div class="border" style="padding:0 .5rem; font-size:.8rem;">{{ $tag }}</div>
                                 @endforeach
                             </div>
+                            @endif
                         </div>
                         <div class="mb-3 ">
                             説明文

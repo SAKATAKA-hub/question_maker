@@ -29,9 +29,10 @@
         @include('_parts.header')
     </header>
     <main>
+
         <!-- 見出しタイトル -->
         <section class="border-bottom">
-            <div class="container-1200">
+            <div class="container-1200 mb-0">
 
                 <h2 class="text-secondary fw-bold">@yield('title')</h2>
 
@@ -39,8 +40,8 @@
         </section>
 
         <!-- breadcrumb -->
-        <section  class="bg-white">
-            <div class="container-1200 ">
+        <section>
+            <div class="mx-auto px-3" style="max-width:1200px;">
                 <nav class="mb-0" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 bg-white">
                         <li class="breadcrumb-item"><a href="{{route('questions_list')}}" class="text-success">
@@ -90,8 +91,6 @@
     <!-- bootstrap JavaScript -->
     @yield('script')
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <!-- avant-ui JavaScript -->
-    {{-- <script src="{{ asset('avant-ui/js/avantui.js') }}" defer></script> --}}
 
 </body>
 </html>

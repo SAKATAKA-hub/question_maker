@@ -39,14 +39,6 @@ class Question extends Model
         }
 
 
-        // /**
-        //  * 求職者：基本情報 $worker->info
-        //  * @return \App\Models\WorkerInfo
-        // */
-        // public function getInfoAttribute(){
-        //     return \App\Models\WorkerInfo::where('worker_id',$this->id)->first();
-        // }
-
     /*
     |--------------------------------------------------------------------------
     | アクセサー
@@ -66,6 +58,73 @@ class Question extends Model
             return Storage::exists( $this->image ) ? $this->image : $no_image;
         }
 
+
+        /**
+         * 問題の選択肢（解答用） $question->option_answer_texts
+         * @return Array
+        */
+        public function getOptionAnswerTextsAttribute(){
+
+            //選択肢のオブジェクトを取得
+            $question_options =
+            QuestionOption::where('question_id', $this->id)->get();
+
+            //選択肢のテキストのみを配列へ保存
+            $options_array = [];
+            foreach ($question_options as $question_option) {
+                $options_array[] = $question_option->answer_text;
+            }
+
+            //選択肢のテキストをランダムに並び替え
+            $rand_array = [];
+            $count = count($options_array)-1;
+            while ($count >= 0) {
+
+                $num = mt_rand( 0, $count );
+                $rand_array[] = $options_array[ $num ];
+                array_splice( $options_array, $num , 1 );
+
+                $count--;
+            }
+
+
+            return $rand_array;
+        }
+
+
+
+
+        /**
+         * 問題の正解 $question->answer
+         * @return String
+        */
+        public function getAnswerAttribute(){
+
+            switch ( $this->answer_type ) {
+                /* 解答選択肢が複数の時 */
+                case 2:
+                    $question_options =
+                    QuestionOption::where('question_id', $this->id)->where('answer_boolean', 1 )->get();
+
+                    $answer = [];
+                    foreach ($question_options as $question_option) {
+                        $answer[] = $question_option->answer_text;
+                    }
+                    $answer = implode(' ',$answer);
+                    break;
+
+                /* それ以外の時 */
+                default:
+                    $question_option =
+                    QuestionOption::where('question_id', $this->id)->where('answer_boolean', 1 )->first();
+
+                    $answer = $question_option->answer_text;
+                    break;
+                //
+            }
+
+            return $answer;
+        }
     //
     /*
     |--------------------------------------------------------------------------
