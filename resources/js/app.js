@@ -24,9 +24,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 /* 問題を解く */
 Vue.component('play-question-component',  require('./components/PlayQuestion/PlayQuestionComponent.vue').default);
-Vue.component('count-up-timer-component', require('./components/PlayQuestion/CountUpTimerComponent.vue').default);
 Vue.component('count-down-timer-component', require('./components/PlayQuestion/CountDownTimerComponent.vue').default);
-
+Vue.component('count-up-timer-component', require('./components/PlayQuestion/CountUpTimerComponent.vue').default);
 
 /* 問題作成 */
 Vue.component('read-image-file-component', require('./components/MakeQuestion/ReadImageFileComponent.vue').default);

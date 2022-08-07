@@ -45,19 +45,22 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-auto fs-5">
-                            あなたの受検結果
+                        <h5 class="fs-5 mb-0">あなたの受検結果</h5>
+                        <div class="col">
+
                         </div>
-                        <div class="col  text-end">
+                        <div class="col-auto">
+                            <div class="d-flex justify-content-between align-items-end"  style="width:10rem;">
+                                    <span class="">正解率</span>
+                                    <span class="">
+                                        <strong class="fs-3">{{$answer_group->score}}</strong>％
+                                    </span>
+                            </div>
                             <div class="">
-                                <span class="fs-1">{{$question_group->score}}</span>点
+                                解答時間 {{$answer_group->elapsed_time}}
                             </div>
                         </div>
                     </div>
-                    <div class="text-end">
-                        解答時間　00:00:01
-                    </div>
-
                 </div>
             </div>
             <div class="card">
@@ -72,16 +75,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($questions as $num => $question)
+                            @foreach ($answers as $num => $answer)
                             <tr>
                                 <th scope="row" class="bg-light">{{ $num + 1 }}</th>
+
                                 <td class="bg-light">
                                     <span class="d-inline-block text-truncate d-md-none"
-                                    style="max-width: 100px;">{{ $question->text }}</span>
-                                    <span class="d-none d-md-inline">{{ $question->text }}</span>
+                                    style="max-width: 100px;">{{ $questions[$num]->text }}</span>
+                                    <span class="d-none d-md-inline">{{ $questions[$num]->text }}</span>
                                 </td>
-                                <td class="" >{{ $question['input_answer']['text'] }}</td>
-                                @if ($question['input_answer']['is_correct'])
+
+                                <td class="" >{{ $answer->text }}</td>
+                                @if ( $answer->is_correct )
                                     <th class="text-center text-info">
                                         <i class="bi bi-record fs-5"></i>
                                         <span class="d-none d-sm-inline">正　解</span>
@@ -97,6 +102,46 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+        </div>
+    </section>
+    <section>
+        <div class="container-1200 my-5">
+            <div class="row gap-3 px-3">
+                <div class="col-md h-100 card">
+                    <div class="card-body text-center">
+                        <h6 class="mb-3">もう一度同じ問題に挑戦する</h6>
+                        <a href="{{ route('play_question',$question_group) }}" class="btn rounded-pill btn-outline-success mx-auto"
+                        >GO!</a>
+                    </div>
+                </div>
+                <div class="col-md h-100 card">
+                    <div class="card-body text-center">
+                        <h6 class="mb-3">別の問題に挑戦する</h6>
+                        <a href="{{ route('questions_list') }}" class="btn rounded-pill btn-outline-success mx-auto"
+                        >GO!</a>
+                    </div>
+                </div>
+                @if (Auth::check())
+                    <div class="col-md h-100 card">
+                        <div class="card-body text-center">
+                            <h6 class="mb-3">これまでの成績を見る</h6>
+                            <a href="{{route('results.list')}}" class="btn rounded-pill btn-outline-success mx-auto"
+                            >GO!</a>
+                        </div>
+                    </div>
+                @else
+                    <div class="col-md h-100 card">
+                        <div class="card-body text-center">
+                            <h6 class="mb-3">新しい問題を作る</h6>
+                            <a href="{{ route('make_question_group.list') }}" class="btn rounded-pill btn-outline-success mx-auto"
+                            >GO!</a>
+                        </div>
+                    </div>
+
+                @endif
+
             </div>
 
         </div>

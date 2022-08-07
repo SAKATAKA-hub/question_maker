@@ -219,10 +219,12 @@
                     @endforeach
                 </div>
 
+                <!-- ページネーション -->
                 <div class="mb-5 d-flex justify-content-center">
                     {{ $question_groups->links('vendor.pagination.bootstrap-4') }}
-
                 </div>
+
+
             </div>
         </section>
         <div class="container-1200 divider divider-dashed my-5"></div><!---- Divider ---->

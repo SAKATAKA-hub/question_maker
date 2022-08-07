@@ -14,7 +14,33 @@ class AnswerGroup extends Model
     use HasFactory;
     public $timestamps = true;
     protected $fillable = [
-        'score','user_id','question_group_id',
+        'score','elapsed_time','user_id','question_group_id',
     ];
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | リレーション
+    |--------------------------------------------------------------------------
+    */
+        # QuestionGroupテーブルとのリレーション
+        public function question_group()
+        {
+            return $this->belongsTo(QuestionGroup::class);
+        }
+
+
+
+
+        # Answerテーブルとのリレーション
+        public function answers()
+        {
+            return $this->hasMany(Answer::class);
+        }
+
+
+
+
 
 }

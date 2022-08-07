@@ -1,5 +1,5 @@
 <template>
-    <div>{{ formatTime }}</div>
+    <div class="d-inline">{{ formatTime }}</div>
 </template>
 
 <script>
@@ -22,13 +22,16 @@ export default {
     },
     mounted() {
 
-        const times = this.time_limit.split(':')
-        this.hour = times[0];
-        this.min  = times[1];
-        this.sec  = times[2];
+        // 制限時間が指定されているとき
+        if(this.time_limit){
+            const times = this.time_limit.split(':')
+            this.hour = times[0];
+            this.min  = times[1];
+            this.sec  = times[2];
 
-        // カウントの開始
-        this.start();
+            // カウントの開始
+            this.start();
+        }
 
     },
     methods: {
@@ -88,19 +91,9 @@ export default {
 
             })
 
-            return "残り時間：" +timeStrings[0] + "時間" + timeStrings[1] + "分" + timeStrings[2] + "秒";
+            // return timeStrings[0] + ":" + timeStrings[1] + ":" + timeStrings[2] ;
+            return timeStrings[0] + "時間" + timeStrings[1] + "分" + timeStrings[2] + "秒" ;
         }
     }
 }
 </script>
-
-<style scoped>
-#timer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.time {
-  font-size: 100px;
-}
-</style>

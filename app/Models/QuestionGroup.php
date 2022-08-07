@@ -15,10 +15,9 @@ class QuestionGroup extends Model
     use HasFactory;
     public $timestamps = true;
     protected $fillable = [
-        'title','resume','image','tags','published_at','user_id',
+        'title','resume','image','tags','time_limit','published_at','user_id',
+        'accessed_count','favorites_count','average_score','max_score','average_elapsed_time',
     ];
-
-
 
 
     /*

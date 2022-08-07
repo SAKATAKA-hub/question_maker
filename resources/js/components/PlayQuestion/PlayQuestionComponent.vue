@@ -13,15 +13,25 @@
 
 
 
-        <!-- 制限時間 -->
-        <div v-if="time_limit">
-                <count-up-timer-component :time_limit="time_limit" @time_up="timeUP"></count-up-timer-component>
+        <div class="mb-2">
+            <!-- 残り時間 -->
+            <div v-if="time_limit">
+                残り時間
+                <count-down-timer-component :time_limit="time_limit" @time_up="timeUP"></count-down-timer-component>
+            </div>
+            <!-- 経過時間 -->
+            <div v-show="!time_limit">
+                経過時間
+                <count-up-timer-component   :time_limit="time_limit" @getElapsedTime="getElapsedTime"></count-up-timer-component>
+            </div>
         </div>
 
 
-        <form :action="route.scoring" method="post">
+        <form :action="route.scoring" method="post" onsubmit="stopOnbeforeunload()">
             <input type="hidden" name="_token" :value="token"/>
             <input type="hidden" name="question_group_id" :value="question_group_id"/>
+            <input type="hidden" name="elapsed_time" :value="elapsed_time">
+
             <ul class="ps-0" style="list-style:none;">
                 <li v-for="( question, q_num ) in questions" :key="q_num">
                     <div v-show="question_num == q_num" class="card">
@@ -152,18 +162,23 @@
                 },
 
 
-
+                /* 表示中の問題番号 */
                 question_num: 0,
+
+                /* 問題データ */
                 questions: [],
 
+                /* 制限時間 */
                 time_limit: null,
+
+                /* 経過時間 */
+                elapsed_time: '',
             }
         },
         mounted() {
 
 
-            console.log('Component mounted.')
-            // [ 非同期通信 ]
+            // 問題データの取得 [ 非同期通信 ]
             fetch(this.route.get_questions_api, {
 
                 method: 'POST',
@@ -182,7 +197,7 @@
 
                 this.questions = json.questions;
                 this.time_limit = json.time_limit;
-                console.log( json );
+                // console.log( json );
             })
 
 
@@ -190,11 +205,16 @@
         methods:{
 
             /* タイムアップ */
-            timeUP : function(){
+            timeUP: function(){
                 this.question_num = this.questions.length +1;
             },
 
-            numAdd :function(){ this.question_num ++; },
+            getElapsedTime: function(elapsed_time){
+                this.elapsed_time = elapsed_time;
+                // console.log( this.elapsed_time );
+            },
+
+            numAdd: function(){ this.question_num ++; },
             numSub: function(){ this.question_num --; },
 
         }

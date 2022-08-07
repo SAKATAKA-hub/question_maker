@@ -19,7 +19,8 @@ class CreateAnswerGroupsTable extends Migration
     {
         Schema::create('answer_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('score',10)->comment('点数')->default(0);;
+            $table->string('score'        ,10)->comment('点数')->default(0);
+            $table->string('elapsed_time',100)->comment('解答時間');
 
 
             $table->unsignedBigInteger('user_id')->comment('回答者ID');

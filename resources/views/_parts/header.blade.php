@@ -13,9 +13,9 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#"
                         >マイページ</a></li>
-                        <li><a class="dropdown-item" href="#"
+                        <li><a class="dropdown-item" href="{{route('results.list')}}"
                         >成績を見る</a></li>
-                        <li><a class="dropdown-item" href="#"
+                        <li><a class="dropdown-item" href="{{route('make_question_group.list')}}"
                         >問題を作る</a></li>
                         <li><a class="dropdown-item" href="#"
                         >プロフィール</a></li>

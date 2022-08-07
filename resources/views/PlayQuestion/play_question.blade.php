@@ -34,6 +34,7 @@
 
 <!----- script ----->
 @section('script')
+<script src="{{asset('js/page_exit_prevention_alert.js')}}"></script>
 @endsection
 
 

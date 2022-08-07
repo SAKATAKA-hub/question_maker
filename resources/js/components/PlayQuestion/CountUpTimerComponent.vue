@@ -1,5 +1,5 @@
 <template>
-    <div>{{ formatTime }}</div>
+    <div class="d-inline">{{ formatTime }}</div>
 </template>
 
 <script>
@@ -8,24 +8,37 @@ export default {
     name: 'timer',
     data() {
         return {
-
+            //経経過時間
             hour: 0, min: 0, sec: 0,
+            //制限時間
+            limit_hour: 0, limit_min: 0, limit_sec: 0,
+
             timerOn: false,
             timerObj: null,
 
         }
     },
     props: {
-        //制限時間
-        time_limit: { type: String, default: '01:00:00', },
 
+        //制限時間
+        time_limit: { type: String, default: '00:00:00', },
     },
     mounted() {
 
-        const times = this.time_limit.split(':')
-        this.hour = times[0];
-        this.min  = times[1];
-        this.sec  = times[2];
+        // 制限時間が指定されているとき
+        if(this.time_limit){
+
+            //制限時間の登録
+            const times = this.time_limit.split(':')
+            this.limit_hour = times[0];
+            this.limit_min  = times[1];
+            this.limit_sec  = times[2];
+
+        } else {
+            this.limit_hour = 99;
+            this.limit_min  = 99;
+            this.limit_sec  = 99;
+        }
 
         // カウントの開始
         this.start();
@@ -34,19 +47,21 @@ export default {
     methods: {
 
         count: function() {
-
-            if (this.sec <= 0 && this.min <= 0 && this.hour >= 1) {
-                this.hour  --;
-                this.min = 59;
-                this.sec = 59;
-            } else if (this.sec <= 0 && this.min >= 1) {
-                this.min --;
-                this.sec = 59;
-            } else if(this.sec <= 1 && this.min <= 0 && this.hour <= 0) {
-                this.complete();
+            if(this.limit_hour==this.hour && this.limit_min==this.min && this.limit_sec==this.sec){
+                this.stop();
+            } else if (this.sec >= 59 && this.min >= 59) {
+                this.hour  ++;
+                this.min = 0;
+                this.sec = 0;
+            } else if (this.sec >= 59) {
+                this.min ++;
+                this.sec = 0;
             } else {
-                this.sec --;
+                this.sec ++;
             }
+
+            /*経過時間フォーマットを渡す*/
+            this.$emit('getElapsedTime', this.formatTime);
         },
 
         start: function() {
@@ -54,20 +69,11 @@ export default {
             this.timerObj = setInterval(function() { self.count() }, 1000);
             this.timerOn = true; //timerがONであることを状態として保持
         },
-
-        // stop: function() {
-        //     clearInterval(this.timerObj);
-        //     this.timerOn = false; //timerがOFFであることを状態として保持
-        // },
-
-        complete: function() {
-
-            this.sec = 0;
+        stop: function() {
             clearInterval(this.timerObj);
+            this.timerOn = false; //timerがOFFであることを状態として保持
+        },
 
-            //親コンポーネントの'time_up'関数を実行
-            this.$emit('time_up');
-        }
     },
     computed: {
         formatTime: function() {
@@ -88,19 +94,10 @@ export default {
 
             })
 
-            return "残り時間：" +timeStrings[0] + "時間" + timeStrings[1] + "分" + timeStrings[2] + "秒";
+            // return timeStrings[0] + ":" + timeStrings[1] + ":" + timeStrings[2] ;
+            return timeStrings[0] + "時間" + timeStrings[1] + "分" + timeStrings[2] + "秒" ;
+
         }
     }
 }
 </script>
-
-<style scoped>
-#timer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.time {
-  font-size: 100px;
-}
-</style>

@@ -16,16 +16,17 @@ class FakeQuestinonSeeder extends Seeder
         # ユーザー情報
         $user = \App\Models\User::first();
 
-        # 問題集の登録
-        $question_group = new \App\Models\QuestionGroup([
-            'user_id' => $user->id,
-            'title'   => 'テスト問題',
-            'resume'  => 'この問題は、作業用のテスト問題です。',
-            'image'   => 'site/image/sample.jpg',
-            'tags'    => '仮登録問題　テスト　hoge',
-            'published_at' => \Carbon\Carbon::parse()->format('Y-m-d H:i:s'),
-        ]);
-        $question_group->save();
+        // # 問題集の登録
+        // $question_group = new \App\Models\QuestionGroup([
+        //     'user_id' => $user->id,
+        //     'title'   => 'テスト問題',
+        //     'resume'  => 'この問題は、作業用のテスト問題です。',
+        //     'image'   => 'site/image/sample.jpg',
+        //     'tags'    => '仮登録問題　テスト　hoge',
+        //     'time_limit' => '00:01:00',
+        //     'published_at' => \Carbon\Carbon::parse()->format('Y-m-d H:i:s'),
+        // ]);
+        // $question_group->save();
 
 
         # 問題の作成
@@ -66,6 +67,19 @@ class FakeQuestinonSeeder extends Seeder
 
         ];
 
+
+
+        # 問題集の登録
+        $question_group = new \App\Models\QuestionGroup([
+            'user_id' => $user->id,
+            'title'   => 'テスト問題1',
+            'resume'  => 'この問題は、作業用のテスト問題です。',
+            'image'   => 'site/image/sample.jpg',
+            'tags'    => '仮登録問題　テスト　hoge',
+            'time_limit' => '00:01:00',
+            'published_at' => \Carbon\Carbon::parse()->format('Y-m-d H:i:s'),
+        ]);
+        $question_group->save();
         foreach ($questions_data as $question_data)
         {
             # 問題情報の保存
@@ -92,8 +106,6 @@ class FakeQuestinonSeeder extends Seeder
         }
 
 
-
-
         # 問題集の登録
         $question_group = new \App\Models\QuestionGroup([
             'user_id' => $user->id,
@@ -101,10 +113,34 @@ class FakeQuestinonSeeder extends Seeder
             'resume'  => 'この問題は、作業用のテスト問題です。',
             'image'   => 'site/image/sample.jpg',
             'tags'    => '仮登録問題　テスト　hoge',
+            'time_limit' => '00:01:00',
             'published_at' => \Carbon\Carbon::parse()->format('Y-m-d H:i:s'),
         ]);
         $question_group->save();
+        foreach ($questions_data as $question_data)
+        {
+            # 問題情報の保存
+            $question = new \App\Models\Question([
+                'question_group_id' => $question_group->id,
+                'text'        => $question_data['text'],
+                'answer_type' => $question_data['answer_type'],
+                'order'       => $question_data['order'],
+                'image'       => $question_data['image'],
+            ]);
+            $question->save();
 
+
+            # 問題の回答選択肢情報の保存
+            foreach ( $question_data['options'] as $option_data)
+            {
+                $question_option = new \App\Models\QuestionOption([
+                    'question_id'    => $question->id,
+                    'answer_text'    => $option_data['answer_text'],
+                    'answer_boolean' => $option_data['answer_boolean'],
+                ]);
+                $question_option->save();
+            }
+        }
 
         # 問題集の登録
         $question_group = new \App\Models\QuestionGroup([
@@ -113,9 +149,34 @@ class FakeQuestinonSeeder extends Seeder
             'resume'  => 'この問題は、作業用のテスト問題です。',
             'image'   => 'site/image/sample.jpg',
             'tags'    => '仮登録問題　テスト　hoge',
+            'time_limit' => '00:01:00',
             'published_at' => \Carbon\Carbon::parse()->format('Y-m-d H:i:s'),
         ]);
         $question_group->save();
+        foreach ($questions_data as $question_data)
+        {
+            # 問題情報の保存
+            $question = new \App\Models\Question([
+                'question_group_id' => $question_group->id,
+                'text'        => $question_data['text'],
+                'answer_type' => $question_data['answer_type'],
+                'order'       => $question_data['order'],
+                'image'       => $question_data['image'],
+            ]);
+            $question->save();
+
+
+            # 問題の回答選択肢情報の保存
+            foreach ( $question_data['options'] as $option_data)
+            {
+                $question_option = new \App\Models\QuestionOption([
+                    'question_id'    => $question->id,
+                    'answer_text'    => $option_data['answer_text'],
+                    'answer_boolean' => $option_data['answer_boolean'],
+                ]);
+                $question_option->save();
+            }
+        }
 
 
         # 問題集の登録
@@ -125,8 +186,33 @@ class FakeQuestinonSeeder extends Seeder
             'resume'  => 'この問題は、作業用のテスト問題です。',
             'image'   => 'site/image/sample.jpg',
             'tags'    => '仮登録問題　テスト　hoge',
+            'time_limit' => '00:01:00',
         ]);
         $question_group->save();
+        foreach ($questions_data as $question_data)
+        {
+            # 問題情報の保存
+            $question = new \App\Models\Question([
+                'question_group_id' => $question_group->id,
+                'text'        => $question_data['text'],
+                'answer_type' => $question_data['answer_type'],
+                'order'       => $question_data['order'],
+                'image'       => $question_data['image'],
+            ]);
+            $question->save();
+
+
+            # 問題の回答選択肢情報の保存
+            foreach ( $question_data['options'] as $option_data)
+            {
+                $question_option = new \App\Models\QuestionOption([
+                    'question_id'    => $question->id,
+                    'answer_text'    => $option_data['answer_text'],
+                    'answer_boolean' => $option_data['answer_boolean'],
+                ]);
+                $question_option->save();
+            }
+        }
 
     }
 }
