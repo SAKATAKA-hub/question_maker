@@ -7,6 +7,10 @@ use \App\Http\Controllers;
 Route::get('/', function(){ return redirect()->route('questions_list'); })
 ->name('home');
 
+// Route::get('/', function(){ return 'question maker'; })
+// ->name('home');
+
+
 /*
 |--------------------------------------------------------------------------
 | 問題集を解く　処理　PlayQuestionController
